@@ -626,22 +626,28 @@ def current_month(date):
     }
    return MONTH.get(date,"invalid month")
 
-def total_class_attained_missed_this_month(pk,type_request):
+def total_class_attained_missed_this_month(pk, type_request):
+    student = std.Student_info.objects.get(id=pk)
+    today = datetime.date.today()
+    year_month_obj = YEAR_MONTH.objects.get(month=today.month, current_year=today.year)
+    
     if type_request == "attained":
-     dtaa = std.Attendence.objects.filter(
-        student = pk,
-        attendence = filtered_month(datetime.date.today()),
-        attended_class = True
-     ).count()
-
-     return dtaa
-    elif type_request == "missed":
         dtaa = std.Attendence.objects.filter(
-        student = pk,
-        attendence= filtered_month(datetime.date.today()),
-        attended_class = False
-     ).count()
-        return dtaa      
+            student=student,
+            attendence=year_month_obj,
+            attended_class=True
+        ).count()
+        return dtaa
+    
+    elif type_request == "missed":
+        dtaa =std.Attendence.objects.filter(
+            student=student,
+            attendence=year_month_obj,
+            attended_class=False
+        ).count()
+        return dtaa
+    
+
     
 # list of all std ! 
 @login_required

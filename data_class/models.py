@@ -109,7 +109,6 @@ class YEAR_MONTH(models.Model):
   
     current_year = models.IntegerField(default=get_current_year)  
 
-
     def __str__(self):
         return f"{self.month} {self.current_year}"
 

@@ -830,45 +830,37 @@
                     <th>Profile</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Subject</th>
+
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody class="fade-in-stagger">
                 {% for teacher in teachers %}
-                <tr class="fade-in-element" data-name="{{ teacher.first_name }} {{ teacher.last_name }}" 
-                    data-subject="{% for subject in teacher.subject.all %}{{ subject.name }}{% if not forloop.last %}, {% endif %}{% endfor %}">
+                <tr class="fade-in-element" data-name="{{ teacher.first_name }} {{ teacher.last_name }}">
+
                     <td>
-                        <img src="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %}/placeholder.svg?height=40&width=40{% endif %}" 
+                        <img src="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %}{% endif %}" 
                              alt="{{ teacher.first_name }} {{ teacher.last_name }}" 
                              class="table-avatar" 
                              data-teacher-name="{{ teacher.first_name }} {{ teacher.last_name }}"
                              data-teacher-email="{{ teacher.email }}"
-                             data-teacher-subjects="{% for subject in teacher.subject.all %}{{ subject.name }}{% if not forloop.last %}, {% endif %}{% endfor %}"
-                             data-teacher-phone="{{ teacher.contact|default:'+1 (555) 000-0000' }}"
-                             data-teacher-office="{{ teacher.office|default:'Office TBA' }}"
+                             data-teacher-phone="{{ teacher.contact|default:'+977 000000-0000' }}"
                              data-teacher-image="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %}/placeholder.svg?height=120&width=120{% endif %}">
                     </td>
                     <td class="teacher-name" 
                         data-teacher-name="{{ teacher.first_name }} {{ teacher.last_name }}"
                         data-teacher-email="{{ teacher.email }}"
-                        data-teacher-subjects="{% for subject in teacher.subject.all %}{{ subject.name }}{% if not forloop.last %}, {% endif %}{% endfor %}"
-                        data-teacher-phone="{{ teacher.contact|default:'+1 (555) 000-0000' }}"
                         data-teacher-office="{{ teacher.office|default:'Office TBA' }}"
                         data-teacher-image="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %}/placeholder.svg?height=120&width=120{% endif %}">{{ teacher.first_name }} {{ teacher.last_name }}</td>
                     <td>
-                        <a href="#" class="email-link" onclick="contactTeacher('{{ teacher.email }}')">
+                        <a href="" class="email-link" onclick="contactTeacher('{{ teacher.email }}')">
                             <svg class="email-icon" fill="currentColor" viewBox="0 0 256 256">
                                 <path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM203.43,64,128,133.15,52.57,64ZM216,192H40V74.19l82.59,75.71a8,8,0,0,0,10.82,0L216,74.19V192Z"></path>
                             </svg>
                             {{ teacher.email }}
                         </a>
                     </td>
-                    <td>
-                        {% for subject in teacher.subject.all %}
-                            {{ subject.name }}{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    </td>
+
                     <td>
                         <button class="contact-btn" onclick="contactTeacher('{{ teacher.email }}')">
                             <svg class="contact-icon" fill="currentColor" viewBox="0 0 256 256">
@@ -941,17 +933,7 @@
             </div>
             
 
-            <div class="info-item fade-in-element">
-                <svg class="info-icon" fill="currentColor" viewBox="0 0 256 256">
-                    <path d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM48,48H208V208H48ZM64,80a8,8,0,0,1,8-8H184a8,8,0,0,1,0,16H72A8,8,0,0,1,64,80Zm0,32a8,8,0,0,1,8-8H184a8,8,0,0,1,0,16H72A8,8,0,0,1,64,112Zm0,32a8,8,0,0,1,8-8h80a8,8,0,0,1,0,16H72A8,8,0,0,1,64,144Z"></path>
-                </svg>
-                <div class="info-content">
-                    <div class="info-label">Subjects</div>
-                    <div class="info-value">
-                        <div class="subjects-list" id="popupSubjects"></div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
         
         <div class="popup-actions fade-in-element">

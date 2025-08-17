@@ -38,8 +38,7 @@ def student_dashboard(request):
         'roll_num':roll_num,
       
     }
-    if not student_content.student_profile:
-        messages.error(request,'upload your profile picture !')
+
     return render(request,"dashboard/dashboard.html",context)
 
 

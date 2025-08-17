@@ -611,6 +611,36 @@
             transform: none !important;
         }
     }
+
+
+.profile-upload-icon {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 28px;
+    height: 28px;
+    background: var(--accent-color);
+    border: 2px solid var(--bg-primary); /* keeps border clean */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+    z-index: 2;
+}
+
+.profile-upload-icon:hover {
+    transform: scale(1.1);
+}
+
+.profile-upload-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
 </style>
 {% endblock %}
 
@@ -629,33 +659,38 @@
     <div class="student-profile fade-in-element">
         <div class="profile-card">
             <div class="profile-image-container">
-                {% if student.student_profile %}
-                 <img id="currentProfileImage" src="{{student.student_profile.url}}" alt="Student Profile">
-                {% else %}
-             
-                 <img id="currentProfileImage" src="
+    {% if student.student_profile %}
+     <img id="currentProfileImage" src="{{student.student_profile.url}}" alt="Student Profile">
+    {% else %}
+     <img id="currentProfileImage" src="
+            {% if not student.student_profile %}
+             {% if student.Gender == "Male" %}
+                {% static 'student/images/male.png' %}
+            {% else %}
+                {% static 'student/images/female.png' %}
+            {% endif %}" alt="Student">
 
-                        {% if student.Gender == "Male" %}
 
-                            {% static 'student/images/male.png' %}
+    <div class="profile-upload-icon" id="uploadTriggerBtn">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+            <path d="M12,11L16,15H13V19H11V15H8L12,11Z" />
+        </svg>
+    </div>
+    {% endif %}
 
-                        {% else %}
-                            {% static 'student/images/female.png' %}
-                        {% endif %}
-                    
-                    
-                    
-                    " alt="Student">
-                 {% endif %}
-                <!-- Upload Overlay -->
-                <div class="upload-overlay" id="uploadTrigger">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
-                        <path d="M12,11L16,15H13V19H11V15H8L12,11Z" />
-                    </svg>
-                    <span>Upload</span>
-                </div>
-            </div>
+    {% endif %}
+
+    <!-- Hover Upload Overlay -->
+    <div class="upload-overlay" id="uploadTrigger">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+            <path d="M12,11L16,15H13V19H11V15H8L12,11Z" />
+        </svg>
+        <span>Upload</span>
+    </div>
+</div>
+
             
             <div class="profile-info">
                 <h2>{{ student.first_name|default:"Student" }} {{student.last_name}}</h2>
