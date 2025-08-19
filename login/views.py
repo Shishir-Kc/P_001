@@ -19,7 +19,6 @@ def user_login(request):
                 user = authenticate(username=username,password=user_pass)
                 login(request,user)
                 if user is not None:
-                   print("logged in sucessfully !  - - - - -- - -  >")
                    if user.groups.filter(name='Student').exists():
                       messages.success(request,'Logged in !')
                       return redirect("student:student_dashboard")
@@ -84,11 +83,8 @@ def user_signup(request):
          return redirect('login:login')
 
      gender = request.POST.get('gender')
-     print('------------------- > ')
-     print(gender)
-
+ 
      user_name = first_name+' '+last_name
-     print(user_name)
      if not User.objects.filter(username=user_name).exists(): 
         user_account = User.objects.create_user(username=user_name,first_name=first_name,last_name=last_name,email=email,password=password)
         user_account.save()
