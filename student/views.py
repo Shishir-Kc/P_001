@@ -7,7 +7,7 @@ from django.contrib.auth import logout
 from teacher import models as teach
 from django.contrib import messages
 from django.core.mail import send_mail
-from teacher.views import total_class_attained_missed_this_month,filtered_month,total_days,current_month
+from teacher.utils import filtered_month,total_days,current_month,total_class_attained_missed_this_month
 import datetime
 
 
