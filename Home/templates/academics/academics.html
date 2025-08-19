@@ -921,7 +921,217 @@
         .table-body tr {
             animation: slideIn 0.3s ease forwards;
         }
-    </style>
+
+        /* Enhanced Pagination Styles */
+        .pagination-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-white);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .pagination-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .page-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            text-align: center;
+        }
+
+        .page-text {
+            font-size: 0.875rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .total-items {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .pagination-nav {
+            display: flex;
+            justify-content: center;
+        }
+
+        .pagination-list {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .pagination-item {
+            display: flex;
+        }
+
+        .pagination-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            height: 40px;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            background: var(--bg-white);
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            gap: 0.25rem;
+        }
+
+        .pagination-link:hover:not(.pagination-disabled):not(.pagination-current) {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+            transform: translateY(-1px);
+        }
+
+        .pagination-current {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: var(--text-white);
+            font-weight: 600;
+        }
+
+        .pagination-disabled {
+            color: #9ca3af;
+            background: #f9fafb;
+            border-color: #e5e7eb;
+            cursor: not-allowed;
+        }
+
+        .pagination-first,
+        .pagination-last {
+            font-weight: 600;
+        }
+
+        .pagination-prev,
+        .pagination-next {
+            padding: 0.5rem 0.75rem;
+        }
+
+        .pagination-text {
+            font-size: 0.875rem;
+        }
+
+        .pagination-ellipsis {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            height: 40px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .items-per-page {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-dark);
+        }
+
+        .items-label,
+        .items-text {
+            font-weight: 500;
+        }
+
+        .items-select {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: var(--bg-white);
+            color: var(--text-dark);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+        }
+
+        .items-select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .pagination-wrapper {
+                gap: 1.5rem;
+            }
+
+            .pagination-list {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.125rem;
+            }
+
+            .pagination-link {
+                min-width: 36px;
+                height: 36px;
+                font-size: 0.8125rem;
+            }
+
+            .pagination-text {
+                display: none;
+            }
+
+            .pagination-prev .pagination-text,
+            .pagination-next .pagination-text {
+                display: none;
+            }
+
+            .items-per-page {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pagination-container {
+                padding: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            .page-info {
+                font-size: 0.8125rem;
+            }
+
+            .pagination-link {
+                min-width: 32px;
+                height: 32px;
+                font-size: 0.75rem;
+            }
+        }
+</style>
 {% endblock links %}
 
 {% block content %}
@@ -1204,12 +1414,117 @@
                 <p>Try adjusting your search criteria</p>
             </div>
 
-            <!-- Table Footer -->
+            <!-- Table Footer with Results Count -->
             <div class="table-footer">
                 <div class="results-count" id="resultsCount">
                     Showing {{ members|length }} member{{ members|length|pluralize }}
                 </div>
             </div>
+
+            <!-- Enhanced Pagination Section -->
+            {% if members.has_other_pages %}
+            <div class="pagination-container">
+                <div class="pagination-wrapper">
+                    <!-- Page Info -->
+                    <div class="page-info">
+                        <span class="page-text">
+                            Page <strong>{{ members.number }}</strong> of <strong>{{ members.paginator.num_pages }}</strong>
+                        </span>
+                        <span class="total-items">
+                            ({{ members.paginator.count }} total members)
+                        </span>
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <nav class="pagination-nav" aria-label="Members pagination">
+                        <ul class="pagination-list">
+                            <!-- First Page -->
+                            {% if members.has_previous %}
+                                <li class="pagination-item">
+                                    <a href="?page=1" class="pagination-link pagination-first" title="First page">
+                                        <i class="fas fa-angle-double-left"></i>
+                                        <span class="sr-only">First</span>
+                                    </a>
+                                </li>
+                                <!-- Previous Page -->
+                                <li class="pagination-item">
+                                    <a href="?page={{ members.previous_page_number }}" class="pagination-link pagination-prev" title="Previous page">
+                                        <i class="fas fa-angle-left"></i>
+                                        <span class="pagination-text">Previous</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="pagination-item">
+                                    <span class="pagination-link pagination-disabled">
+                                        <i class="fas fa-angle-double-left"></i>
+                                        <span class="sr-only">First</span>
+                                    </span>
+                                </li>
+                                <li class="pagination-item">
+                                    <span class="pagination-link pagination-disabled">
+                                        <i class="fas fa-angle-left"></i>
+                                        <span class="pagination-text">Previous</span>
+                                    </span>
+                                </li>
+                            {% endif %}
+
+                            <!-- Page Numbers -->
+                            {% for num in members.paginator.page_range %}
+                                {% if num == members.number %}
+                                    <li class="pagination-item">
+                                        <span class="pagination-link pagination-current" aria-current="page">
+                                            {{ num }}
+                                        </span>
+                                    </li>
+                                {% elif num > members.number|add:'-3' and num < members.number|add:'3' %}
+                                    <li class="pagination-item">
+                                        <a href="?page={{ num }}" class="pagination-link">{{ num }}</a>
+                                    </li>
+                                {% elif num == 1 or num == members.paginator.num_pages %}
+                                    <li class="pagination-item">
+                                        <a href="?page={{ num }}" class="pagination-link">{{ num }}</a>
+                                    </li>
+                                {% elif num == members.number|add:'-4' or num == members.number|add:'4' %}
+                                    <li class="pagination-item">
+                                        <span class="pagination-ellipsis">...</span>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            <!-- Next Page -->
+                            {% if members.has_next %}
+                                <li class="pagination-item">
+                                    <a href="?page={{ members.next_page_number }}" class="pagination-link pagination-next" title="Next page">
+                                        <span class="pagination-text">Next</span>
+                                        <i class="fas fa-angle-right"></i>
+                                    </a>
+                                </li>
+                                <!-- Last Page -->
+                                <li class="pagination-item">
+                                    <a href="?page={{ members.paginator.num_pages }}" class="pagination-link pagination-last" title="Last page">
+                                        <span class="sr-only">Last</span>
+                                        <i class="fas fa-angle-double-right"></i>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="pagination-item">
+                                    <span class="pagination-link pagination-disabled">
+                                        <span class="pagination-text">Next</span>
+                                        <i class="fas fa-angle-right"></i>
+                                    </span>
+                                </li>
+                                <li class="pagination-item">
+                                    <span class="pagination-link pagination-disabled">
+                                        <span class="sr-only">Last</span>
+                                        <i class="fas fa-angle-double-right"></i>
+                                    </span>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
 </section>
@@ -1229,6 +1544,34 @@
         </div>
     </div>
 </section>
+
+<script>
+    function changeItemsPerPage(value) {
+        const url = new URL(window.location);
+        url.searchParams.set('per_page', value);
+        url.searchParams.set('page', '1'); // Reset to first page
+        window.location.href = url.toString();
+    }
+
+    // Preserve search parameters in pagination links
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchParams = new URLSearchParams(window.location.search);
+        const paginationLinks = document.querySelectorAll('.pagination-link[href]');
+        
+        paginationLinks.forEach(link => {
+            const url = new URL(link.href, window.location.origin);
+            
+            // Preserve existing search parameters except page
+            for (const [key, value] of searchParams.entries()) {
+                if (key !== 'page') {
+                    url.searchParams.set(key, value);
+                }
+            }
+            
+            link.href = url.toString();
+        });
+    });
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
