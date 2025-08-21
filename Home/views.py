@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from student.models import Student_info
 from teacher.models import Teacher
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 
 def home(request):
     user_session ="guest"
@@ -56,11 +57,16 @@ def academics(request):
     grade = mod.Academics.objects.first()
     resource = mod.Academic_resources.objects.first()
     members = mod.Members.objects.all()
+    paginator = Paginator(members,10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+
     context = { 
         'achivement':achivement,
         'grade':grade,
         'resource':resource,
-        'members':members
+        'members':page_obj
 }
 
 
@@ -81,7 +87,6 @@ def gallery(request):
     images = mod.GalleryImage.objects.all()
     context = { 
         'images':images,
-
     }
 
     return render(request,'gallery/gallery.html',context)
@@ -97,7 +102,10 @@ def contact(request):
         faculty = request.POST.get("subject")
         message = request.POST.get("message")
         subject = "to get admitted "
-
+        teacher = User.objects.filter(groups__name='Head')
+        list_teacher= []
+        for i in teacher:
+           list_teacher.append(i.email)
         data = mod.Contact(full_name=full_name,email=email,contact=contact,faculty=faculty,message=message)
         data.save()
         full_message = f"From: {full_name} <{email}>\n\nSubject: {subject}\n\n Full Name : {full_name} \n\n Contact :{contact} \n\n Email:{email}\n\n Faculty:{faculty} \n\nMessage:\n{message}"
@@ -106,7 +114,7 @@ def contact(request):
             subject=f"Contact Form: {subject}",
             message=full_message,
             from_email= email,
-            recipient_list=[''],  #
+            recipient_list=list_teacher,  #
             fail_silently=False,
         )
 
