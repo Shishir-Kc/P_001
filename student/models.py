@@ -70,6 +70,4 @@ class Attendence(models.Model):
 
     def __str__(self):
         attended = 'YES' if self.attended_class else 'NO'
-        month = str(self.attendence.month)
-        year = str(self.attendence.current_year)
         return f"{self.student.first_name} |  {self.date_month} |  PRESENT => {attended}"
