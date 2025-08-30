@@ -821,7 +821,7 @@
                             <span class="featured-badge">Featured</span>
                             <h2 class="featured-title">{{ featured_news.title }}</h2>
                             <p class="featured-description">
-                                {{ featured_news.description|truncatewords:30 }}
+                                {{ featured_news.description|truncatewords:5 }}
                             </p>
                         </div>
                         <!-- Hidden data for modal -->
@@ -855,7 +855,7 @@
                         <div class="news-content">
                             <h3 class="news-item-title">{{ news.title }}</h3>
                             <p class="news-item-description">
-                                {{ news.description|truncatewords:20 }}
+                                {{ news.description|truncatewords:5 }}
                             </p>
                             <div class="news-item-meta">
                                 <div class="meta-item">
