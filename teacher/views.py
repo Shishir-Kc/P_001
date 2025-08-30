@@ -593,9 +593,42 @@ def student_attendence_list(request):
          return redirect('home:home')
     teacher = models.Teacher.objects.get(user=request.user)
     students = std.Student_info.objects.filter(refrence_code=teacher.refrence_code).order_by('Roll_num')
+    today = datetime.date.today()
+    year_month_obj = YEAR_MONTH.objects.get(
+        month=today.month,
+        current_year=today.year
+    )
+
+    number_of_present_students = std.Attendence.objects.filter(
+            student__in=students,
+            attendence=year_month_obj,
+            date_month = datetime.date.today(),
+            attended_class=True
+        ).count()
+    number_of_absent_students =  std.Attendence.objects.filter(
+            student__in=students,
+            attendence=year_month_obj,
+            date_month = datetime.date.today(),
+            attended_class=False
+        ).count()
+    
+
+    print(f"total students present today = > {number_of_present_students}")
+    print(f"total students present today = > {number_of_absent_students}")
+    
+    attendance_dict = {att.student_id: att for att in std.Attendence.objects.filter(
+        student__in=students,
+        attendence=year_month_obj,
+        date_month=today
+    )}
+
     context =  {
         'teacher':teacher,
         'students':students,
+        'absent_students' :number_of_absent_students,
+        'present_students':number_of_present_students,
+        'attendance_dict': attendance_dict,
+        'today_date':datetime.date.today(),
 
     }
     return render(request,'std_attendence/student_list.html',context)
@@ -654,8 +687,9 @@ def save_attendence(request,pk):
          )
          attendance.save()
         except Exception:
-            print("error data duplicated ! ")
-            return redirect("teacher:student_attendence")
+            messages.success(request,'Student attendence has been saved  !')
+            return redirect("teacher:student_attendence_list")
         
-        return redirect('teacher:student_attendence',pk=pk)
-    
+        return redirect('teacher:student_attendence_list')
+    else:
+         return redirect('teacher:student_attendence_list')
