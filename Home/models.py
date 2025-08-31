@@ -1,5 +1,5 @@
 from django.db import models
-
+import uuid
 
 class Header(models.Model):
     title = models.CharField(max_length=255,verbose_name="school _name")
@@ -26,6 +26,7 @@ class Slider(models.Model):
         return self.title or f"Slide {self.id}"
 
 class News(models.Model):
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     CATEGORY_CHOICES = [
         ('Academics', 'Academics'),
         ('Events', 'Events'),
