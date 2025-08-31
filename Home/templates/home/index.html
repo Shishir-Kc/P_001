@@ -1689,7 +1689,6 @@ main {
   line-height: 1.7;
   font-size: 1rem;
   margin-bottom: 1.5rem;
-  font-family: 'Inter', sans-serif;
 }
 
 /* ========== NOTICE IMAGE STYLES ========== */
@@ -2169,6 +2168,34 @@ main {
 .review-row:hover .review-track {
   animation-play-state: paused;
 }
+
+/* Added styles for the View Full Info button */
+.view-full-info-btn {
+  background: linear-gradient(135deg, var(--teal-color) 0%, var(--dark-teal) 100%);
+  color: var(--white);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  margin-top: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+}
+
+.view-full-info-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 150, 136, 0.3);
+}
+
+.view-full-info-btn i {
+  font-size: 0.9rem;
+}
 </style>
 
 <main>
@@ -2307,6 +2334,24 @@ main {
           </div>
           <div class="notifications-table">
             {% for notice in news %}
+             <!-- Replaced Django template syntax with actual static HTML using the notice UUIDs -->
+            <div class="notification-row" data-notice-id="{{notice.id}}" tabindex="0" role="button" aria-label="notice.title">
+              <div class="notification-title">{{notice.title|truncatechars:10}}</div>
+              <div class="notification-preview">{{notice.description|truncatechars:20}}</div>
+              <div class="notification-meta">
+                <span class="notification-category">
+                  <i class="fas fa-tag"></i> Notice
+                </span>
+                <span class="notification-date">Dec 15</span>
+              </div>
+            </div>
+            {% empty %}
+            <div class="no-notifications">
+              <i class="fas fa-bell-slash"></i>
+              <p>No new notices available</p>
+            </div>
+            {% endfor %} 
+            <!-- {% for notice in news %}
             <div class="notification-row" data-notice-id="{{ notice.id }}" tabindex="0" role="button" aria-label="Read notice: {{ notice.title }}">
               <div class="notification-title">{{ notice.title|truncatechars:45 }}</div>
               <div class="notification-preview">{{ notice.description|truncatechars:70 }}</div>
@@ -2322,7 +2367,7 @@ main {
               <i class="fas fa-bell-slash"></i>
               <p>No new notices available</p>
             </div>
-            {% endfor %}
+            {% endfor %} -->
           </div>
         </div>
       </div>
@@ -2919,7 +2964,7 @@ main {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // ========== PROGRAM DATA ========== 
+  // ========== PROGRAM DATA ==========
   const programData = {
     'science': {
       title: '+2 Science',
@@ -2999,204 +3044,96 @@ document.addEventListener('DOMContentLoaded', function() {
     'Management': {
       title: '+2 Education',
       subtitle: 'Education Program',
-      description: 'Understanding educational principles',
+      description: 'Preparing future educators and leaders',
       duration: '2 Years (Plus Two Level)',
-      streams: 'English, Math, Nepali',
+      streams: 'Education Studies, Psychology, Teaching Methods',
       coreSubjects: [
         'Educational Psychology',
-        'Teaching Methodology',
-        'Curriculum Development',
-        'Assessment Techniques',
-        'Educational Technology'
+        'Teaching Methodologies',
+        'Child Development',
+        'Curriculum Design',
+        'Assessment & Evaluation'
       ],
-      careerPathways: 'Civil Services, Social Work, Journalism, Teaching, Research'
+      careerPathways: 'Teaching, Educational Administration, Counseling, Training'
     },
     'Hotel-Management': {
-      title: 'Hotel Management Program',
-      subtitle: 'Hospitality Management',
-      description: 'Mastering Hotel Management and hospitality',
+      title: '+2 Hotel Management',
+      subtitle: 'Hospitality Management Program',
+      description: 'Excellence in hospitality and service industry',
       duration: '2 Years (Plus Two Level)',
-      streams: 'Hospitality, Tourism, Food Service',
+      streams: 'Hotel Operations, Food & Beverage, Tourism',
       coreSubjects: [
-        'Hotel Operations',
-        'Food & Beverage Management',
-        'Tourism Management',
-        'Customer Service',
-        'Event Management',
-        'Culinary Arts'
+        'Hotel Operations Management',
+        'Food & Beverage Service',
+        'Tourism & Travel Management',
+        'Customer Service Excellence',
+        'Event Management'
       ],
-      careerPathways: 'Hotel Manager, Chef, Tourism Guide, Event Coordinator'
+      careerPathways: 'Hotel Management, Tourism, Event Planning, Restaurant Management'
     }
   };
 
-  // ========== REVIEW DATA ==========
+  // ========== NOTICE DATA FROM DJANGO ==========
+
+
+const noticeData = {
+  {% for notice in news %}
+    "{{ notice.id }}": {
+      title: "{{ notice.title|truncatechars:40|escapejs }}",
+      date: "{{ notice.created_at|date:'F d, Y' }}",
+      description: "{{ notice.description|truncatechars:70|escapejs }}",
+      image: "{% if notice.image %}{{ notice.image.url|escapejs }}{% else %}{% static 'home/images/nope.jpg' %}{% endif %}"
+    }{% if not forloop.last %},{% endif %}
+  {% endfor %}
+};
+
+
   const reviewData = {
-    1: {
-      name: "Aarav Sharma",
-      class: "Class of 2023",
-      subject: "Mathematics",
-      avatar: "https://i.pravatar.cc/80?img=1",
-      fullReview: "Great faculty and calm environment. The teachers here really care about each student's progress and provide individual attention when needed. The mathematics department is particularly strong with excellent problem-solving sessions and regular practice tests. The school has helped me develop not just academic skills but also critical thinking abilities that will serve me well in my future studies. I'm grateful for the supportive learning environment and the friendships I've made here.",
-      date: "June 15, 2023",
-      likes: "24 students found this helpful"
+    'review-1': {
+      name: 'Priya Sharma',
+      class: '+2 Science',
+      subject: 'Physics',
+      fullReview: 'The physics program here is exceptional. The teachers are very knowledgeable and the lab facilities are top-notch. I feel well-prepared for my engineering entrance exams.',
+      date: 'November 2024',
+      likes: '24',
+      avatar: '/placeholder.svg?height=60&width=60',
+      rating: 5
     },
-    2: {
-      name: "Sneha Karki",
-      class: "Class of 2022",
-      subject: "Science",
-      avatar: "https://i.pravatar.cc/80?img=2",
-      fullReview: "The extracurriculars really helped me build confidence. Amazing sports facilities and cultural programs that allow students to explore their talents beyond academics. The science labs are well-equipped and the practical sessions are conducted regularly. Teachers encourage participation in science fairs and competitions which helped me develop presentation skills. The school's emphasis on holistic development has prepared me well for college and beyond.",
-      date: "March 22, 2023",
-      likes: "31 students found this helpful"
-    },
-    3: {
-      name: "Roshan Thapa",
-      class: "Class of 2023",
-      subject: "Management",
-      avatar: "https://i.pravatar.cc/80?img=3",
-      fullReview: "Teachers were always supportive and kind. The mentorship program helped me choose my career path and provided valuable guidance throughout my academic journey. The management studies curriculum is comprehensive and includes practical case studies that make learning engaging. Regular guest lectures from industry professionals give real-world insights. I particularly appreciated the career counseling sessions that helped me make informed decisions about my future.",
-      date: "May 8, 2023",
-      likes: "18 students found this helpful"
-    },
-    4: {
-      name: "Puja Tamang",
-      class: "Class of 2021",
-      subject: "Management",
-      avatar: "https://i.pravatar.cc/80?img=4",
-      fullReview: "Safe, clean, and full of opportunities. The library and computer lab are excellent resources for research and study. The Management department offers diverse subjects that broaden your perspective on society and culture. Regular debates, essay competitions, and cultural events enhance learning beyond textbooks. The school maintains high standards of cleanliness and safety, creating an ideal learning environment. The supportive peer community makes studying enjoyable.",
-      date: "December 10, 2022",
-      likes: "27 students found this helpful"
-    },
-    5: {
-      name: "Binod Lama",
-      class: "Class of 2022",
-      subject: "Science",
-      avatar: "https://i.pravatar.cc/80?img=5",
-      fullReview: "Loved the labs and library. The practical approach to learning made complex topics easy to understand. The science department has modern equipment and well-maintained laboratories for physics, chemistry, and biology. Teachers demonstrate experiments clearly and encourage students to conduct their own investigations. The library has an extensive collection of reference books and journals. Study groups and peer learning sessions are regularly organized to help students excel.",
-      date: "January 18, 2023",
-      likes: "22 students found this helpful"
-    },
-    6: {
-      name: "Anita Joshi",
-      class: "Class of 2020",
-      subject: "Arts",
-      avatar: "https://i.pravatar.cc/80?img=6",
-      fullReview: "My best friends and memories were made here. The school community feels like a second family where everyone supports each other. The arts program is exceptional with opportunities to explore music, dance, drama, and visual arts. Regular cultural festivals and art exhibitions showcase student talents. Teachers in the arts department are passionate and help students discover their creative potential. The friendships and experiences here have shaped who I am today.",
-      date: "August 5, 2022",
-      likes: "35 students found this helpful"
-    },
-    7: {
-      name: "Dipesh Shrestha",
-      class: "Class of 2023",
-      subject: "Computer Science",
-      avatar: "https://i.pravatar.cc/80?img=7",
-      fullReview: "Very modern and digital classrooms. The technology integration in teaching is impressive and keeps students engaged. The computer science program covers both theoretical concepts and practical programming skills. Regular coding competitions and tech workshops enhance learning. The school has invested in modern infrastructure including smart boards, high-speed internet, and updated computer labs. This technological approach has prepared me well for the digital age.",
-      date: "April 12, 2023",
-      likes: "29 students found this helpful"
-    },
-    8: {
-      name: "Saraswati Bhatta",
-      class: "Class of 2021",
-      subject: "Literature",
-      avatar: "https://i.pravatar.cc/80?img=8",
-      fullReview: "Library was my favorite spot. Quiet study areas and vast collection of books for research and leisure reading. The literature program encourages critical thinking and creative writing. Regular poetry recitations, book clubs, and literary discussions enrich the learning experience. Teachers are knowledgeable and passionate about literature, making classes engaging and thought-provoking. The peaceful library environment was perfect for deep study and reflection.",
-      date: "November 28, 2022",
-      likes: "20 students found this helpful"
-    },
-    9: {
-      name: "Kishor Kunwar",
-      class: "Class of 2022",
-      subject: "Business Studies",
-      avatar: "https://i.pravatar.cc/80?img=9",
-      fullReview: "Great support from mentors. The career guidance program helped shape my future goals and provided clear direction for higher education choices. Business studies curriculum includes practical projects, market research, and entrepreneurship workshops. Guest speakers from the business world share valuable insights. The mentorship program pairs students with alumni working in various fields, providing real-world perspective and networking opportunities.",
-      date: "February 14, 2023",
-      likes: "26 students found this helpful"
-    },
-    10: {
-      name: "Rekha Gurung",
-      class: "Class of 2020",
-      subject: "Physical Education",
-      avatar: "https://i.pravatar.cc/80?img=10",
-      fullReview: "Cultural events and sports made school fun. The annual festival and inter-house competitions create a vibrant school atmosphere. Excellent sports facilities including basketball court, football field, and indoor games room. Regular tournaments and sports meets encourage healthy competition. The physical education program emphasizes both fitness and sportsmanship. Cultural events celebrate diversity and bring the school community together in joyful celebrations.",
-      date: "September 30, 2022",
-      likes: "33 students found this helpful"
+    'review-2': {
+      name: 'Rajesh Kumar',
+      class: '+2 Management',
+      subject: 'Business Studies',
+      fullReview: 'Great learning environment with practical approach to business studies. The case study method really helps in understanding real-world applications.',
+      date: 'October 2024',
+      likes: '18',
+      avatar: '/placeholder.svg?height=60&width=60',
+      rating: 4
     }
   };
 
-  // ========== ENHANCED NOTICE DATA WITH IMAGE SUPPORT ==========
-  const noticeData = {
-    {% for notice in news %}
-      {{ notice.id }}: {
-        title: "{{ notice.title|escapejs }}",
-        date: "{{ notice.created_at|date:'M d, Y' }}",
-        description: "{{ notice.description|escapejs }}",
-        image: "{% if notice.image %}{{ notice.image.url }}{% else %}{% endif %}",
-        file: "{% if notice.file %}{{ notice.file.url }}{% else %}{% endif %}"
-      }{% if not forloop.last %},{% endif %}
-    {% endfor %}
-  };
-
-  // ========== MOBILE NOTIFICATION TOGGLE ==========
+  // ========== NOTIFICATION FUNCTIONALITY ==========
   const notificationToggle = document.getElementById('notificationToggle');
-  const notificationsPanel = document.getElementById('notificationsPanel');
-  let isNotificationOpen = false;
-  let isToggling = false;
+  const notificationDropdown = document.getElementById('notificationDropdown');
 
-  if (notificationToggle && notificationsPanel) {
+  if (notificationToggle && notificationDropdown) {
     notificationToggle.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
       
-      if (isToggling) return;
-      isToggling = true;
+      const isOpen = notificationDropdown.classList.contains('active');
       
-      isNotificationOpen = !isNotificationOpen;
-      
-      if (isNotificationOpen) {
-        notificationsPanel.classList.add('mobile-open');
-        notificationToggle.classList.add('active');
-        notificationToggle.innerHTML = '<i class="fas fa-times"></i>';
-        notificationToggle.setAttribute('aria-expanded', 'true');
+      if (isOpen) {
+        notificationDropdown.classList.remove('active');
+        notificationToggle.setAttribute('aria-expanded', 'false');
       } else {
-        notificationsPanel.classList.remove('mobile-open');
-        notificationToggle.classList.remove('active');
-        notificationToggle.innerHTML = '<i class="fas fa-bell"></i>';
-        notificationToggle.setAttribute('aria-expanded', 'false');
+        notificationDropdown.classList.add('active');
+        notificationToggle.setAttribute('aria-expanded', 'true');
       }
-      
-      setTimeout(() => {
-        isToggling = false;
-      }, 350);
     });
-    
+
     document.addEventListener('click', function(e) {
-      if (window.innerWidth <= 768 && isNotificationOpen && !isToggling) {
-        if (!notificationsPanel.contains(e.target) && !notificationToggle.contains(e.target)) {
-          isNotificationOpen = false;
-          notificationsPanel.classList.remove('mobile-open');
-          notificationToggle.classList.remove('active');
-          notificationToggle.innerHTML = '<i class="fas fa-bell"></i>';
-          notificationToggle.setAttribute('aria-expanded', 'false');
-        }
-      }
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && isNotificationOpen && !isToggling) {
-        isNotificationOpen = false;
-        notificationsPanel.classList.remove('mobile-open');
-        notificationToggle.classList.remove('active');
-        notificationToggle.innerHTML = '<i class="fas fa-bell"></i>';
-        notificationToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 768 && isNotificationOpen) {
-        isNotificationOpen = false;
-        notificationsPanel.classList.remove('mobile-open');
-        notificationToggle.classList.remove('active');
-        notificationToggle.innerHTML = '<i class="fas fa-bell"></i>';
+      if (!notificationToggle.contains(e.target) && !notificationDropdown.contains(e.target)) {
+        notificationDropdown.classList.remove('active');
         notificationToggle.setAttribute('aria-expanded', 'false');
       }
     });
@@ -3231,13 +3168,16 @@ document.addEventListener('DOMContentLoaded', function() {
     isFiltering = true;
     currentFilter = filter;
     
+    // Update active button
     filterButtons.forEach(btn => btn.classList.remove('active'));
     activeButton.classList.add('active');
     
+    // Show loading if available
     if (facultyLoading) {
       facultyLoading.classList.add('active');
     }
     
+    // Add filtering class to all cards
     facultyCards.forEach(card => {
       card.classList.add('filtering');
     });
@@ -3274,6 +3214,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
       
+      // Reset slider position
       facultyCurrentIndex = 0;
       if (facultySlider) {
         facultySlider.scrollTo({ left: 0, behavior: 'smooth' });
@@ -3376,7 +3317,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const downloadBtn = document.getElementById('noticeDownloadBtn');
   const downloadContainer = document.getElementById('noticeDownloadContainer');
 
-  // Fixed openNoticeModal function - now properly declared as global
   window.openNoticeModal = function(noticeId) {
     const notice = noticeData[noticeId];
     if (!notice || !noticeModal) return;
@@ -3387,114 +3327,98 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle image display
     if (notice.image && notice.image.trim() !== '') {
-      noticeImageContainer.style.display = 'block';
-      noticeImageContainer.innerHTML = '<div class="notice-image-loading"></div>';
+      if (noticeImageContainer) {
+        noticeImageContainer.style.display = 'block';
+        noticeImageContainer.innerHTML = '<div class="notice-image-loading"></div>';
 
-      const img = new Image();
-      img.onload = function() {
-        noticeModalImage.src = notice.image;
-        noticeModalImage.alt = notice.title;
-        noticeImageContainer.innerHTML = '';
-        noticeImageContainer.appendChild(noticeModalImage);
-      };
-      img.onerror = function() {
-        noticeImageContainer.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 1rem;">Image could not be loaded.</p>';
-      };
-      img.src = notice.image;
+        const img = new Image();
+        img.onload = function() {
+          if (noticeModalImage) {
+            noticeModalImage.src = notice.image;
+            noticeModalImage.alt = notice.title;
+            noticeImageContainer.innerHTML = '';
+            noticeImageContainer.appendChild(noticeModalImage);
+          }
+        };
+        img.onerror = function() {
+          noticeImageContainer.style.display = 'none';
+        };
+        img.src = notice.image;
+      }
     } else {
-      noticeImageContainer.style.display = 'none';
+      if (noticeImageContainer) {
+        noticeImageContainer.style.display = 'none';
+      }
     }
 
-    // Handle file download support - Fixed conditional logic
-    if (notice.file && notice.file.trim() !== '') {
-      const fileName = notice.file.split('/').pop();
-      downloadBtn.href = notice.file;
-      downloadBtn.setAttribute('download', fileName);
-      downloadContainer.style.display = 'block';
-    } else {
-      downloadContainer.style.display = 'none';
+    const existingButton = document.getElementById('viewFullInfoBtn');
+    if (existingButton) {
+      existingButton.remove();
+    }
+
+    const viewFullInfoBtn = document.createElement('button');
+    viewFullInfoBtn.id = 'viewFullInfoBtn';
+    viewFullInfoBtn.className = 'view-full-info-btn';
+    viewFullInfoBtn.innerHTML = '<i class="fas fa-external-link-alt"></i> View Full Info';
+    viewFullInfoBtn.onclick = function() {
+      window.location.href = `/shared/${noticeId}/view/`;
+    };
+
+    const modalBody = document.querySelector('.notice-modal-body');
+    if (modalBody) {
+      modalBody.appendChild(viewFullInfoBtn);
     }
 
     noticeModal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    
+    if (closeNoticeModal) closeNoticeModal.focus();
   };
 
-  function closeNoticeModalFunc() {
-    if (noticeModal) {
-      noticeModal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-  }
-
-  function openImageModal(imageSrc) {
-    if (!imageModal || !fullscreenImage) return;
-    fullscreenImage.src = imageSrc;
-    imageModal.classList.add('active');
-  }
-
-  function closeImageModalFunc() {
-    if (imageModal) {
-      imageModal.classList.remove('active');
-    }
-  }
-
-  if (closeNoticeModal) closeNoticeModal.addEventListener('click', closeNoticeModalFunc);
-  if (closeImageModal) closeImageModal.addEventListener('click', closeImageModalFunc);
-
-  if (noticeModalImage) {
-    noticeModalImage.addEventListener('click', function() {
-      openImageModal(this.src);
-    });
-  }
-
-  if (noticeModal) {
-    noticeModal.addEventListener('click', function(e) {
-      if (e.target === noticeModal) {
-        closeNoticeModalFunc();
-      }
-    });
-  }
-
-  if (imageModal) {
-    imageModal.addEventListener('click', function(e) {
-      if (e.target === imageModal) {
-        closeImageModalFunc();
-      }
-    });
-  }
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      if (imageModal && imageModal.classList.contains('active')) {
-        closeImageModalFunc();
-      } else if (noticeModal && noticeModal.classList.contains('active')) {
-        closeNoticeModalFunc();
-      }
-    }
-  });
-
-  // Fixed notification row event listeners
-  const notificationRows = document.querySelectorAll('.notification-row');
-  notificationRows.forEach(row => {
-    // Click event
-    row.addEventListener('click', function() {
+  <!-- Added debug logging and improved notice modal event listeners -->
+  const noticeItems = document.querySelectorAll('.notification-row[data-notice-id]');
+  console.log('[v0] Found notice items:', noticeItems.length); // Debug log
+  
+  noticeItems.forEach(item => {
+    console.log('[v0] Setting up listener for notice:', item.getAttribute('data-notice-id')); // Debug log
+    
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
       const noticeId = this.getAttribute('data-notice-id');
+      console.log('[v0] Notice clicked with ID:', noticeId); // Debug log
       if (noticeId) {
         openNoticeModal(noticeId);
       }
     });
 
-    // Keyboard event
-    row.addEventListener('keydown', function(e) {
+    item.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         const noticeId = this.getAttribute('data-notice-id');
+        console.log('[v0] Notice activated via keyboard with ID:', noticeId); // Debug log
         if (noticeId) {
           openNoticeModal(noticeId);
         }
       }
     });
   });
+
+  // Close notice modal functionality
+  if (closeNoticeModal) {
+    closeNoticeModal.addEventListener('click', function() {
+      noticeModal.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  }
+
+  if (noticeModal) {
+    noticeModal.addEventListener('click', function(e) {
+      if (e.target === noticeModal) {
+        noticeModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  }
 
   // ========== MODAL FUNCTIONALITY ==========
   const modal = document.getElementById('programModal');
@@ -3513,12 +3437,14 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('modalCareerPathways').textContent = program.careerPathways;
 
     const coreSubjectsList = document.getElementById('modalCoreSubjects');
-    coreSubjectsList.innerHTML = '';
-    program.coreSubjects.forEach(subject => {
-      const li = document.createElement('li');
-      li.textContent = subject;
-      coreSubjectsList.appendChild(li);
-    });
+    if (coreSubjectsList) {
+      coreSubjectsList.innerHTML = '';
+      program.coreSubjects.forEach(subject => {
+        const li = document.createElement('li');
+        li.textContent = subject;
+        coreSubjectsList.appendChild(li);
+      });
+    }
 
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -3536,19 +3462,25 @@ document.addEventListener('DOMContentLoaded', function() {
   curriculumCards.forEach(card => {
     card.addEventListener('click', function() {
       const program = this.getAttribute('data-program');
-      openModal(program);
+      if (program) {
+        openModal(program);
+      }
     });
 
     card.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         const program = this.getAttribute('data-program');
-        openModal(program);
+        if (program) {
+          openModal(program);
+        }
       }
     });
   });
 
-  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeModal);
+  }
 
   if (modal) {
     modal.addEventListener('click', function(e) {
@@ -3559,8 +3491,14 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
-      closeModal();
+    if (e.key === 'Escape') {
+      if (modal && modal.classList.contains('active')) {
+        closeModal();
+      }
+      if (noticeModal && noticeModal.classList.contains('active')) {
+        noticeModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
     }
   });
 
@@ -3584,21 +3522,38 @@ document.addEventListener('DOMContentLoaded', function() {
       const review = reviewData[reviewId];
       
       if (review && reviewModal) {
-        document.getElementById('modalAvatar').src = review.avatar;
-        document.getElementById('modalAvatar').alt = review.name;
-        document.getElementById('modalName').textContent = review.name;
-        document.getElementById('modalClass').textContent = review.class;
-        document.getElementById('modalSubject').textContent = review.subject;
-        document.getElementById('modalFullReview').textContent = review.fullReview;
-        document.getElementById('modalDate').textContent = review.date;
-        document.getElementById('modalLikes').textContent = review.likes;
+        const modalAvatar = document.getElementById('modalAvatar');
+        const modalName = document.getElementById('modalName');
+        const modalClass = document.getElementById('modalClass');
+        const modalSubject = document.getElementById('modalSubject');
+        const modalFullReview = document.getElementById('modalFullReview');
+        const modalDate = document.getElementById('modalDate');
+        const modalLikes = document.getElementById('modalLikes');
+        
+        if (modalAvatar) {
+          modalAvatar.src = review.avatar;
+          modalAvatar.alt = review.name;
+        }
+        if (modalName) modalName.textContent = review.name;
+        if (modalClass) modalClass.textContent = review.class;
+        if (modalSubject) modalSubject.textContent = review.subject;
+        if (modalFullReview) modalFullReview.textContent = review.fullReview;
+        if (modalDate) modalDate.textContent = review.date;
+        if (modalLikes) modalLikes.textContent = review.likes;
         
         const ratingContainer = document.getElementById('modalRating');
-        ratingContainer.innerHTML = '';
-        for (let i = 0; i < 5; i++) {
-          const star = document.createElement('i');
-          star.className = 'fas fa-star';
-          ratingContainer.appendChild(star);
+        if (ratingContainer) {
+          ratingContainer.innerHTML = '';
+          for (let i = 0; i < 5; i++) {
+            const star = document.createElement('i');
+            star.className = 'fas fa-star';
+            if (i < review.rating) {
+              star.style.color = '#ffd700';
+            } else {
+              star.style.color = '#ddd';
+            }
+            ratingContainer.appendChild(star);
+          }
         }
         
         reviewModal.classList.add('active');
@@ -3607,45 +3562,25 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  if (closeReviewBtn) closeReviewBtn.addEventListener('click', closeReviewModal);
+  if (closeReviewBtn) {
+    closeReviewBtn.addEventListener('click', () => {
+      reviewModal.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  }
+
   if (reviewModal) {
     reviewModal.addEventListener('click', (e) => {
       if (e.target === reviewModal) {
-        closeReviewModal();
+        reviewModal.classList.remove('active');
+        document.body.style.overflow = '';
       }
     });
   }
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && reviewModal && reviewModal.classList.contains('active')) {
-      closeReviewModal();
-    }
-  });
-
-  function closeReviewModal() {
-    if (reviewModal) {
-      reviewModal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-  }
-
-  // ========== CONTACT FORM ENHANCEMENT ==========
-  const contactForm = document.getElementById('contactForm');
-  const submitBtn = document.getElementById('submitBtn');
-
-  if (contactForm && submitBtn) {
-    contactForm.addEventListener('submit', function(e) {
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-      submitBtn.disabled = true;
-      
-      setTimeout(() => {
-        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-        submitBtn.disabled = false;
-      }, 2000);
-    });
-  }
-
-  const formInputs = document.querySelectorAll('.form-input, .form-select, .form-textarea');
+  // ========== FORM ENHANCEMENTS ==========
+  const formInputs = document.querySelectorAll('.form-group input, .form-group textarea');
+  
   formInputs.forEach(input => {
     input.addEventListener('focus', function() {
       this.parentElement.style.transform = 'translateY(-2px)';
@@ -3675,6 +3610,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
+    // Set first slide as active
     if (slides[0]) {
       slides[0].classList.add('active');
       if (indicators[0]) {
@@ -3685,7 +3621,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     currentSlide = 0;
     
-    indicators.forEach((indicator, index) =>  {
+    indicators.forEach((indicator, index) => {
       indicator.addEventListener('click', () => {
         showSlide(index);
         resetAutoSlide();
@@ -3733,6 +3669,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function showSlide(index) {
     if (index < 0 || index >= slides.length) return;
     
+    // Remove active class from all slides and indicators
     slides.forEach((slide, i) => {
       slide.classList.remove('active');
       if (indicators[i]) {
@@ -3741,6 +3678,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
+    // Add active class to current slide and indicator
     slides[index].classList.add('active');
     if (indicators[index]) {
       indicators[index].classList.add('active');
@@ -3786,7 +3724,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Initialize slideshow on DOMContentLoaded
+  // Initialize slideshow
   initSlideshow();
 
   // Initialize infinite reviews
@@ -3796,9 +3734,25 @@ document.addEventListener('DOMContentLoaded', function() {
   initFacultyFilter();
 
   // Update faculty slider on load
-  updateFacultySlider();
+  setTimeout(() => {
+    updateFacultySlider();
+  }, 100);
+
+  // Handle page visibility changes for slideshow
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && heroSectionVisible) {
+      startAutoSlide();
+    } else {
+      stopAutoSlide();
+    }
+  });
 });
 </script>
+
+
+
+
+
 
 
 {% endblock content %}

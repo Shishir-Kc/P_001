@@ -804,16 +804,16 @@
                 <div class="filter-tag" data-filter="Student Life">Student Life</div>
                 <div class="filter-tag" data-filter="Sports">Sports</div>
                 <div class="filter-tag" data-filter="Announcements">Announcements</div>
-                 <div class="filter-tag" data-filter="Notice">Notice</div>
+                <div class="filter-tag" data-filter="Notice">Notice</div>
             </div>
 
-            <!-- Featured Article (if you have a featured news item) -->
+            <!-- Featured Article -->
             {% if new_s %}
                 {% with new_s.0 as featured_news %}
                 <div class="featured-container">
-                    <article class="featured-article" onclick="openNewsModal({{ featured_news.id }})">
+                    <article class="featured-article" data-news-id="{{ featured_news.id }}">
                         <div class="featured-image" style="background-image: url('{% if featured_news.image %}{{ featured_news.image.url }}{% else %}{% static "home/images/nope.jpg" %}{% endif %}');">
-                            <button class="image-view-btn" onclick="event.stopPropagation(); openImageViewer('{% if featured_news.image %}{{ featured_news.image.url }}{% else %}{% static "home/images/nope.jpg" %}{% endif %}', '{{ featured_news.title|escapejs }}')">
+                            <button class="image-view-btn" data-action="view-image" data-image-url="{% if featured_news.image %}{{ featured_news.image.url }}{% else %}{% static "home/images/nope.jpg" %}{% endif %}" data-image-title="{{ featured_news.title|escapejs }}">
                                 <i class="fas fa-expand"></i>
                             </button>
                         </div>
@@ -821,17 +821,17 @@
                             <span class="featured-badge">Featured</span>
                             <h2 class="featured-title">{{ featured_news.title }}</h2>
                             <p class="featured-description">
-                                {{ featured_news.description|truncatewords:5 }}
+                                {{ featured_news.description|truncatewords:20 }}
                             </p>
                         </div>
                         <!-- Hidden data for modal -->
                         <div class="news-data" style="display: none;">
                             <span class="news-full-title">{{ featured_news.title }}</span>
-                            <span class="news-full-description">{{ featured_news.description }}</span>
+                            <span class="news-full-description">{{ featured_news.description|truncatechars:80 }}</span>
                             <span class="news-full-category">{{ featured_news.category }}</span>
                             <span class="news-full-date">{{ featured_news.created_at|date:"F d, Y" }}</span>
                             <span class="news-full-time">{{ featured_news.created_at|date:"g:i A" }}</span>
-                            <span class="news-full-image">{% if featured_news.image %}{{ featured_news.image.url }}{% else %}https://lh3.googleusercontent.com/aida-public/AB6AXuBMqWcSEqeZbtpS2lPyud2JSw4oKEmmnXVOebY-bRdINv6Vxlna3Eu6w0eeGPTfjrXYZXygU9eZZYu4rgpnGfQraYXMRVAuNOLsmQGjtz36JJydFknyIMG9h6fdVviFQpjNu2m_M0_xcMuPRm4iOY0tGfaYibkrJwFC1KXEDmZGUSx_fqqP3O5f5Ip3G8QEl0dIwfyo0p4fO7zz4xh4EaxdtIOJRSw2m9xDF4YiBhWMraKLQmli8Dj-kbk7v-AADe2ExaM4sgOAZLo{% endif %}</span>
+                            <span class="news-full-image">{% if featured_news.image %}{{ featured_news.image.url }}{% else %}{% static "home/images/nope.jpg" %}{% endif %}</span>
                             <span class="news-full-file">{% if featured_news.file %}{{ featured_news.file.url }}{% endif %}</span>
                             <span class="news-full-filename">{% if featured_news.file %}{{ featured_news.file.name }}{% endif %}</span>
                         </div>
@@ -846,16 +846,16 @@
             {% if new_s %}
                 <div class="news-grid" id="newsGrid">
                     {% for news in new_s %}
-                    <article class="news-item" data-category="{{ news.category }}" onclick="openNewsModal({{ news.id }})">
-                        <div class="news-image" style="background-image: url('{% if news.image %}{{ news.image.url }}{% else %}https://lh3.googleusercontent.com/aida-public/AB6AXuBMqWcSEqeZbtpS2lPyud2JSw4oKEmmnXVOebY-bRdINv6Vxlna3Eu6w0eeGPTfjrXYZXygU9eZZYu4rgpnGfQraYXMRVAuNOLsmQGjtz36JJydFknyIMG9h6fdVviFQpjNu2m_M0_xcMuPRm4iOY0tGfaYibkrJwFC1KXEDmZGUSx_fqqP3O5f5Ip3G8QEl0dIwfyo0p4fO7zz4xh4EaxdtIOJRSw2m9xDF4YiBhWMraKLQmli8Dj-kbk7v-AADe2ExaM4sgOAZLo{% endif %}');">
-                            <button class="image-view-btn" onclick="event.stopPropagation(); openImageViewer('{% if news.image %}{{ news.image.url }}{% else %}https://lh3.googleusercontent.com/aida-public/AB6AXuBMqWcSEqeZbtpS2lPyud2JSw4oKEmmnXVOebY-bRdINv6Vxlna3Eu6w0eeGPTfjrXYZXygU9eZZYu4rgpnGfQraYXMRVAuNOLsmQGjtz36JJydFknyIMG9h6fdVviFQpjNu2m_M0_xcMuPRm4iOY0tGfaYibkrJwFC1KXEDmZGUSx_fqqP3O5f5Ip3G8QEl0dIwfyo0p4fO7zz4xh4EaxdtIOJRSw2m9xDF4YiBhWMraKLQmli8Dj-kbk7v-AADe2ExaM4sgOAZLo{% endif %}', '{{ news.title|escapejs }}')">
+                    <article class="news-item" data-category="{{ news.category }}" data-news-id="{{ news.id }}">
+                        <div class="news-image" style="background-image: url('{% if news.image %}{{ news.image.url }}{% else %}{% static "home/images/nope.jpg" %}{% endif %}');">
+                            <button class="image-view-btn" data-action="view-image" data-image-url="{% if news.image %}{{ news.image.url }}{% else %}{% static "home/images/nope.jpg" %}{% endif %}" data-image-title="{{ news.title|escapejs }}">
                                 <i class="fas fa-expand"></i>
                             </button>
                         </div>
                         <div class="news-content">
                             <h3 class="news-item-title">{{ news.title }}</h3>
                             <p class="news-item-description">
-                                {{ news.description|truncatewords:5 }}
+                                {{ news.description|truncatewords:15 }}
                             </p>
                             <div class="news-item-meta">
                                 <div class="meta-item">
@@ -872,7 +872,7 @@
                             <span class="news-full-category">{{ news.category }}</span>
                             <span class="news-full-date">{{ news.created_at|date:"F d, Y" }}</span>
                             <span class="news-full-time">{{ news.created_at|date:"g:i A" }}</span>
-                            <span class="news-full-image">{% if news.image %}{{ news.image.url }}{% else %}https://lh3.googleusercontent.com/aida-public/AB6AXuBMqWcSEqeZbtpS2lPyud2JSw4oKEmmnXVOebY-bRdINv6Vxlna3Eu6w0eeGPTfjrXYZXygU9eZZYu4rgpnGfQraYXMRVAuNOLsmQGjtz36JJydFknyIMG9h6fdVviFQpjNu2m_M0_xcMuPRm4iOY0tGfaYibkrJwFC1KXEDmZGUSx_fqqP3O5f5Ip3G8QEl0dIwfyo0p4fO7zz4xh4EaxdtIOJRSw2m9xDF4YiBhWMraKLQmli8Dj-kbk7v-AADe2ExaM4sgOAZLo{% endif %}</span>
+                            <span class="news-full-image">{% if news.image %}{{ news.image.url }}{% else %}{% static "home/images/nope.jpg" %}{% endif %}</span>
                             <span class="news-full-file">{% if news.file %}{{ news.file.url }}{% endif %}</span>
                             <span class="news-full-filename">{% if news.file %}{{ news.file.name }}{% endif %}</span>
                         </div>
@@ -900,7 +900,7 @@
 <div class="modal-overlay" id="newsModal">
     <div class="modal-content">
         <div class="modal-header">
-            <div class="modal-image" id="modalImage" onclick="openImageViewerFromModal()"></div>
+            <div class="modal-image" id="modalImage"></div>
             <button class="modal-close" onclick="closeNewsModal()">
                 <i class="fas fa-times"></i>
             </button>
@@ -996,6 +996,31 @@
         let startY = 0;
         let translateX = 0;
         let translateY = 0;
+        
+        // Global variables for modal data
+        let currentModalImageSrc = '';
+        let currentModalTitle = '';
+        
+        // Event delegation for news items and image buttons
+        document.addEventListener('click', function(e) {
+            // Handle news item clicks
+            const newsItem = e.target.closest('.news-item, .featured-article');
+            if (newsItem && !e.target.closest('.image-view-btn')) {
+                const newsId = newsItem.getAttribute('data-news-id');
+                if (newsId) {
+                    openNewsModal(newsId);
+                }
+            }
+            
+            // Handle image view button clicks
+            if (e.target.closest('.image-view-btn')) {
+                e.stopPropagation();
+                const btn = e.target.closest('.image-view-btn');
+                const imageUrl = btn.getAttribute('data-image-url');
+                const imageTitle = btn.getAttribute('data-image-title');
+                openImageViewer(imageUrl, imageTitle);
+            }
+        });
         
         // Filter functionality
         filterTags.forEach(tag => {
@@ -1141,177 +1166,160 @@
         function updateImageTransform() {
             imageViewerImg.style.transform = `scale(${currentZoom}) translate(${translateX / currentZoom}px, ${translateY / currentZoom}px)`;
         }
-    });
-
-    // Global variables for modal data
-    let currentModalImageSrc = '';
-    let currentModalTitle = '';
-
-    // Function to open news modal
-    function openNewsModal(newsId) {
-        // Find the clicked news item
-        const newsItem = document.querySelector(`[onclick="openNewsModal(${newsId})"]`);
-        if (!newsItem) return;
-
-        // Get news data from the hidden elements
-        const newsData = newsItem.querySelector('.news-data');
-        if (newsData) {
-            // Use hidden data elements
-            const title = newsData.querySelector('.news-full-title').textContent;
-            const description = newsData.querySelector('.news-full-description').textContent;
-            const category = newsData.querySelector('.news-full-category').textContent;
-            const date = newsData.querySelector('.news-full-date').textContent;
-            const time = newsData.querySelector('.news-full-time').textContent;
-            const imageUrl = newsData.querySelector('.news-full-image').textContent;
-            const fileUrl = newsData.querySelector('.news-full-file') ? newsData.querySelector('.news-full-file').textContent : '';
-            const fileName = newsData.querySelector('.news-full-filename') ? newsData.querySelector('.news-full-filename').textContent : '';
-    
-        populateModal(title, description, category, date, time, `url('${imageUrl}')`, imageUrl, fileUrl, fileName);
-        } else {
-            // Fallback to visible elements if hidden data not found
-            const title = newsItem.querySelector('.news-item-title, .featured-title').textContent;
-            const description = newsItem.querySelector('.news-item-description, .featured-description').textContent;
-            const categoryElement = newsItem.querySelector('.category-badge');
-            const category = categoryElement ? categoryElement.textContent : 'News';
-            const dateElement = newsItem.querySelector('.meta-item span');
-            const date = dateElement ? dateElement.textContent : 'Recently';
-            const imageElement = newsItem.querySelector('.news-image, .featured-image');
-            const image = imageElement ? imageElement.style.backgroundImage : '';
-            const imageUrl = image.replace(/url$$['"]?([^'"]*?)['"]?$$/i, '$1');
-    
-        populateModal(title, description, category, date, 'Just now', image, imageUrl);
-    }
-
-    // Show modal
-    document.body.classList.add('modal-open');
-    document.getElementById('newsModal').classList.add('active');
-}
-
-// Function to populate modal with data
-function populateModal(title, description, category, date, time, backgroundImage, imageUrl, fileUrl = '', fileName = '') {
-    document.getElementById('modalTitle').textContent = title;
-    document.getElementById('modalDescription').textContent = description;
-    document.getElementById('modalCategory').textContent = category;
-    document.getElementById('modalCategoryTag').textContent = category;
-    document.getElementById('modalDate').textContent = date;
-    document.getElementById('modalTime').textContent = time;
-    document.getElementById('modalImage').style.backgroundImage = backgroundImage;
-    
-    // Store current modal image data
-    currentModalImageSrc = imageUrl;
-    currentModalTitle = title;
-    
-    // Handle file download
-    const modalActions = document.getElementById('modalActions');
-    const downloadBtn = document.getElementById('modalDownloadBtn');
-    
-    if (fileUrl && fileUrl.trim() !== '') {
-        modalActions.style.display = 'flex';
-        downloadBtn.href = fileUrl;
-        downloadBtn.download = fileName || 'attachment';
-        downloadBtn.querySelector('span').textContent = fileName ? `Download ${fileName}` : 'Download Attachment';
-    } else {
-        modalActions.style.display = 'none';
-    }
-    
-    // Calculate reading time (rough estimate: 200 words per minute)
-    const wordCount = description.split(' ').length;
-    const readingTime = Math.max(1, Math.ceil(wordCount / 200));
-    document.getElementById('readingTime').textContent = readingTime;
-}
-
-    // Function to close news modal
-    function closeNewsModal() {
-        document.body.classList.remove('modal-open');
-        document.getElementById('newsModal').classList.remove('active');
-    }
-
-    // Function to open image viewer
-    function openImageViewer(imageSrc, imageTitle) {
-        currentImageSrc = imageSrc;
-        currentImageTitle = imageTitle;
         
-        const imageViewerImg = document.getElementById('imageViewerImg');
-        const imageViewerInfo = document.getElementById('imageViewerInfo');
-        
-        imageViewerImg.src = imageSrc;
-        imageViewerImg.alt = imageTitle;
-        imageViewerInfo.textContent = imageTitle;
-        
-        // Reset zoom and position
-        currentZoom = 1;
-        translateX = 0;
-        translateY = 0;
-        updateImageTransform();
-        
-        // Show image viewer
-        document.body.classList.add('modal-open');
-        document.getElementById('imageViewer').classList.add('active');
-    }
+        // Function to open news modal
+        window.openNewsModal = function(newsId) {
+            // Find the clicked news item using data attribute
+            const newsItem = document.querySelector(`[data-news-id="${newsId}"]`);
+            if (!newsItem) {
+                console.error('News item not found:', newsId);
+                return;
+            }
 
-    // Function to open image viewer from modal
-    function openImageViewerFromModal() {
-        if (currentModalImageSrc) {
-            openImageViewer(currentModalImageSrc, currentModalTitle);
-        }
-    }
+            // Get news data from the hidden elements
+            const newsData = newsItem.querySelector('.news-data');
+            if (newsData) {
+                const title = newsData.querySelector('.news-full-title').textContent;
+                const description = newsData.querySelector('.news-full-description').textContent;
+                const category = newsData.querySelector('.news-full-category').textContent;
+                const date = newsData.querySelector('.news-full-date').textContent;
+                const time = newsData.querySelector('.news-full-time').textContent;
+                const imageUrl = newsData.querySelector('.news-full-image').textContent;
+                const fileUrl = newsData.querySelector('.news-full-file') ? newsData.querySelector('.news-full-file').textContent : '';
+                const fileName = newsData.querySelector('.news-full-filename') ? newsData.querySelector('.news-full-filename').textContent : '';
 
-    // Function to close image viewer
-    function closeImageViewer() {
-        document.body.classList.remove('modal-open');
-        document.getElementById('imageViewer').classList.remove('active');
-    }
+                populateModal(title, description, category, date, time, `url('${imageUrl}')`, imageUrl, fileUrl, fileName);
+            } else {
+                console.error('News data not found for:', newsId);
+                return;
+            }
 
-    // Zoom functions
-    function zoomIn() {
-        currentZoom = Math.min(currentZoom * 1.5, 5);
-        updateImageTransform();
-        updateCursor();
-    }
+            // Show modal
+            document.body.classList.add('modal-open');
+            document.getElementById('newsModal').classList.add('active');
+        };
 
-    function zoomOut() {
-        currentZoom = Math.max(currentZoom / 1.5, 0.5);
-        if (currentZoom <= 1) {
+        // Function to populate modal with data
+        window.populateModal = function(title, description, category, date, time, backgroundImage, imageUrl, fileUrl = '', fileName = '') {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalDescription').textContent = description;
+            document.getElementById('modalCategory').textContent = category;
+            document.getElementById('modalCategoryTag').textContent = category;
+            document.getElementById('modalDate').textContent = date;
+            document.getElementById('modalTime').textContent = time;
+            document.getElementById('modalImage').style.backgroundImage = backgroundImage;
+            
+            // Store current modal image data
+            currentModalImageSrc = imageUrl;
+            currentModalTitle = title;
+            
+            // Handle file download
+            const modalActions = document.getElementById('modalActions');
+            const downloadBtn = document.getElementById('modalDownloadBtn');
+            
+            if (fileUrl && fileUrl.trim() !== '') {
+                modalActions.style.display = 'flex';
+                downloadBtn.href = fileUrl;
+                downloadBtn.download = fileName || 'attachment';
+                downloadBtn.querySelector('span').textContent = fileName ? `Download ${fileName}` : 'Download Attachment';
+            } else {
+                modalActions.style.display = 'none';
+            }
+            
+            // Calculate reading time (rough estimate: 200 words per minute)
+            const wordCount = description.split(' ').length;
+            const readingTime = Math.max(1, Math.ceil(wordCount / 200));
+            document.getElementById('readingTime').textContent = readingTime;
+        };
+
+        // Function to close news modal
+        window.closeNewsModal = function() {
+            document.body.classList.remove('modal-open');
+            document.getElementById('newsModal').classList.remove('active');
+        };
+
+        // Function to open image viewer
+        window.openImageViewer = function(imageSrc, imageTitle) {
+            currentImageSrc = imageSrc;
+            currentImageTitle = imageTitle;
+            
+            const imageViewerImg = document.getElementById('imageViewerImg');
+            const imageViewerInfo = document.getElementById('imageViewerInfo');
+            
+            imageViewerImg.src = imageSrc;
+            imageViewerImg.alt = imageTitle;
+            imageViewerInfo.textContent = imageTitle;
+            
+            // Reset zoom and position
+            currentZoom = 1;
             translateX = 0;
             translateY = 0;
+            updateImageTransform();
+            
+            // Show image viewer
+            document.body.classList.add('modal-open');
+            document.getElementById('imageViewer').classList.add('active');
+        };
+
+        // Function to open image viewer from modal
+        window.openImageViewerFromModal = function() {
+            if (currentModalImageSrc) {
+                openImageViewer(currentModalImageSrc, currentModalTitle);
+            }
+        };
+
+        // Function to close image viewer
+        window.closeImageViewer = function() {
+            document.body.classList.remove('modal-open');
+            document.getElementById('imageViewer').classList.remove('active');
+        };
+
+        // Zoom functions
+        window.zoomIn = function() {
+            currentZoom = Math.min(currentZoom * 1.5, 5);
+            updateImageTransform();
+            updateCursor();
+        };
+
+        window.zoomOut = function() {
+            currentZoom = Math.max(currentZoom / 1.5, 0.5);
+            if (currentZoom <= 1) {
+                translateX = 0;
+                translateY = 0;
+            }
+            updateImageTransform();
+            updateCursor();
+        };
+
+        window.resetZoom = function() {
+            currentZoom = 1;
+            translateX = 0;
+            translateY = 0;
+            updateImageTransform();
+            updateCursor();
+        };
+
+        function updateCursor() {
+            const imageViewerImg = document.getElementById('imageViewerImg');
+            imageViewerImg.style.cursor = currentZoom > 1 ? 'grab' : 'default';
+            if (currentZoom > 1) {
+                imageViewerImg.classList.add('zoomed');
+            } else {
+                imageViewerImg.classList.remove('zoomed');
+            }
         }
-        updateImageTransform();
-        updateCursor();
-    }
 
-    function resetZoom() {
-        currentZoom = 1;
-        translateX = 0;
-        translateY = 0;
-        updateImageTransform();
-        updateCursor();
-    }
-
-    function updateImageTransform() {
-        const imageViewerImg = document.getElementById('imageViewerImg');
-        imageViewerImg.style.transform = `scale(${currentZoom}) translate(${translateX / currentZoom}px, ${translateY / currentZoom}px)`;
-    }
-
-    function updateCursor() {
-        const imageViewerImg = document.getElementById('imageViewerImg');
-        imageViewerImg.style.cursor = currentZoom > 1 ? 'grab' : 'default';
-        if (currentZoom > 1) {
-            imageViewerImg.classList.add('zoomed');
-        } else {
-            imageViewerImg.classList.remove('zoomed');
-        }
-    }
-
-    // Download image function
-    function downloadImage() {
-        if (currentImageSrc) {
-            const link = document.createElement('a');
-            link.href = currentImageSrc;
-            link.download = currentImageTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.jpg';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    }
+        // Download image function
+        window.downloadImage = function() {
+            if (currentImageSrc) {
+                const link = document.createElement('a');
+                link.href = currentImageSrc;
+                link.download = currentImageTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.jpg';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        };
+    });
 </script>
 {% endblock content %}

@@ -16,6 +16,6 @@ urlpatterns = [
     path('contact/',views.contact,name="contact"),
     path('student/',sd.student_dashboard,name="dashboard"),
     path('teacher/',td.teacher_dashboard,name="teach_dash"),
-    
+    path('shared/<str:pk>/view/',views.detail_news,name='detailed_news'),   
 
 ]

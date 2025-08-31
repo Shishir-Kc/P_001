@@ -25,6 +25,8 @@ def home(request):
     name = mod.Header.objects.first()
     slider = mod.Slider.objects.all()
     news = mod.News.objects.filter(category = 'Notice').order_by('-created_at')[:6]
+    for i in news:
+       print(i.id)
     event = mod.News.objects.filter(category = 'Events').order_by('-created_at')[:1]
     photo = mod.GalleryImage.objects.all().order_by('-created_at')[:4]
     events = mod.Event.objects.all().order_by('-created_at')[:1]
@@ -90,6 +92,16 @@ def gallery(request):
     }
 
     return render(request,'gallery/gallery.html',context)
+
+def detail_news(request,pk):
+   news = mod.News.objects.get(id=pk)
+   context = {
+      'news':news,
+
+   }
+   return render(request,'News/detail_news.html',context)
+
+
 
 def achivement(request):
     return render (request,'achivements/achivements.html')
