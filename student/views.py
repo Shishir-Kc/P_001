@@ -49,9 +49,6 @@ def update_image(request):
         return redirect('home:home')
     
     if request.method == 'POST':
-
-        print('------------------------------> ')
-    
         student_image = std_md.Student_info.objects.get(user=request.user)
         student_image.student_profile = request.FILES.get('profile_image')
         student_image.save()
