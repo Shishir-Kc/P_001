@@ -456,10 +456,13 @@ def student_details(request,pk):
 
     if not request.user.groups.filter(name='Teacher').exists():
          return redirect('home:home')
-        
+    
     teacher = models.Teacher.objects.get(user=request.user)
-
     student = std.Student_info.objects.get(id=pk)
+    if not student.refrence_code == teacher.refrence_code:
+        messages.error(request,'Cannot edit details of student other then your own class ! ')
+        return redirect("teacher:manage_std")
+    
     context = {
         'student':student,
         'teacher':teacher
@@ -538,7 +541,7 @@ def edit_student(request):
         except std.Student_info.DoesNotExist:
             messages.error(request, 'Student not found.')
         except Exception as e:
-            messages.error(request, f'Error updating student: {str(e)}')
+            messages.error(request, 'Error updating student: Add proper record ! ')
     
     return redirect('teacher:student_details', pk=student_id)
 
@@ -558,35 +561,9 @@ def remove_student(request):
 
         return redirect('teacher:manage_std')
     
-# @login_required
-# def student_attendence (request):
-    # if not request.user.groups.filter(name='Teacher').exists():
-    #      return redirect('home:home')
-#     teacher = models.Teacher.objects.get(user=request.user)
-#     students = std.Student_info.objects.filter(refrence_code=teacher.refrence_code,)
-#     dtaa = std.Attendence.objects.filter(
-#         student = 1,
-#         date_month = '2025-08-14',
-#         attended_class = True
-#     ).count()
-#     print(dtaa)
-    
-   
-
-#     context =  {
-#         'teacher':teacher,
-#         'students':students,
-
-#     }
-#     return render(request,'attendence/student_list.html',context)
-
-# @login_required
-
-  
 
 
-    
-# list of all std ! 
+ 
 @login_required
 def student_attendence_list(request):
     if not request.user.groups.filter(name='Teacher').exists():
@@ -611,10 +588,6 @@ def student_attendence_list(request):
             date_month = datetime.date.today(),
             attended_class=False
         ).count()
-    
-
-    print(f"total students present today = > {number_of_present_students}")
-    print(f"total students present today = > {number_of_absent_students}")
     
     attendance_dict = {att.student_id: att for att in std.Attendence.objects.filter(
         student__in=students,
