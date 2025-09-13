@@ -5,7 +5,6 @@ from .code import generate_unique_code
 import datetime
 
 
-
 class Student_info(models.Model):
     GENDER = {
         'Male':'Male',
@@ -58,8 +57,8 @@ def get_today_date():
 
 class Attendence(models.Model):
     student = models.ForeignKey(Student_info, on_delete=models.CASCADE,related_name='attendence')
-    attendence = models.ForeignKey(YEAR_MONTH, on_delete=models.CASCADE)
-    date_month = models.DateField(default=get_today_date, blank=True) 
+    attendence = models.ForeignKey(YEAR_MONTH, on_delete=models.CASCADE,verbose_name='Month/Year')
+    date_month = models.DateField(default=get_today_date, blank=True,verbose_name='Month/Date') 
     attended_class = models.BooleanField(verbose_name='class_attended')
 
     class Meta:
