@@ -1,7 +1,7 @@
 {% extends "Base/base.html" %}
 {% load static %}
 
-{% block title %}Shree Rastriya Mavi School - News & Announcements{% endblock title %}
+{% block title %}Shree Rastriya Secondary School - News & Announcements{% endblock title %}
 
 {% block links %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,6 +27,7 @@
             --bg-light: #f8fafc;
             --bg-gray: #e7edf4;
         }
+
 
         /* Full Screen Layout */
         .news-wrapper {
@@ -220,6 +221,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
         }
 
         .news-item:hover {
@@ -278,6 +280,32 @@
             border-radius: 0.25rem;
             font-size: 0.75rem;
             font-weight: 500;
+        }
+
+        /* Added View button styles for redirect functionality */
+        .view-btn {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+
+        .view-btn:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
         }
 
         /* Image View Button */
@@ -772,16 +800,15 @@
 
 {% block content %}
 <div class="news-wrapper">
-    <!-- Content Container -->
+     Content Container 
     <div class="content-container">
         <div class="news-container">
-            <!-- Header -->
+            
             <div class="news-header">
                 <h1 class="news-title">News & Announcements</h1>
-                <p class="news-subtitle">Stay updated with the latest happenings at Shree Rastriya Mavi School</p>
+                <p class="news-subtitle">Stay updated with the latest happenings at Shree Rastriya Secondary School</p>
             </div>
 
-            <!-- Search -->
             <div class="search-container">
                 <div class="search-wrapper">
                     <div class="search-icon">
@@ -796,7 +823,7 @@
                 </div>
             </div>
 
-            <!-- Filter Tags -->
+   
             <div class="filter-container">
                 <div class="filter-tag active" data-filter="all">All</div>
                 <div class="filter-tag" data-filter="Academic">Academic</div>
@@ -807,9 +834,9 @@
                 <div class="filter-tag" data-filter="Notice">Notice</div>
             </div>
 
-            <!-- Featured Article -->
             {% if new_s %}
                 {% with new_s.0 as featured_news %}
+                 {% if featured_news.id %}
                 <div class="featured-container">
                     <article class="featured-article" data-news-id="{{ featured_news.id }}">
                         <div class="featured-image" style="background-image: url('{% if featured_news.image %}{{ featured_news.image.url }}{% else %}{% static "home/images/nope.jpg" %}{% endif %}');">
@@ -824,7 +851,7 @@
                                 {{ featured_news.description|truncatewords:20 }}
                             </p>
                         </div>
-                        <!-- Hidden data for modal -->
+                  
                         <div class="news-data" style="display: none;">
                             <span class="news-full-title">{{ featured_news.title }}</span>
                             <span class="news-full-description">{{ featured_news.description|truncatechars:80 }}</span>
@@ -837,15 +864,17 @@
                         </div>
                     </article>
                 </div>
+                {% endif %}
                 {% endwith %}
             {% endif %}
 
-            <!-- Latest News Section -->
+    
             <h2 class="news-section-title">Latest News</h2>
             
             {% if new_s %}
                 <div class="news-grid" id="newsGrid">
                     {% for news in new_s %}
+                     {% if news.id %}
                     <article class="news-item" data-category="{{ news.category }}" data-news-id="{{ news.id }}">
                         <div class="news-image" style="background-image: url('{% if news.image %}{{ news.image.url }}{% else %}{% static "home/images/nope.jpg" %}{% endif %}');">
                             <button class="image-view-btn" data-action="view-image" data-image-url="{% if news.image %}{{ news.image.url }}{% else %}{% static "home/images/nope.jpg" %}{% endif %}" data-image-title="{{ news.title|escapejs }}">
@@ -865,7 +894,11 @@
                                 <span class="category-badge">{{ news.category }}</span>
                             </div>
                         </div>
-                        <!-- Hidden data for modal -->
+                         <button class="view-btn" onclick="redirectToNewsDetail('{{ news.id }}')">
+                            <i class="fas fa-external-link-alt"></i>
+                            View
+                        </button>
+                  
                         <div class="news-data" style="display: none;">
                             <span class="news-full-title">{{ news.title }}</span>
                             <span class="news-full-description">{{ news.description }}</span>
@@ -877,6 +910,7 @@
                             <span class="news-full-filename">{% if news.file %}{{ news.file.name }}{% endif %}</span>
                         </div>
                     </article>
+                    {% endif %}
                     {% endfor %}
                 </div>
             {% else %}
@@ -886,7 +920,7 @@
                 </div>
             {% endif %}
 
-            <!-- No Results Message (hidden by default) -->
+    
             <div class="no-results" id="noResults" style="display: none;">
                 <i class="fas fa-search"></i>
                 <p>No news articles match your search criteria.</p>
@@ -896,7 +930,6 @@
     </div>
 </div>
 
-<!-- News Detail Modal -->
 <div class="modal-overlay" id="newsModal">
     <div class="modal-content">
         <div class="modal-header">
@@ -925,12 +958,18 @@
                     <i class="fas fa-expand"></i>
                     <span style="cursor: pointer; color: var(--primary-blue);" onclick="openImageViewerFromModal()">View Image</span>
                 </div>
+                
             </div>
+
             <div class="modal-description" id="modalDescription"></div>
-            <div class="modal-actions" id="modalActions" style="display: none;">
-                <a class="download-btn" id="modalDownloadBtn" href="#" download>
+            <div class="modal-actions" id="modalActions">
+                <a class="download-btn" id="modalDownloadBtn" href="#" download style="display:none;">
                     <i class="fas fa-download"></i>
                     <span>Download Attachment</span>
+                </a>
+                 <a class="download-btn" id="viewFullNewsBtn" href="#" target="_blank">
+                    <i class="fas fa-external-link-alt"></i>
+                    View Full News
                 </a>
             </div>
             <div class="modal-tags">
@@ -942,7 +981,7 @@
     </div>
 </div>
 
-<!-- Image Viewer Modal -->
+ 
 <div class="image-viewer-overlay" id="imageViewer">
     <div class="image-viewer-content">
         <button class="image-viewer-close" onclick="closeImageViewer()">
@@ -1003,9 +1042,9 @@
         
         // Event delegation for news items and image buttons
         document.addEventListener('click', function(e) {
-            // Handle news item clicks
+            // Handle news item clicks (but exclude View button clicks)
             const newsItem = e.target.closest('.news-item, .featured-article');
-            if (newsItem && !e.target.closest('.image-view-btn')) {
+            if (newsItem && !e.target.closest('.image-view-btn') && !e.target.closest('.view-btn')) {
                 const newsId = newsItem.getAttribute('data-news-id');
                 if (newsId) {
                     openNewsModal(newsId);
@@ -1194,6 +1233,15 @@
                 return;
             }
 
+            var viewFullNewsBtn = document.getElementById('viewFullNewsBtn');
+            if (viewFullNewsBtn && newsId) {
+                // Option 1: Use the shared/newsid/view/ format as requested
+                viewFullNewsBtn.href = `/shared/${newsId}/view/`;
+                
+                // Option 2: Uncomment this line if you prefer Django URL pattern
+                // viewFullNewsBtn.href = `/home/detailed_news/${newsId}/`;
+            }
+
             // Show modal
             document.body.classList.add('modal-open');
             document.getElementById('newsModal').classList.add('active');
@@ -1217,13 +1265,16 @@
             const modalActions = document.getElementById('modalActions');
             const downloadBtn = document.getElementById('modalDownloadBtn');
             
+            // Always show modalActions
+            modalActions.style.display = 'flex';
+            // Only show/hide downloadBtn
             if (fileUrl && fileUrl.trim() !== '') {
-                modalActions.style.display = 'flex';
+                downloadBtn.style.display = 'inline-flex';
                 downloadBtn.href = fileUrl;
                 downloadBtn.download = fileName || 'attachment';
                 downloadBtn.querySelector('span').textContent = fileName ? `Download ${fileName}` : 'Download Attachment';
             } else {
-                modalActions.style.display = 'none';
+                downloadBtn.style.display = 'none';
             }
             
             // Calculate reading time (rough estimate: 200 words per minute)
@@ -1321,5 +1372,15 @@
             }
         };
     });
+
+    function redirectToNewsDetail(newsId) {
+        if (newsId) {
+            // Option 1: Redirect to shared/newsid/view/ format as requested
+            window.location.href = `/shared/${newsId}/view/`;
+            
+            // Option 2: Uncomment this line if you prefer Django URL pattern
+            // window.location.href = `/home/detailed_news/${newsId}/`;
+        }
+    }
 </script>
 {% endblock content %}
