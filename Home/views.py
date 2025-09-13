@@ -25,8 +25,6 @@ def home(request):
     name = mod.Header.objects.first()
     slider = mod.Slider.objects.all()
     news = mod.News.objects.filter(category = 'Notice').order_by('-created_at')[:6]
-    for i in news:
-       print(i.id)
     event = mod.News.objects.filter(category = 'Events').order_by('-created_at')[:1]
     photo = mod.GalleryImage.objects.all().order_by('-created_at')[:4]
     events = mod.Event.objects.all().order_by('-created_at')[:1]
@@ -120,7 +118,25 @@ def contact(request):
            list_teacher.append(i.email)
         data = mod.Contact(full_name=full_name,email=email,contact=contact,faculty=faculty,message=message)
         data.save()
-        full_message = f"From: {full_name} <{email}>\n\nSubject: {subject}\n\n Full Name : {full_name} \n\n Contact :{contact} \n\n Email:{email}\n\n Faculty:{faculty} \n\nMessage:\n{message}"
+        full_message = f"""From: {full_name} <{email}>
+        Subject: {subject}
+
+        Dear Teacher,
+
+                    You have received a new contact query from a student.
+
+                    Full Name: {full_name}
+                    Contact: {contact}
+                    Email: {email}
+                    Faculty: {faculty}
+
+                    Message:
+                            {message}
+
+                    Best regards,
+                    {full_name}
+                    """
+
 
         send_mail(
             subject=f"Contact Form: {subject}",
