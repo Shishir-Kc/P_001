@@ -3,6 +3,986 @@
 
 {% block title %}News Management - Teacher Dashboard{% endblock %}
 
+{% block content %}
+<div class="content-section active">
+    <div class="content-header">
+        <h1>News Management</h1>
+    </div>
+
+    <div class="news-container">
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <h2 class="section-title">
+                <i class="fas fa-plus-circle"></i>
+                Upload News
+            </h2>
+
+            <!-- Django Form -->
+            <form method="post" enctype="multipart/form-data" id="newsForm">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label class="form-label" for="id_title">
+                        <i class="fas fa-heading"></i>
+                        News Title *
+                    </label>
+                    <input type="text" id="id_title" name="title" class="form-input" placeholder="Enter an engaging news title..." required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="id_category">
+                        <i class="fas fa-tags"></i>
+                        Category *
+                    </label>
+                    <select id="id_category" name="category" class="form-select" required>
+                        <option value="">Choose a category</option>
+                        <option value="Academic">Academic</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Events">Events</option>
+                        <option value="Announcements">Announcements</option>
+                        <option value="Notice">Notice</option>
+                        <option value="Student Life">Student Life</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="id_content">
+                        <i class="fas fa-align-left"></i>
+                        News Content *
+                    </label>
+                    <textarea id="id_content" name="content" class="form-textarea" placeholder="Write your news content here. Be detailed and engaging..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-image"></i>
+                        News Image (Optional)
+                    </label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="id_image" name="image" class="form-file" accept="image/*" style="display: none;">
+                        <label for="id_image" class="file-upload-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Click to upload image or drag and drop</span>
+                            <div class="upload-hint">Supports JPG, PNG, WebP up to 5MB</div>
+                        </label>
+                    </div>
+                    <div class="file-preview" id="imagePreview">
+                        <i class="fas fa-file-image"></i>
+                        <span id="imageFileName"></span>
+                        <button type="button" class="file-preview-remove" id="removeImageFile" title="Remove file">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PDF/Document Upload -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-file-pdf"></i>
+                        Document File (Optional)
+                    </label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="id_pdf" name="pdf_file" class="form-file" accept=".pdf,.doc,.docx,.txt,.ppt,.pptx" style="display: none;">
+                        <label for="id_pdf" class="file-upload-label">
+                            <i class="fas fa-file-upload"></i>
+                            <span>Click to upload document</span>
+                            <div class="upload-hint">Supports PDF, DOC, DOCX, TXT, PPT, PPTX up to 5MB</div>
+                        </label>
+                    </div>
+                    <div class="file-preview" id="pdfPreview">
+                        <i class="fas fa-file-pdf"></i>
+                        <span id="pdfFileName"></span>
+                        <button type="button" class="file-preview-remove" id="removePdfFile" title="Remove file">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Send Notification Option -->
+                <div class="form-group">
+                    <div class="notification-group">
+                        <input type="checkbox" id="send_notification" name="send_notification" class="notification-checkbox">
+                        <label for="send_notification" class="notification-label">
+                            <i class="fas fa-bell"></i>
+                            Send push notification to all users
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="upload-btn" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Upload Notice </span>
+                </button>
+            </form>
+        </div>
+
+        <!-- News List Section -->
+        <div class="news-list-section">
+            <h2 class="section-title">
+                <i class="fas fa-newspaper"></i>
+                All News
+                <span class="article-count">
+                    {{ new_s|length }} Article{{ new_s|length|pluralize }}
+                </span>
+            </h2>
+
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search news by title, content, or category...">
+                <button type="button" class="search-clear" id="searchClear" title="Clear search">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="search-results" id="searchResults"></div>
+
+            <div class="news-list" id="newsList">
+                {% for news in new_s %} 
+                <div class="news-item" 
+                     data-title="{{news.title}}" 
+                     data-category="{{news.category}}" 
+                     data-content="{{news.description|truncatechars:60}}" 
+                     data-date="{{news.created_at|date:'F d, Y - g:i A'}}"
+                     data-news-id="{{news.id}}"
+                     data-share-url="/home/shared/{{news.id}}/view"
+                     {% if news.image %} 
+                     data-image="{{news.image.url}}"
+                     {% else %}
+                     data-image="{% static 'teacher/images/nope.jpg' %}"
+                     {% endif %}
+                     {% if news.pdf_file %}
+                     data-pdf="{{news.pdf_file.url}}"
+                     data-pdf-name="{{news.pdf_file.name}}"
+                     {% endif %}>
+                    <div class="news-header">
+                        <h3 class="news-title">{{news.title}}</h3>
+                        <div class="news-actions">
+                            <button class="action-btn view-btn" onclick="viewNews(this)" title="View full article" aria-label="View {{news.title}}">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn share-btn" onclick="shareNews(this)" title="Share article" aria-label="Share {{news.title}}">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                            <button class="action-btn delete-btn" onclick="confirmDelete(this)" title="Delete article" aria-label="Delete {{news.title}}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="news-category">{{news.category}}</div>
+                    <div class="news-preview">{{news.description|truncatechars:10}}</div>
+                    {% if news.pdf_file %}
+                    <div class="file-attachment">
+                        <i class="fas fa-paperclip"></i>
+                        <span>{{news.pdf_file.name|default:"Document attached"}}</span>
+                    </div>
+                    {% endif %}
+                    <div class="news-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        {{news.created_at|date:"F d, Y - g:i A"}}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="empty-state">
+                    <i class="fas fa-newspaper"></i>
+                    <h3>No news articles yet</h3>
+                    <p>Start by creating your first news article using the form on the left. Share important updates, events, and announcements with your community.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- News View Modal -->
+<div class="modal-overlay" id="viewModal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('viewModal')" aria-label="Close modal">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div id="modalImageContainer" style="display: none;">
+            <img class="modal-image" id="modalImage" alt="News Image">
+        </div>
+        
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <div class="modal-category" id="modalCategory"></div>
+        <div class="modal-content-text" id="modalContent"></div>
+        
+        <div id="modalFileContainer" style="display: none;">
+            <div class="modal-file-attachment">
+                <i class="fas fa-file-pdf"></i>
+                <span id="modalFileName"></span>
+            </div>
+        </div>
+        
+        <div class="modal-date">
+            <i class="fas fa-calendar-alt"></i>
+            <span id="modalDate"></span>
+        </div>
+    </div>
+</div>
+
+<!-- Share Modal -->
+<div class="modal-overlay share-modal" id="shareModal" role="dialog" aria-labelledby="shareModalTitle" aria-modal="true">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('shareModal')" aria-label="Close modal">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="share-modal-icon">
+            <i class="fas fa-share-alt"></i>
+        </div>
+        
+        <h3 class="share-modal-title" id="shareModalTitle">Share Article</h3>
+        <p class="share-modal-text" id="shareModalText">
+            Share this news article with others through your preferred platform
+        </p>
+        
+        <div class="url-copy-section">
+            <div class="url-copy-label">Article URL:</div>
+            <div class="url-copy-input">
+                <input type="text" class="url-input" id="shareUrl" readonly>
+                <button class="copy-url-btn" onclick="copyToClipboard()">
+                    <i class="fas fa-copy"></i>
+                    <span id="copyBtnText">Copy</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-options">
+            <a href="#" class="share-option facebook" onclick="shareToFacebook()" target="_blank">
+                <i class="fab fa-facebook-f"></i>
+                <span>Facebook</span>
+            </a>
+            {% comment %} <a href="#" class="share-option twitter" onclick="shareToTwitter()" target="_blank">
+                <i class="fab fa-twitter"></i>
+                <span>Twitter</span>
+            </a>
+            <a href="#" class="share-option linkedin" onclick="shareToLinkedIn()" target="_blank">
+                <i class="fab fa-linkedin-in"></i>
+                <span>LinkedIn</span>
+            </a>
+            <a href="#" class="share-option whatsapp" onclick="shareToWhatsApp()" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                <span>WhatsApp</span>
+            </a>
+            <a href="#" class="share-option telegram" onclick="shareToTelegram()" target="_blank">
+                <i class="fab fa-telegram-plane"></i>
+                <span>Telegram</span>
+            </a>
+            <a href="#" class="share-option email" onclick="shareViaEmail()">
+                <i class="fas fa-envelope"></i>
+                <span>Email</span>
+            </a> {% endcomment %}
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay delete-modal" id="deleteModal" role="dialog" aria-labelledby="deleteModalTitle" aria-modal="true">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('deleteModal')" aria-label="Close modal">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="delete-modal-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        
+        <h3 class="delete-modal-title" id="deleteModalTitle">Delete News Article</h3>
+        <p class="delete-modal-text">
+            Are you sure you want to delete this news article? This action cannot be undone.
+        </p>
+        
+        <div class="delete-modal-actions">
+            <form method="post" action="{% url "teacher:delete_news" %}" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="news_id" id="deleteNewsId">
+                <button type="submit" class="delete-confirm-btn">
+                    <i class="fas fa-trash"></i>
+                    Delete Article
+                </button>
+            </form>
+            <button type="button" class="delete-cancel-btn" onclick="closeModal('deleteModal')">
+                <i class="fas fa-times"></i>
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('News management script loaded');
+
+    // DOM elements
+    const searchInput = document.getElementById('searchInput');
+    const searchClear = document.getElementById('searchClear');
+    const searchResults = document.getElementById('searchResults');
+    const newsList = document.getElementById('newsList');
+    const imageInput = document.getElementById('id_image');
+    const pdfInput = document.getElementById('id_pdf');
+    const imagePreview = document.getElementById('imagePreview');
+    const pdfPreview = document.getElementById('pdfPreview');
+    const imageFileName = document.getElementById('imageFileName');
+    const pdfFileName = document.getElementById('pdfFileName');
+    const removeImageFile = document.getElementById('removeImageFile');
+    const removePdfFile = document.getElementById('removePdfFile');
+    const imageUploadLabel = document.querySelector('label[for="id_image"] span');
+    const pdfUploadLabel = document.querySelector('label[for="id_pdf"] span');
+    const toastContainer = document.getElementById('toastContainer');
+
+    let allNewsItems = [];
+    let currentSearchTerm = '';
+    let originalNewsListHTML = '';
+    let currentShareData = {};
+
+    // Toast notification system
+    function showToast(type, title, message, duration = 5000) {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        const iconMap = {
+            success: 'fas fa-check-circle',
+            error: 'fas fa-exclamation-circle',
+            info: 'fas fa-info-circle'
+        };
+
+        toast.innerHTML = `
+            <i class="toast-icon ${iconMap[type]}"></i>
+            <div class="toast-content">
+                <div class="toast-title">${title}</div>
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close" onclick="removeToast(this)">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="toast-progress"></div>
+        `;
+
+        toastContainer.appendChild(toast);
+
+        // Show toast with animation
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 100);
+
+        // Auto remove toast
+        setTimeout(() => {
+            removeToast(toast.querySelector('.toast-close'));
+        }, duration);
+    }
+
+    // Remove toast function
+    window.removeToast = function(button) {
+        const toast = button.closest('.toast');
+        if (toast) {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 300);
+        }
+    };
+
+    // File validation with toast notifications
+    function validateFile(file, type) {
+        const maxSize = 5 * 1024 * 1024; // 5MB
+
+        if (file.size > maxSize) {
+            const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+            showToast('error', 'File too large!', `File size must be less than 5MB. Your file is ${fileSizeMB}MB.`, 6000);
+            return false;
+        }
+
+        if (type === 'image' && !file.type.startsWith('image/')) {
+            showToast('error', 'Invalid file type', 'Please select a valid image file (JPG, PNG, WebP).');
+            return false;
+        }
+
+        if (type === 'pdf' && ![
+            'application/pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'text/plain',
+            'application/vnd.ms-powerpoint',
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+        ].includes(file.type)) {
+            showToast('error', 'Invalid file type', 'Please select a valid document file (PDF, DOC, DOCX, TXT, PPT, PPTX).');
+            return false;
+        }
+
+        return true;
+    }
+
+    // Initialize news items array and preserve original HTML
+    function initializeNewsItems() {
+        originalNewsListHTML = newsList.innerHTML;
+        
+        const newsItems = newsList.querySelectorAll('.news-item');
+        console.log('Found news items:', newsItems.length);
+        
+        allNewsItems = Array.from(newsItems).map(item => ({
+            element: item,
+            title: item.dataset.title ? item.dataset.title.toLowerCase() : '',
+            content: item.dataset.content ? item.dataset.content.toLowerCase() : '',
+            category: item.dataset.category ? item.dataset.category.toLowerCase() : '',
+            date: item.dataset.date || '',
+            newsId: item.dataset.newsId || '',
+            shareUrl: item.dataset.shareUrl || ''
+        }));
+        
+        console.log('Initialized news items:', allNewsItems.length);
+    }
+
+    // Image file upload functionality
+    if (imageInput) {
+        imageInput.addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                const file = e.target.files[0];
+                
+                if (validateFile(file, 'image')) {
+                    imageFileName.textContent = file.name;
+                    imagePreview.classList.add('show');
+                    if (imageUploadLabel) {
+                        imageUploadLabel.textContent = '✓ Image selected';
+                    }
+                    showToast('success', 'Image selected', `${file.name} is ready to upload.`);
+                } else {
+                    this.value = '';
+                }
+            } else {
+                resetImageInput();
+            }
+        });
+
+        if (removeImageFile) {
+            removeImageFile.addEventListener('click', function() {
+                imageInput.value = '';
+                resetImageInput();
+            });
+        }
+    }
+
+    // PDF file upload functionality
+    if (pdfInput) {
+        pdfInput.addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                const file = e.target.files[0];
+                
+                if (validateFile(file, 'pdf')) {
+                    pdfFileName.textContent = file.name;
+                    pdfPreview.classList.add('show');
+                    if (pdfUploadLabel) {
+                        pdfUploadLabel.textContent = '✓ Document selected';
+                    }
+                    showToast('success', 'Document selected', `${file.name} is ready to upload.`);
+                } else {
+                    this.value = '';
+                }
+            } else {
+                resetPdfInput();
+            }
+        });
+
+        if (removePdfFile) {
+            removePdfFile.addEventListener('click', function() {
+                pdfInput.value = '';
+                resetPdfInput();
+            });
+        }
+    }
+
+    function resetImageInput() {
+        if (imagePreview) imagePreview.classList.remove('show');
+        if (imageUploadLabel) {
+            imageUploadLabel.textContent = 'Click to upload image or drag and drop';
+        }
+    }
+
+    function resetPdfInput() {
+        if (pdfPreview) pdfPreview.classList.remove('show');
+        if (pdfUploadLabel) {
+            pdfUploadLabel.textContent = 'Click to upload document';
+        }
+    }
+
+    // Form submission with notification handling
+    const newsForm = document.getElementById('newsForm');
+    if (newsForm) {
+        newsForm.addEventListener('submit', function(e) {
+            const sendNotification = document.getElementById('send_notification');
+            const isNotificationChecked = sendNotification && sendNotification.checked;
+            
+            // Show immediate feedback
+            const submitBtn = document.getElementById('submitBtn');
+            if (submitBtn) {
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Publishing...</span>';
+                submitBtn.disabled = true;
+            }
+            
+            // Show success toast after form submission
+            setTimeout(() => {
+                if (isNotificationChecked) {
+                    showToast('success', 'News article created!', 'Article published and notification sent to all users.', 6000);
+                    // Show additional notification sent toast
+                    setTimeout(() => {
+                        showToast('info', 'Notification sent!', 'Push notification delivered to all subscribed users.');
+                    }, 1000);
+                } else {
+                    showToast('success', 'News article created!', 'Article published successfully.');
+                }
+            }, 500);
+        });
+    }
+
+    // Enhanced search functionality with proper restoration
+    function performSearch(searchTerm) {
+        console.log('Performing search for:', searchTerm);
+        
+        currentSearchTerm = searchTerm.toLowerCase().trim();
+        
+        if (currentSearchTerm === '') {
+            showAllNews();
+            if (searchClear) searchClear.classList.remove('show');
+            if (searchResults) searchResults.classList.remove('show');
+            return;
+        }
+
+        if (searchClear) searchClear.classList.add('show');
+        
+        const filteredItems = allNewsItems.filter(item => {
+            return item.title.includes(currentSearchTerm) || 
+                   item.content.includes(currentSearchTerm) || 
+                   item.category.includes(currentSearchTerm);
+        });
+
+        console.log('Filtered items:', filteredItems.length);
+        
+        displayFilteredNews(filteredItems);
+        updateSearchResults(filteredItems.length);
+    }
+
+    function showAllNews() {
+        console.log('Showing all news - restoring original HTML');
+        
+        if (originalNewsListHTML) {
+            newsList.innerHTML = originalNewsListHTML;
+            
+            const newsItems = newsList.querySelectorAll('.news-item');
+            allNewsItems = Array.from(newsItems).map(item => ({
+                element: item,
+                title: item.dataset.title ? item.dataset.title.toLowerCase() : '',
+                content: item.dataset.content ? item.dataset.content.toLowerCase() : '',
+                category: item.dataset.category ? item.dataset.category.toLowerCase() : '',
+                date: item.dataset.date || '',
+                newsId: item.dataset.newsId || '',
+                shareUrl: item.dataset.shareUrl || ''
+            }));
+            
+            console.log('All news restored, items count:', allNewsItems.length);
+        } else {
+            allNewsItems.forEach(item => {
+                if (item.element) {
+                    item.element.style.display = 'block';
+                }
+            });
+        }
+    }
+
+    function displayFilteredNews(filteredItems) {
+        console.log('Displaying filtered news:', filteredItems.length);
+        
+        allNewsItems.forEach(item => {
+            if (item.element) {
+                item.element.style.display = 'none';
+            }
+        });
+
+        filteredItems.forEach(item => {
+            if (item.element) {
+                item.element.style.display = 'block';
+            }
+        });
+
+        if (filteredItems.length === 0) {
+            showEmptyState('search');
+        }
+    }
+
+    function updateSearchResults(count) {
+        if (searchResults && currentSearchTerm) {
+            searchResults.innerHTML = `
+                <i class="fas fa-search"></i>
+                Found <strong>${count}</strong> result${count !== 1 ? 's' : ''} for "<strong>${currentSearchTerm}</strong>"
+            `;
+            searchResults.classList.add('show');
+        } else if (searchResults) {
+            searchResults.classList.remove('show');
+        }
+    }
+
+    // Search event listeners
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            performSearch(this.value);
+        });
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                this.value = '';
+                performSearch('');
+                this.blur();
+            }
+        });
+    }
+
+    if (searchClear) {
+        searchClear.addEventListener('click', function() {
+            if (searchInput) {
+                searchInput.value = '';
+                performSearch('');
+                searchInput.focus();
+            }
+        });
+    }
+
+    // Modal functions
+    function openModal(modalId) {
+        console.log('Opening modal:', modalId);
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            modal.offsetHeight;
+            
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+        } else {
+            console.error('Modal not found:', modalId);
+        }
+    }
+
+    function closeModal(modalId) {
+        console.log('Closing modal:', modalId);
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('closing');
+            modal.classList.remove('show');
+            
+            setTimeout(() => {
+                modal.style.display = 'none';
+                modal.classList.remove('closing');
+                document.body.style.overflow = '';
+            }, 250);
+        }
+    }
+
+    // Make functions globally available
+    window.openModal = openModal;
+    window.closeModal = closeModal;
+
+    // View news function
+    window.viewNews = function(button) {
+        console.log('View news clicked');
+        
+        const newsItem = button.closest('.news-item');
+        if (!newsItem) {
+            console.error('News item not found');
+            return;
+        }
+
+        const title = newsItem.dataset.title || '';
+        const category = newsItem.dataset.category || '';
+        const content = newsItem.dataset.content || '';
+        const date = newsItem.dataset.date || '';
+        const image = newsItem.dataset.image || '';
+        const pdfUrl = newsItem.dataset.pdf || '';
+        const pdfName = newsItem.dataset.pdfName || '';
+
+        console.log('News data:', { title, category, content, date, image, pdfUrl, pdfName });
+
+        // Update modal content
+        const modalTitle = document.getElementById('modalTitle');
+        const modalCategory = document.getElementById('modalCategory');
+        const modalContent = document.getElementById('modalContent');
+        const modalDate = document.getElementById('modalDate');
+        const modalImageContainer = document.getElementById('modalImageContainer');
+        const modalImage = document.getElementById('modalImage');
+        const modalFileContainer = document.getElementById('modalFileContainer');
+        const modalFileName = document.getElementById('modalFileName');
+
+        if (modalTitle) modalTitle.textContent = title;
+        if (modalCategory) modalCategory.textContent = category;
+        if (modalContent) modalContent.textContent = content;
+        if (modalDate) modalDate.textContent = date;
+
+        // Handle image
+        if (modalImageContainer && modalImage) {
+            if (image && !image.includes('nope.jpg')) {
+                modalImage.src = image;
+                modalImage.alt = title;
+                modalImageContainer.style.display = 'block';
+            } else {
+                modalImageContainer.style.display = 'none';
+            }
+        }
+
+        // Handle PDF file
+        if (modalFileContainer && modalFileName) {
+            if (pdfUrl && pdfName) {
+                modalFileName.textContent = `Attached: ${pdfName}`;
+                modalFileContainer.style.display = 'block';
+            } else {
+                modalFileContainer.style.display = 'none';
+            }
+        }
+
+        openModal('viewModal');
+    };
+
+    // Share news function
+    window.shareNews = function(button) {
+        console.log('Share button clicked');
+        
+        const newsItem = button.closest('.news-item');
+        if (!newsItem) {
+            console.error('News item not found');
+            return;
+        }
+
+        const title = newsItem.dataset.title || '';
+        const category = newsItem.dataset.category || '';
+        const shareUrl = newsItem.dataset.shareUrl || window.location.href;
+        
+        // Store current share data
+        currentShareData = {
+            title: title,
+            category: category,
+            url: shareUrl,
+            description: `Check out this ${category.toLowerCase()} news: ${title}`
+        };
+
+        // Update share modal content
+        const shareModalTitle = document.getElementById('shareModalTitle');
+        const shareModalText = document.getElementById('shareModalText');
+        const shareUrlInput = document.getElementById('shareUrl');
+
+        if (shareModalTitle) {
+            shareModalTitle.textContent = `Share: ${title}`;
+        }
+        
+        if (shareModalText) {
+            shareModalText.innerHTML = `Share "<strong>${title}</strong>" from the <em>${category}</em> category with others through your preferred platform.`;
+        }
+        
+        if (shareUrlInput) {
+            shareUrlInput.value = shareUrl;
+        }
+
+        openModal('shareModal');
+    };
+
+    // Share platform functions
+    window.shareToFacebook = function() {
+        let url = currentShareData.url;
+        // Ensure absolute URL for Facebook
+        if (!/^https?:\/\//.test(url)) {
+            url = window.location.origin + url;
+        }
+        const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+        window.open(shareUrl, '_blank', 'width=600,height=400');
+        showToast('success', 'Shared!', 'Opening Facebook share dialog...');
+    };
+
+    // window.shareToTwitter = function() {
+    //     const url = encodeURIComponent(currentShareData.url);
+    //     const text = encodeURIComponent(currentShareData.description);
+    //     const shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+    //     window.open(shareUrl, '_blank', 'width=600,height=400');
+    //     showToast('success', 'Shared!', 'Opening Twitter share dialog...');
+    // };
+
+    // window.shareToLinkedIn = function() {
+    //     const url = encodeURIComponent(currentShareData.url);
+    //     const title = encodeURIComponent(currentShareData.title);
+    //     const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}&title=${title}`;
+    //     window.open(shareUrl, '_blank', 'width=600,height=500');
+    //     showToast('success', 'Shared!', 'Opening LinkedIn share dialog...');
+    // };
+
+    // window.shareToWhatsApp = function() {
+    //     const text = encodeURIComponent(`${currentShareData.description} - ${currentShareData.url}`);
+    //     const shareUrl = `https://wa.me/?text=${text}`;
+    //     window.open(shareUrl, '_blank');
+    //     showToast('success', 'Shared!', 'Opening WhatsApp...');
+    // };
+
+    // window.shareToTelegram = function() {
+    //     const text = encodeURIComponent(currentShareData.description);
+    //     const url = encodeURIComponent(currentShareData.url);
+    //     const shareUrl = `https://t.me/share/url?text=${text}&url=${url}`;
+    //     window.open(shareUrl, '_blank');
+    //     showToast('success', 'Shared!', 'Opening Telegram...');
+    // };
+
+    // window.shareViaEmail = function() {
+    //     const subject = encodeURIComponent(`News: ${currentShareData.title}`);
+    //     const body = encodeURIComponent(`Hi,\n\nI wanted to share this ${currentShareData.category.toLowerCase()} news article with you:\n\n"${currentShareData.title}"\n\nYou can read it here: ${currentShareData.url}\n\nBest regards`);
+    //     const shareUrl = `mailto:?subject=${subject}&body=${body}`;
+    //     window.location.href = shareUrl;
+    //     showToast('success', 'Email opened!', 'Opening your default email client...');
+    // };
+
+    // Copy to clipboard function
+    window.copyToClipboard = function() {
+        const shareUrlInput = document.getElementById('shareUrl');
+        const copyBtn = document.querySelector('.copy-url-btn');
+        const copyBtnText = document.getElementById('copyBtnText');
+        
+        if (shareUrlInput) {
+            shareUrlInput.select();
+            shareUrlInput.setSelectionRange(0, 99999); // For mobile devices
+            
+            try {
+                navigator.clipboard.writeText(shareUrlInput.value).then(() => {
+                    // Success feedback
+                    copyBtn.classList.add('copied');
+                    copyBtnText.textContent = 'Copied!';
+                    showToast('success', 'Link copied!', 'The article URL has been copied to your clipboard.');
+                    
+                    // Reset button after 2 seconds
+                    setTimeout(() => {
+                        copyBtn.classList.remove('copied');
+                        copyBtnText.textContent = 'Copy';
+                    }, 2000);
+                }).catch(() => {
+                    // Fallback for older browsers
+                    fallbackCopyText();
+                });
+            } catch (err) {
+                fallbackCopyText();
+            }
+        }
+        
+        function fallbackCopyText() {
+            try {
+                document.execCommand('copy');
+                copyBtn.classList.add('copied');
+                copyBtnText.textContent = 'Copied!';
+                showToast('success', 'Link copied!', 'The article URL has been copied to your clipboard.');
+                
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyBtnText.textContent = 'Copy';
+                }, 2000);
+            } catch (err) {
+                showToast('error', 'Copy failed', 'Unable to copy link. Please select and copy manually.');
+            }
+        }
+    };
+
+    // Delete confirmation function
+    window.confirmDelete = function(button) {
+        console.log('Delete button clicked');
+        
+        const newsItem = button.closest('.news-item');
+        if (!newsItem) {
+            console.error('News item not found');
+            return;
+        }
+
+        const newsId = newsItem.dataset.newsId || '';
+        const title = newsItem.dataset.title || '';
+        
+        console.log('Delete data:', { newsId, title });
+
+        const deleteNewsIdInput = document.getElementById('deleteNewsId');
+        const deleteModalText = document.querySelector('.delete-modal-text');
+
+        if (deleteNewsIdInput) {
+            deleteNewsIdInput.value = newsId;
+        }
+        
+        if (deleteModalText) {
+            deleteModalText.innerHTML = `
+                Are you sure you want to delete "<strong>${title}</strong>"? 
+                <br><br>
+                This action cannot be undone and will permanently remove this news article from your system.
+            `;
+        }
+        
+        openModal('deleteModal');
+    };
+
+    // Empty state functions
+    function showEmptyState(type) {
+        if (!newsList) return;
+        
+        const existingEmpty = newsList.querySelector('.empty-state');
+        if (existingEmpty) return;
+
+        let emptyHTML = '';
+        if (type === 'search') {
+            emptyHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-search"></i>
+                    <h3>No results found</h3>
+                    <p>No news articles match your search criteria.<br>Try different keywords or check your spelling.</p>
+                </div>
+            `;
+        }
+        
+        newsList.insertAdjacentHTML('beforeend', emptyHTML);
+    }
+
+    // Modal event listeners for clicking outside
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('modal-overlay')) {
+            const modalId = e.target.id;
+            closeModal(modalId);
+        }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const openModals = document.querySelectorAll('.modal-overlay.show');
+            openModals.forEach(modal => {
+                closeModal(modal.id);
+            });
+        }
+    });
+
+    // Initialize everything
+    initializeNewsItems();
+
+    // Auto-hide Django messages
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach((alert, index) => {
+        setTimeout(() => {
+            alert.style.opacity = '0';
+            alert.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                alert.remove();
+            }, 300);
+        }, 5000 + (index * 500));
+    });
+
+    console.log('News management script initialization complete');
+});
+</script>
+{% endblock %}
+        
+
 {% block header_title %}News Management{% endblock %}
 
 {% block page_title %}News Management{% endblock %}
@@ -403,6 +1383,16 @@
         transform: scale(1.1);
     }
 
+    .share-btn {
+        color: #10b981;
+        background: rgba(16, 185, 129, 0.1);
+    }
+
+    .share-btn:hover {
+        background: rgba(16, 185, 129, 0.2);
+        transform: scale(1.1);
+    }
+
     .delete-btn {
         color: #ef4444;
         background: rgba(239, 68, 68, 0.1);
@@ -619,6 +1609,134 @@
     .modal-file-attachment span {
         font-weight: 500;
         color: var(--text-primary, #333);
+    }
+
+    /* Share Modal */
+    .share-modal .modal-content {
+        max-width: 500px;
+        text-align: center;
+    }
+
+    .share-modal-icon {
+        font-size: 3rem;
+        color: #10b981;
+        margin-bottom: 1rem;
+    }
+
+    .share-modal-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary, #333);
+        margin-bottom: 0.5rem;
+    }
+
+    .share-modal-text {
+        color: var(--text-secondary, #666);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+        font-size: 1rem;
+    }
+
+    .share-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .share-option {
+        padding: 1rem;
+        border: 2px solid var(--border-color, #e0e0e0);
+        border-radius: 12px;
+        background: var(--bg-secondary, #f8f9fa);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .share-option:hover {
+        border-color: var(--primary-color, #007bff);
+        background: rgba(0, 123, 255, 0.05);
+        transform: translateY(-2px);
+    }
+
+    .share-option i {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .share-option span {
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .share-option.facebook i { color: #1877f2; }
+    .share-option.twitter i { color: #1da1f2; }
+    .share-option.linkedin i { color: #0a66c2; }
+    .share-option.whatsapp i { color: #25d366; }
+    .share-option.telegram i { color: #0088cc; }
+    .share-option.email i { color: #ea4335; }
+    .share-option.copy i { color: #6b7280; }
+
+    .url-copy-section {
+        padding: 1rem;
+        background: var(--bg-tertiary, #f1f3f4);
+        border-radius: 8px;
+        border: 1px solid var(--border-color, #e0e0e0);
+        margin-bottom: 1.5rem;
+    }
+
+    .url-copy-label {
+        font-size: 0.9rem;
+        color: var(--text-secondary, #666);
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .url-copy-input {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .url-input {
+        flex: 1;
+        padding: 0.75rem;
+        border: 1px solid var(--border-color, #e0e0e0);
+        border-radius: 6px;
+        background: var(--bg-primary, #ffffff);
+        font-size: 0.9rem;
+        color: var(--text-primary, #333);
+    }
+
+    .copy-url-btn {
+        padding: 0.75rem 1rem;
+        background: var(--primary-color, #007bff);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .copy-url-btn:hover {
+        background: #0056b3;
+        transform: scale(1.05);
+    }
+
+    .copy-url-btn.copied {
+        background: #10b981;
+        transform: scale(1.05);
     }
 
     /* Delete Modal */
@@ -1119,298 +2237,21 @@
             margin: 0 0.5rem;
             font-size: 0.85rem;
         }
-    }
 
-    /* ULTRA COMPACT MOBILE PHONE STYLES */
-    @media (max-width: 480px) {
-        .news-container {
-            padding: 0.125rem;
-            gap: 0.125rem;
+        .share-options {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
         }
 
-        .upload-section, .news-list-section {
-            padding: 0.5rem;
-            border-radius: 4px;
+        .share-option {
+            padding: 0.75rem 0.5rem;
         }
 
-        .section-title {
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            gap: 0.125rem;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .section-title i {
-            font-size: 0.8rem;
-        }
-
-        .article-count {
-            margin-left: 0;
-            margin-top: 0.125rem;
-            font-size: 0.65rem;
-        }
-
-        .form-group {
-            margin-bottom: 0.5rem;
-        }
-
-        .form-label {
-            font-size: 0.75rem;
-            gap: 0.25rem;
-        }
-
-        .form-input, .form-textarea, .form-select, .search-input {
-            padding: 0.375rem;
-            font-size: 0.75rem;
-            border-radius: 4px;
-        }
-
-        .form-textarea {
-            min-height: 50px;
-        }
-
-        .file-upload-label {
-            padding: 0.5rem 0.25rem;
-            gap: 0.25rem;
-        }
-
-        .file-upload-label i {
-            font-size: 1rem;
-        }
-
-        .file-upload-label span {
-            font-size: 0.75rem;
-        }
-
-        .upload-hint {
-            font-size: 0.65rem;
-        }
-
-        .upload-btn {
-            padding: 0.5rem 0.75rem;
-            font-size: 0.75rem;
-            gap: 0.25rem;
-        }
-
-        .search-container {
-            margin-bottom: 0.5rem;
-        }
-
-        .search-input {
-            padding: 0.375rem 0.5rem 0.375rem 2rem;
-        }
-
-        .search-icon {
-            left: 0.5rem;
-            font-size: 0.8rem;
-        }
-
-        .search-clear {
-            right: 0.5rem;
-            padding: 0.25rem;
-        }
-
-        .news-item {
-            padding: 0.375rem;
-            margin-bottom: 0.125rem;
-            border-radius: 4px;
-        }
-
-        .news-header {
-            margin-bottom: 0.125rem;
-        }
-
-        .news-title {
-            font-size: 0.75rem;
-            line-height: 1.2;
-        }
-
-        .news-actions {
-            margin-top: -1.25rem;
-            gap: 0.125rem;
-        }
-
-        .action-btn {
-            width: 24px;
-            height: 24px;
-            padding: 0.125rem;
-            font-size: 0.7rem;
-        }
-
-        .news-category {
-            font-size: 0.6rem;
-            padding: 0.125rem 0.375rem;
-            margin-bottom: 0.125rem;
-        }
-
-        .news-preview {
-            font-size: 0.7rem;
-            margin-bottom: 0.125rem;
-            -webkit-line-clamp: 1;
-        }
-
-        .news-date {
-            font-size: 0.65rem;
-            gap: 0.25rem;
-        }
-
-        .modal-overlay {
-            padding: 0.25rem;
-        }
-
-        .modal-content {
-            padding: 0.5rem;
-            margin: 0.125rem;
-            border-radius: 4px;
-        }
-
-        .modal-close {
-            top: 0.375rem;
-            right: 0.375rem;
-            width: 24px;
-            height: 24px;
-            font-size: 0.8rem;
-        }
-
-        .modal-title {
-            font-size: 0.9rem;
-            padding-right: 1.5rem;
-            margin-bottom: 0.375rem;
-        }
-
-        .modal-category {
-            font-size: 0.65rem;
-            padding: 0.2rem 0.4rem;
-            margin-bottom: 0.375rem;
-        }
-
-        .modal-content-text {
-            font-size: 0.75rem;
-            margin-bottom: 0.5rem;
-            line-height: 1.3;
-        }
-
-        .modal-date {
-            font-size: 0.7rem;
-            padding-top: 0.375rem;
-        }
-
-        .modal-image {
-            max-height: 120px;
-            margin-bottom: 0.5rem;
-        }
-
-        .delete-modal .modal-content {
-            max-width: 250px;
-        }
-
-        .delete-modal-icon {
+        .share-option i {
             font-size: 1.5rem;
-            margin-bottom: 0.375rem;
         }
 
-        .delete-modal-title {
-            font-size: 0.9rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .delete-modal-text {
-            font-size: 0.75rem;
-            margin-bottom: 0.75rem;
-            line-height: 1.2;
-        }
-
-        .delete-confirm-btn, .delete-cancel-btn {
-            padding: 0.375rem 0.5rem;
-            font-size: 0.75rem;
-        }
-
-        .file-preview {
-            padding: 0.375rem;
-            font-size: 0.75rem;
-        }
-
-        .search-results {
-            font-size: 0.7rem;
-            padding: 0.375rem 0.5rem;
-        }
-
-        .alert {
-            padding: 0.5rem 0.75rem;
-            font-size: 0.75rem;
-            gap: 0.25rem;
-        }
-
-        .empty-state {
-            padding: 0.75rem 0.375rem;
-        }
-
-        .empty-state i {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .empty-state h3 {
-            font-size: 0.8rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .empty-state p {
-            font-size: 0.7rem;
-            line-height: 1.2;
-        }
-
-        .toast {
-            margin: 0 0.25rem;
-            padding: 0.75rem;
-            font-size: 0.8rem;
-        }
-    }
-
-    /* EXTRA SMALL SCREENS */
-    @media (max-width: 360px) {
-        .news-container {
-            padding: 0.0625rem;
-        }
-
-        .upload-section, .news-list-section {
-            padding: 0.375rem;
-        }
-
-        .section-title {
-            font-size: 0.8rem;
-        }
-
-        .form-input, .form-textarea, .form-select, .search-input {
-            padding: 0.25rem;
-            font-size: 0.7rem;
-        }
-
-        .upload-btn {
-            padding: 0.375rem 0.5rem;
-            font-size: 0.7rem;
-        }
-
-        .news-item {
-            padding: 0.25rem;
-        }
-
-        .news-title {
-            font-size: 0.7rem;
-        }
-
-        .action-btn {
-            width: 20px;
-            height: 20px;
-            font-size: 0.6rem;
-        }
-
-        .modal-content {
-            padding: 0.375rem;
-        }
-
-        .modal-title {
+        .share-option span {
             font-size: 0.8rem;
         }
     }
@@ -1455,781 +2296,7 @@
         color: var(--accent-color);
         background-color: rgba(59, 130, 246, 0.1);
     }
+
+
 </style>
-{% endblock %}
-
-{% block content %}
-<div class="content-section active">
-    <div class="content-header">
-        <h1>News Management</h1>
-    </div>
-
-    <div class="news-container">
-        <!-- Upload Section -->
-        <div class="upload-section">
-            <h2 class="section-title">
-                <i class="fas fa-plus-circle"></i>
-                Upload News
-            </h2>
-
-
-            <!-- Django Form -->
-            <form method="post" enctype="multipart/form-data" id="newsForm">
-                {% csrf_token %}
-                
-                <div class="form-group">
-                    <label class="form-label" for="id_title">
-                        <i class="fas fa-heading"></i>
-                        News Title *
-                    </label>
-                    <input type="text" id="id_title" name="title" class="form-input" placeholder="Enter an engaging news title..." required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="id_category">
-                        <i class="fas fa-tags"></i>
-                        Category *
-                    </label>
-                    <select id="id_category" name="category" class="form-select" required>
-                        <option value="">Choose a category</option>
-                        <option value="Academic">Academic</option>
-                        <option value="Sports">Sports</option>
-                        <option value="Events">Events</option>
-                        <option value="Announcements">Announcements</option>
-                        <option value="Notice">Notice</option>
-                        <option value="Student Life">Student Life</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="id_content">
-                        <i class="fas fa-align-left"></i>
-                        News Content *
-                    </label>
-                    <textarea id="id_content" name="content" class="form-textarea" placeholder="Write your news content here. Be detailed and engaging..." required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">
-                        <i class="fas fa-image"></i>
-                        News Image (Optional)
-                    </label>
-                    <div class="file-upload-wrapper">
-                        <input type="file" id="id_image" name="image" class="form-file" accept="image/*" style="display: none;">
-                        <label for="id_image" class="file-upload-label">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <span>Click to upload image or drag and drop</span>
-                            <div class="upload-hint">Supports JPG, PNG, WebP up to 5MB</div>
-                        </label>
-                    </div>
-                    <div class="file-preview" id="imagePreview">
-                        <i class="fas fa-file-image"></i>
-                        <span id="imageFileName"></span>
-                        <button type="button" class="file-preview-remove" id="removeImageFile" title="Remove file">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- PDF/Document Upload -->
-                <div class="form-group">
-                    <label class="form-label">
-                        <i class="fas fa-file-pdf"></i>
-                        Document File (Optional)
-                    </label>
-                    <div class="file-upload-wrapper">
-                        <input type="file" id="id_pdf" name="pdf_file" class="form-file" accept=".pdf,.doc,.docx,.txt,.ppt,.pptx" style="display: none;">
-                        <label for="id_pdf" class="file-upload-label">
-                            <i class="fas fa-file-upload"></i>
-                            <span>Click to upload document</span>
-                            <div class="upload-hint">Supports PDF, DOC, DOCX, TXT, PPT, PPTX up to 5MB</div>
-                        </label>
-                    </div>
-                    <div class="file-preview" id="pdfPreview">
-                        <i class="fas fa-file-pdf"></i>
-                        <span id="pdfFileName"></span>
-                        <button type="button" class="file-preview-remove" id="removePdfFile" title="Remove file">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Send Notification Option -->
-                <div class="form-group">
-                    <div class="notification-group">
-                        <input type="checkbox" id="send_notification" name="send_notification" class="notification-checkbox">
-                        <label for="send_notification" class="notification-label">
-                            <i class="fas fa-bell"></i>
-                            Send push notification to all users
-                        </label>
-                    </div>
-                </div>
-
-                <button type="submit" class="upload-btn" id="submitBtn">
-                    <i class="fas fa-paper-plane"></i>
-                    <span>Upload Notice </span>
-                </button>
-            </form>
-        </div>
-
-        <!-- News List Section -->
-        <div class="news-list-section">
-            <h2 class="section-title">
-                <i class="fas fa-newspaper"></i>
-                All News
-                <span class="article-count">
-                    {{ new_s|length }} Article{{ new_s|length|pluralize }}
-                </span>
-            </h2>
-
-            <div class="search-container">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" id="searchInput" class="search-input" placeholder="Search news by title, content, or category...">
-                <button type="button" class="search-clear" id="searchClear" title="Clear search">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-
-            <div class="search-results" id="searchResults"></div>
-
-            <div class="news-list" id="newsList">
-                {% for news in new_s %} 
-                <div class="news-item" 
-                     data-title="{{news.title}}" 
-                     data-category="{{news.category}}" 
-                     data-content="{{news.description}}" 
-                     data-date="{{news.created_at|date:'F d, Y - g:i A'}}"
-                     data-news-id="{{news.id}}"
-                     {% if news.image %} 
-                     data-image="{{news.image.url}}"
-                     {% else %}
-                     data-image="{% static 'teacher/images/nope.jpg' %}"
-                     {% endif %}
-                     {% if news.pdf_file %}
-                     data-pdf="{{news.pdf_file.url}}"
-                     data-pdf-name="{{news.pdf_file.name}}"
-                     {% endif %}>
-                    <div class="news-header">
-                        <h3 class="news-title">{{news.title}}</h3>
-                        <div class="news-actions">
-                            <button class="action-btn view-btn" onclick="viewNews(this)" title="View full article" aria-label="View {{news.title}}">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="action-btn delete-btn" onclick="confirmDelete(this)" title="Delete article" aria-label="Delete {{news.title}}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="news-category">{{news.category}}</div>
-                    <div class="news-preview">{{news.description|truncatewords:25}}</div>
-                    {% if news.pdf_file %}
-                    <div class="file-attachment">
-                        <i class="fas fa-paperclip"></i>
-                        <span>{{news.pdf_file.name|default:"Document attached"}}</span>
-                    </div>
-                    {% endif %}
-                    <div class="news-date">
-                        <i class="fas fa-calendar-alt"></i>
-                        {{news.created_at|date:"F d, Y - g:i A"}}
-                    </div>
-                </div>
-                {% empty %}
-                <div class="empty-state">
-                    <i class="fas fa-newspaper"></i>
-                    <h3>No news articles yet</h3>
-                    <p>Start by creating your first news article using the form on the left. Share important updates, events, and announcements with your community.</p>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Toast Container -->
-<div class="toast-container" id="toastContainer"></div>
-
-<!-- News View Modal -->
-<div class="modal-overlay" id="viewModal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
-    <div class="modal-content">
-        <button class="modal-close" onclick="closeModal('viewModal')" aria-label="Close modal">
-            <i class="fas fa-times"></i>
-        </button>
-        
-        <div id="modalImageContainer" style="display: none;">
-            <img class="modal-image" id="modalImage" alt="News Image">
-        </div>
-        
-        <h2 class="modal-title" id="modalTitle"></h2>
-        <div class="modal-category" id="modalCategory"></div>
-        <div class="modal-content-text" id="modalContent"></div>
-        
-        <div id="modalFileContainer" style="display: none;">
-            <div class="modal-file-attachment">
-                <i class="fas fa-file-pdf"></i>
-                <span id="modalFileName"></span>
-            </div>
-        </div>
-        
-        <div class="modal-date">
-            <i class="fas fa-calendar-alt"></i>
-            <span id="modalDate"></span>
-        </div>
-    </div>
-</div>
-
-<!-- Delete Confirmation Modal -->
-<div class="modal-overlay delete-modal" id="deleteModal" role="dialog" aria-labelledby="deleteModalTitle" aria-modal="true">
-    <div class="modal-content">
-        <button class="modal-close" onclick="closeModal('deleteModal')" aria-label="Close modal">
-            <i class="fas fa-times"></i>
-        </button>
-        
-        <div class="delete-modal-icon">
-            <i class="fas fa-exclamation-triangle"></i>
-        </div>
-        
-        <h3 class="delete-modal-title" id="deleteModalTitle">Delete News Article</h3>
-        <p class="delete-modal-text">
-            Are you sure you want to delete this news article? This action cannot be undone.
-        </p>
-        
-        <div class="delete-modal-actions">
-            <form method="post" action="{% url "teacher:delete_news" %}" style="display: inline;">
-                {% csrf_token %}
-                <input type="hidden" name="news_id" id="deleteNewsId">
-                <button type="submit" class="delete-confirm-btn">
-                    <i class="fas fa-trash"></i>
-                    Delete Article
-                </button>
-            </form>
-            <button type="button" class="delete-cancel-btn" onclick="closeModal('deleteModal')">
-                <i class="fas fa-times"></i>
-                Cancel
-            </button>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('News management script loaded');
-
-    // DOM elements
-    const searchInput = document.getElementById('searchInput');
-    const searchClear = document.getElementById('searchClear');
-    const searchResults = document.getElementById('searchResults');
-    const newsList = document.getElementById('newsList');
-    const imageInput = document.getElementById('id_image');
-    const pdfInput = document.getElementById('id_pdf');
-    const imagePreview = document.getElementById('imagePreview');
-    const pdfPreview = document.getElementById('pdfPreview');
-    const imageFileName = document.getElementById('imageFileName');
-    const pdfFileName = document.getElementById('pdfFileName');
-    const removeImageFile = document.getElementById('removeImageFile');
-    const removePdfFile = document.getElementById('removePdfFile');
-    const imageUploadLabel = document.querySelector('label[for="id_image"] span');
-    const pdfUploadLabel = document.querySelector('label[for="id_pdf"] span');
-    const toastContainer = document.getElementById('toastContainer');
-
-    let allNewsItems = [];
-    let currentSearchTerm = '';
-    let originalNewsListHTML = '';
-
-    // Toast notification system
-    function showToast(type, title, message, duration = 5000) {
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        
-        const iconMap = {
-            success: 'fas fa-check-circle',
-            error: 'fas fa-exclamation-circle',
-            info: 'fas fa-info-circle'
-        };
-
-        toast.innerHTML = `
-            <i class="toast-icon ${iconMap[type]}"></i>
-            <div class="toast-content">
-                <div class="toast-title">${title}</div>
-                <div class="toast-message">${message}</div>
-            </div>
-            <button class="toast-close" onclick="removeToast(this)">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="toast-progress"></div>
-        `;
-
-        toastContainer.appendChild(toast);
-
-        // Show toast with animation
-        setTimeout(() => {
-            toast.classList.add('show');
-        }, 100);
-
-        // Auto remove toast
-        setTimeout(() => {
-            removeToast(toast.querySelector('.toast-close'));
-        }, duration);
-    }
-
-    // Remove toast function
-    window.removeToast = function(button) {
-        const toast = button.closest('.toast');
-        if (toast) {
-            toast.classList.remove('show');
-            setTimeout(() => {
-                if (toast.parentNode) {
-                    toast.parentNode.removeChild(toast);
-                }
-            }, 300);
-        }
-    };
-
-    // File validation with toast notifications
-    function validateFile(file, type) {
-        const maxSize = 5 * 1024 * 1024; // 5MB
-
-        if (file.size > maxSize) {
-            const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
-            showToast('error', 'File too large!', `File size must be less than 5MB. Your file is ${fileSizeMB}MB.`, 6000);
-            return false;
-        }
-
-        if (type === 'image' && !file.type.startsWith('image/')) {
-            showToast('error', 'Invalid file type', 'Please select a valid image file (JPG, PNG, WebP).');
-            return false;
-        }
-
-        if (type === 'pdf' && ![
-            'application/pdf',
-            'application/msword',
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-            'text/plain',
-            'application/vnd.ms-powerpoint',
-            'application/vnd.openxmlformats-officedocument.presentationml.presentation'
-        ].includes(file.type)) {
-            showToast('error', 'Invalid file type', 'Please select a valid document file (PDF, DOC, DOCX, TXT, PPT, PPTX).');
-            return false;
-        }
-
-        return true;
-    }
-
-    // Initialize news items array and preserve original HTML
-    function initializeNewsItems() {
-        originalNewsListHTML = newsList.innerHTML;
-        
-        const newsItems = newsList.querySelectorAll('.news-item');
-        console.log('Found news items:', newsItems.length);
-        
-        allNewsItems = Array.from(newsItems).map(item => ({
-            element: item,
-            title: item.dataset.title ? item.dataset.title.toLowerCase() : '',
-            content: item.dataset.content ? item.dataset.content.toLowerCase() : '',
-            category: item.dataset.category ? item.dataset.category.toLowerCase() : '',
-            date: item.dataset.date || '',
-            newsId: item.dataset.newsId || ''
-        }));
-        
-        console.log('Initialized news items:', allNewsItems.length);
-    }
-
-    // Image file upload functionality
-    if (imageInput) {
-        imageInput.addEventListener('change', function(e) {
-            if (e.target.files && e.target.files[0]) {
-                const file = e.target.files[0];
-                
-                if (validateFile(file, 'image')) {
-                    imageFileName.textContent = file.name;
-                    imagePreview.classList.add('show');
-                    if (imageUploadLabel) {
-                        imageUploadLabel.textContent = '✓ Image selected';
-                    }
-                    showToast('success', 'Image selected', `${file.name} is ready to upload.`);
-                } else {
-                    this.value = '';
-                }
-            } else {
-                resetImageInput();
-            }
-        });
-
-        if (removeImageFile) {
-            removeImageFile.addEventListener('click', function() {
-                imageInput.value = '';
-                resetImageInput();
-            });
-        }
-    }
-
-    // PDF file upload functionality
-    if (pdfInput) {
-        pdfInput.addEventListener('change', function(e) {
-            if (e.target.files && e.target.files[0]) {
-                const file = e.target.files[0];
-                
-                if (validateFile(file, 'pdf')) {
-                    pdfFileName.textContent = file.name;
-                    pdfPreview.classList.add('show');
-                    if (pdfUploadLabel) {
-                        pdfUploadLabel.textContent = '✓ Document selected';
-                    }
-                    showToast('success', 'Document selected', `${file.name} is ready to upload.`);
-                } else {
-                    this.value = '';
-                }
-            } else {
-                resetPdfInput();
-            }
-        });
-
-        if (removePdfFile) {
-            removePdfFile.addEventListener('click', function() {
-                pdfInput.value = '';
-                resetPdfInput();
-            });
-        }
-    }
-
-    function resetImageInput() {
-        if (imagePreview) imagePreview.classList.remove('show');
-        if (imageUploadLabel) {
-            imageUploadLabel.textContent = 'Click to upload image or drag and drop';
-        }
-    }
-
-    function resetPdfInput() {
-        if (pdfPreview) pdfPreview.classList.remove('show');
-        if (pdfUploadLabel) {
-            pdfUploadLabel.textContent = 'Click to upload document';
-        }
-    }
-
-    // Form submission with notification handling
-    const newsForm = document.getElementById('newsForm');
-    if (newsForm) {
-        newsForm.addEventListener('submit', function(e) {
-            const sendNotification = document.getElementById('send_notification');
-            const isNotificationChecked = sendNotification && sendNotification.checked;
-            
-            // Show immediate feedback
-            const submitBtn = document.getElementById('submitBtn');
-            if (submitBtn) {
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Publishing...</span>';
-                submitBtn.disabled = true;
-            }
-            
-            // Show success toast after form submission
-            setTimeout(() => {
-                if (isNotificationChecked) {
-                    showToast('success', 'News article created!', 'Article published and notification sent to all users.', 6000);
-                    // Show additional notification sent toast
-                    setTimeout(() => {
-                        showToast('info', 'Notification sent!', 'Push notification delivered to all subscribed users.');
-                    }, 1000);
-                } else {
-                    showToast('success', 'News article created!', 'Article published successfully.');
-                }
-            }, 500);
-        });
-    }
-
-    // Enhanced search functionality with proper restoration
-    function performSearch(searchTerm) {
-        console.log('Performing search for:', searchTerm);
-        
-        currentSearchTerm = searchTerm.toLowerCase().trim();
-        
-        if (currentSearchTerm === '') {
-            showAllNews();
-            if (searchClear) searchClear.classList.remove('show');
-            if (searchResults) searchResults.classList.remove('show');
-            return;
-        }
-
-        if (searchClear) searchClear.classList.add('show');
-        
-        const filteredItems = allNewsItems.filter(item => {
-            return item.title.includes(currentSearchTerm) || 
-                   item.content.includes(currentSearchTerm) || 
-                   item.category.includes(currentSearchTerm);
-        });
-
-        console.log('Filtered items:', filteredItems.length);
-        
-        displayFilteredNews(filteredItems);
-        updateSearchResults(filteredItems.length);
-    }
-
-    function showAllNews() {
-        console.log('Showing all news - restoring original HTML');
-        
-        if (originalNewsListHTML) {
-            newsList.innerHTML = originalNewsListHTML;
-            
-            const newsItems = newsList.querySelectorAll('.news-item');
-            allNewsItems = Array.from(newsItems).map(item => ({
-                element: item,
-                title: item.dataset.title ? item.dataset.title.toLowerCase() : '',
-                content: item.dataset.content ? item.dataset.content.toLowerCase() : '',
-                category: item.dataset.category ? item.dataset.category.toLowerCase() : '',
-                date: item.dataset.date || '',
-                newsId: item.dataset.newsId || ''
-            }));
-            
-            console.log('All news restored, items count:', allNewsItems.length);
-        } else {
-            allNewsItems.forEach(item => {
-                if (item.element) {
-                    item.element.style.display = 'block';
-                }
-            });
-        }
-    }
-
-    function displayFilteredNews(filteredItems) {
-        console.log('Displaying filtered news:', filteredItems.length);
-        
-        allNewsItems.forEach(item => {
-            if (item.element) {
-                item.element.style.display = 'none';
-            }
-        });
-
-        filteredItems.forEach(item => {
-            if (item.element) {
-                item.element.style.display = 'block';
-            }
-        });
-
-        if (filteredItems.length === 0) {
-            showEmptyState('search');
-        }
-    }
-
-    function updateSearchResults(count) {
-        if (searchResults && currentSearchTerm) {
-            searchResults.innerHTML = `
-                <i class="fas fa-search"></i>
-                Found <strong>${count}</strong> result${count !== 1 ? 's' : ''} for "<strong>${currentSearchTerm}</strong>"
-            `;
-            searchResults.classList.add('show');
-        } else if (searchResults) {
-            searchResults.classList.remove('show');
-        }
-    }
-
-    // Search event listeners
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            performSearch(this.value);
-        });
-
-        searchInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                this.value = '';
-                performSearch('');
-                this.blur();
-            }
-        });
-    }
-
-    if (searchClear) {
-        searchClear.addEventListener('click', function() {
-            if (searchInput) {
-                searchInput.value = '';
-                performSearch('');
-                searchInput.focus();
-            }
-        });
-    }
-
-    // Modal functions
-    function openModal(modalId) {
-        console.log('Opening modal:', modalId);
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            
-            modal.offsetHeight;
-            
-            setTimeout(() => {
-                modal.classList.add('show');
-            }, 10);
-        } else {
-            console.error('Modal not found:', modalId);
-        }
-    }
-
-    function closeModal(modalId) {
-        console.log('Closing modal:', modalId);
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.add('closing');
-            modal.classList.remove('show');
-            
-            setTimeout(() => {
-                modal.style.display = 'none';
-                modal.classList.remove('closing');
-                document.body.style.overflow = '';
-            }, 250);
-        }
-    }
-
-    // Make functions globally available
-    window.openModal = openModal;
-    window.closeModal = closeModal;
-
-    // View news function
-    window.viewNews = function(button) {
-        console.log('View news clicked');
-        
-        const newsItem = button.closest('.news-item');
-        if (!newsItem) {
-            console.error('News item not found');
-            return;
-        }
-
-        const title = newsItem.dataset.title || '';
-        const category = newsItem.dataset.category || '';
-        const content = newsItem.dataset.content || '';
-        const date = newsItem.dataset.date || '';
-        const image = newsItem.dataset.image || '';
-        const pdfUrl = newsItem.dataset.pdf || '';
-        const pdfName = newsItem.dataset.pdfName || '';
-
-        console.log('News data:', { title, category, content, date, image, pdfUrl, pdfName });
-
-        // Update modal content
-        const modalTitle = document.getElementById('modalTitle');
-        const modalCategory = document.getElementById('modalCategory');
-        const modalContent = document.getElementById('modalContent');
-        const modalDate = document.getElementById('modalDate');
-        const modalImageContainer = document.getElementById('modalImageContainer');
-        const modalImage = document.getElementById('modalImage');
-        const modalFileContainer = document.getElementById('modalFileContainer');
-        const modalFileName = document.getElementById('modalFileName');
-
-        if (modalTitle) modalTitle.textContent = title;
-        if (modalCategory) modalCategory.textContent = category;
-        if (modalContent) modalContent.textContent = content;
-        if (modalDate) modalDate.textContent = date;
-
-        // Handle image
-        if (modalImageContainer && modalImage) {
-            if (image && !image.includes('nope.jpg')) {
-                modalImage.src = image;
-                modalImage.alt = title;
-                modalImageContainer.style.display = 'block';
-            } else {
-                modalImageContainer.style.display = 'none';
-            }
-        }
-
-        // Handle PDF file
-        if (modalFileContainer && modalFileName) {
-            if (pdfUrl && pdfName) {
-                modalFileName.textContent = `Attached: ${pdfName}`;
-                modalFileContainer.style.display = 'block';
-            } else {
-                modalFileContainer.style.display = 'none';
-            }
-        }
-
-        openModal('viewModal');
-    };
-
-    // Delete confirmation function
-    window.confirmDelete = function(button) {
-        console.log('Delete button clicked');
-        
-        const newsItem = button.closest('.news-item');
-        if (!newsItem) {
-            console.error('News item not found');
-            return;
-        }
-
-        const newsId = newsItem.dataset.newsId || '';
-        const title = newsItem.dataset.title || '';
-        
-        console.log('Delete data:', { newsId, title });
-
-        const deleteNewsIdInput = document.getElementById('deleteNewsId');
-        const deleteModalText = document.querySelector('.delete-modal-text');
-
-        if (deleteNewsIdInput) {
-            deleteNewsIdInput.value = newsId;
-        }
-        
-        if (deleteModalText) {
-            deleteModalText.innerHTML = `
-                Are you sure you want to delete "<strong>${title}</strong>"? 
-                <br><br>
-                This action cannot be undone and will permanently remove this news article from your system.
-            `;
-        }
-        
-        openModal('deleteModal');
-    };
-
-    // Empty state functions
-    function showEmptyState(type) {
-        if (!newsList) return;
-        
-        const existingEmpty = newsList.querySelector('.empty-state');
-        if (existingEmpty) return;
-
-        let emptyHTML = '';
-        if (type === 'search') {
-            emptyHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-search"></i>
-                    <h3>No results found</h3>
-                    <p>No news articles match your search criteria.<br>Try different keywords or check your spelling.</p>
-                </div>
-            `;
-        }
-        
-        newsList.insertAdjacentHTML('beforeend', emptyHTML);
-    }
-
-    // Modal event listeners for clicking outside
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('modal-overlay')) {
-            const modalId = e.target.id;
-            closeModal(modalId);
-        }
-    });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            const openModals = document.querySelectorAll('.modal-overlay.show');
-            openModals.forEach(modal => {
-                closeModal(modal.id);
-            });
-        }
-    });
-
-    // Initialize everything
-    initializeNewsItems();
-
-    // Auto-hide Django messages
-    const alerts = document.querySelectorAll('.alert');
-    alerts.forEach((alert, index) => {
-        setTimeout(() => {
-            alert.style.opacity = '0';
-            alert.style.transform = 'translateY(-10px)';
-            setTimeout(() => {
-                alert.remove();
-            }, 300);
-        }, 5000 + (index * 500));
-    });
-
-    console.log('News management script initialization complete');
-});
-</script>
 {% endblock %}
