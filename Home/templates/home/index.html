@@ -2298,6 +2298,14 @@ main {
               <h3>Hotel Management</h3>
               <p>Understanding society through literature, arts, culture, and social sciences</p>
             </div>
+
+            <div class="curriculum-card" data-program="Future" tabindex="0" role="button" aria-label="What to do next  ? ">
+              <div class="card-icon">
+                <i class="fa-solid fa-chart-line" aria-hidden="true" ></i>
+              </div>
+              <h3>Whats Next ?</h3>
+              <p>whats the next thing you can do after +2  ? </p>
+            </div>
           </div>
 
           <div class="section-divider">
@@ -2306,20 +2314,20 @@ main {
           </div> 
           <!-- Regular Courses Section -->
           <div class="curriculum-grid">
-            <div class="curriculum-card" data-program="science" tabindex="0" role="button" aria-label="Learn more about Science program">
+            <div class="curriculum-card" data-program="DCE3year" tabindex="0" role="button" aria-label="Learn more about DCE(3/Years) program">
               <div class="card-icon">
                 <i class="fa-solid fa-graduation-cap" areas-hidde="true"></i>
               </div>
               <h3>DCE 3 Years</h3> 
-              <p>Exploring the natural world through inquiry-based learning and hands-on experiments</p>
+              <p>A full-length program providing in-depth knowledge and skills in civil engineering for professional and technical careers.</p>
             </div>
 
-            <div class="curriculum-card" data-program="mathematics" tabindex="0" role="button" aria-label="Learn more about Mathematics program">
+            <div class="curriculum-card" data-program="DCE18" tabindex="0" role="button" aria-label="Learn more about DEC(18/Month)program">
               <div class="card-icon">
                 <i class="fa-solid fa-user-graduate" aria-hidden="true"></i>
               </div>
               <h3>DCE 18 Months  </h3>
-              <p>Building strong analytical and problem-solving skills through comprehensive mathematical education</p>
+              <p>A fast-track, practical program focused on hands-on skills for construction and site supervision roles.</p>
             </div>
 
             
@@ -2481,10 +2489,10 @@ main {
             <div class="review-card" data-review-id="1">
               <div class="review-header">
                 <div class="review-avatar">
-                  <img src="https://i.pravatar.cc/80?img=1" alt="Aarav Sharma">
+                  <img src="{% static 'home/images/students/nibesh.jpeg' %}" alt="Aarav Sharma">
                 </div>
                 <div class="review-info">
-                  <h4 class="review-name">Aarav Sharma</h4>
+                  <h4 class="review-name">Nibesh Gautam</h4>
                   <div class="review-rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -2492,12 +2500,12 @@ main {
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                   </div>
-                  <span class="review-class">Class of 2023</span>
+                  <span class="review-class">Class of 2082</span>
                 </div>
               </div>
-              <p class="review-text">Great faculty and calm environment. The teachers here really care about each student's progress...</p>
+              <p class="review-text"> शिक्षकहरूको माया , शान्त वातावरण र प्रेरणादायी शिक्षण शौलीले मलाई धेरै कुरा सिक्न प्रेरित हुन्छ । समग्रमा मेरो विद्यालय अनुभव प्रेरणादायी , शिक्षाप्रद र  सभ्झनालयक छ । </p>
               <div class="review-footer">
-                <span class="review-subject">Mathematics</span>
+                <span class="review-subject">Science</span>
               </div>
             </div>
 
@@ -2966,20 +2974,39 @@ main {
 document.addEventListener('DOMContentLoaded', function() {
   // ========== PROGRAM DATA ==========
   const programData = {
-    'science': {
-      title: '+2 Science',
-      subtitle: 'Higher Secondary Science Program',
-      description: 'Foundation for scientific and technical careers',
-      duration: '2 Years (Plus Two Level)',
-      streams: 'Physics, Chemistry, Biology, Mathematics',
-      coreSubjects: [
+    'DCE3year': {
+      title: '3-Year Diploma in Civil Engineering (DCE)',
+      subtitle: 'Comprehensive civil engineering training for advanced technical careers.',
+      description: ' construction, environmental engineering, and project work. Prepares graduates for roles such as site engineer, structural draughtsman, project coordinator, or for further studies in civil engineering.',
+      duration: '3 Years ',
+      streams: ', Chemistry, Biology, Mathematics',
+        coreSubjects: [
         'Advanced Physics & Chemistry',
-        'Biology & Biotechnology',
         'Mathematics & Statistics',
         'Computer Science Fundamentals',
-        'Research & Laboratory Work'
+        'Research & Laboratory Work',
+        'Surveying',
+        'Engineering Drawing',
+        'Structural Analysis'
       ],
-      careerPathways: 'Engineering, Medical, Research, Environmental Science, Technology'
+      careerPathways: 'Site Engineer,Structural Draughtsman,Quantity Surveyor,Construction Supervisor,Quality Control Inspector, And more ! '
+    },
+    'DCE18': {
+      title: '18-Month Diploma in Civil Engineering ',
+      subtitle: 'Practical-focused, fast-track civil engineering training.',
+      description: 'Emphasizes hands-on skills in construction, surveying, and workshop practice. Prepares for roles like sub-overseer, site supervisor or assistant surveyor.',
+      duration: '18 Months ',
+      streams: 'Construction Supervision,Surveying,Materials,Project Work /OJT (6 months)',
+      coreSubjects: [
+        'Construction Materials',
+        
+        'Building Construction Techniques',
+        'Engineering Drawing',
+        'Workshop Practice',
+        'Computer Applications',
+
+      ],
+      careerPathways: 'Sub-overseer,Assistant Surveyor,Construction Foreman,Site Supervisor,and Many More ! '
     },
     'plus2-science': {
       title: '+2 Science',
@@ -3001,7 +3028,7 @@ document.addEventListener('DOMContentLoaded', function() {
       subtitle: 'Computer Science',
       description: 'Understanding technology and programming',
       duration: '2 Years (Plus Two Level)',
-      streams: 'English, Math, Nepali',
+      streams: 'English, Math, Nepali , Account , Economics',
       coreSubjects: [
         'Programming Fundamentals',
         'Data Structures',
@@ -3011,27 +3038,12 @@ document.addEventListener('DOMContentLoaded', function() {
       ],
       careerPathways: 'AI/ML, Back-End Dev, Front-End Dev, Teacher, Full Stack Developer'
     },
-    'mathematics': {
-      title: '+2 Mathematics',
-      subtitle: 'Advanced Mathematics Program',
-      description: 'Building analytical minds for the future',
-      duration: '2 Years (Plus Two Level)',
-      streams: 'Pure Mathematics, Applied Mathematics, Statistics',
-      coreSubjects: [
-        'Calculus & Advanced Algebra',
-        'Statistics & Probability',
-        'Discrete Mathematics',
-        'Mathematical Modeling',
-        'Problem Solving Techniques'
-      ],
-      careerPathways: 'Engineering, Data Science, Finance, Research, Teaching'
-    },
     'management': {
       title: '+2 Management',
       subtitle: 'Business Management Program',
       description: 'Developing future business leaders',
       duration: '2 Years (Plus Two Level)',
-      streams: 'Business Studies, Accounting, Economics',
+      streams: 'Accounting ,Economics ,Business Studies , Marketing , Business Mathematics',
       coreSubjects: [
         'Business Administration',
         'Financial Accounting',
@@ -3046,7 +3058,7 @@ document.addEventListener('DOMContentLoaded', function() {
       subtitle: 'Education Program',
       description: 'Preparing future educators and leaders',
       duration: '2 Years (Plus Two Level)',
-      streams: 'Education Studies, Psychology, Teaching Methods',
+      streams: 'Nepali, English, Social Studies and Life Skills or Mathematics',
       coreSubjects: [
         'Educational Psychology',
         'Teaching Methodologies',
@@ -3070,7 +3082,22 @@ document.addEventListener('DOMContentLoaded', function() {
         'Event Management'
       ],
       careerPathways: 'Hotel Management, Tourism, Event Planning, Restaurant Management'
-    }
+    },
+'Future': {
+  title: 'What\'s Next?',
+  subtitle: 'Choosing Your Path After +2',
+  description: 'After completing +2, students can choose academic streams, professional courses, or skill-based programs based on their interests and career goals.',
+  duration: 'Depends on the chosen program: 1–4 years for degrees, 6 months–3 years for diplomas and certifications',
+  streams: 'Science, Management, Humanities, Education, Law, Hotel Management, Technical and Vocational Courses',
+  coreSubjects: [
+    'Depends on the chosen stream; e.g., Physics, Chemistry, Biology, Mathematics for Science',
+    'Accounting, Economics, Business Studies, Marketing for Management',
+    'Nepali, English, Sociology, Psychology for Humanities',
+    'Hotel Operations, Food Production, Accommodation Management for Hotel Management'
+  ],
+  careerPathways: 'Further study (Bachelor’s), professional diplomas, vocational training, or entry-level jobs in respective fields'
+}
+
   };
 
   // ========== NOTICE DATA FROM DJANGO ==========
@@ -3082,7 +3109,7 @@ const noticeData = {
       title: "{{ notice.title|truncatechars:40|escapejs }}",
       date: "{{ notice.created_at|date:'F d, Y' }}",
       description: "{{ notice.description|truncatechars:70|escapejs }}",
-      image: "{% if notice.image %}{{ notice.image.url|escapejs }}{% else %}{% static 'home/images/nope.jpg' %}{% endif %}"
+      image: "{% if notice.image %}{{ notice.image.url|escapejs }}{% else %}{% endif %}"
     }{% if not forloop.last %},{% endif %}
   {% endfor %}
 };
