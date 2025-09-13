@@ -1,7 +1,7 @@
 {% extends "Base/base.html" %}
 {% load static %}
 
-{% block title %}Shree Rastriya Mavi School - Academics{% endblock title %}
+{% block title %}Shree Rastriya Secondary School - Academics{% endblock title %}
 
 {% block links %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1534,7 +1534,7 @@
     <div class="container">
         <div class="cta-content" data-aos="fade-up">
             <h2 style="color: black;">Ready to Begin Your Academic Journey?</h2>
-            <p style="color:black"> Join our community of learners and discover your potential at Shree Rastriya Mavi School.</p>
+            <p style="color:black"> Join our community of learners and discover your potential at Shree Rastriya Secondary School.</p>
             <div class="cta-buttons">
                 <a href="{% url "home:admission" %}"> 
                 <button class="btn btn-primary btn-large">Apply Now</button>
@@ -1569,7 +1569,47 @@
             }
             
             link.href = url.toString();
+            
+            link.addEventListener('click', function(e) {
+                // Let the default navigation happen, but add scroll behavior
+                setTimeout(() => {
+                    // Find the table or members section to scroll to
+                    const tableSection = document.querySelector('.members-table') || 
+                                        document.querySelector('.table-responsive') || 
+                                        document.querySelector('table') ||
+                                        document.querySelector('.pagination-container');
+                    
+                    if (tableSection) {
+                        tableSection.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'start',
+                            inline: 'nearest'
+                        });
+                    }
+                }, 50);
+            });
         });
+
+        // Check if we're on a paginated page (page parameter exists and > 1)
+        const currentPage = searchParams.get('page');
+        if (currentPage && parseInt(currentPage) > 1) {
+            // Find the table or members section to scroll to
+            const tableSection = document.querySelector('.members-table') || 
+                                document.querySelector('.table-responsive') || 
+                                document.querySelector('table') ||
+                                document.querySelector('.pagination-container');
+            
+            if (tableSection) {
+                // Small delay to ensure page is fully loaded
+                setTimeout(() => {
+                    tableSection.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start',
+                        inline: 'nearest'
+                    });
+                }, 100);
+            }
+        }
     });
 </script>
 

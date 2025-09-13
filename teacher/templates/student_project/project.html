@@ -1203,7 +1203,7 @@ document.addEventListener('DOMContentLoaded', function() {
             date: "{{ project.uploaded_at|date:'M d, Y' }}",
             time: "{{ project.uploaded_at|date:'g:i A' }}",
             status: "{{ project.status }}",
-            description: "{{ project.title|escapejs }}",
+            description: "{{ project.description|escapejs }}",
             pdfUrl: "{{ project.pdf.url }}",
             feedback: ""
         }{% if not forloop.last %},{% endif %}
@@ -1509,7 +1509,6 @@ function filterProjects(filter) {
             showToast(`"${project.title}" project...`, 'success');
         });
     });
-    
    approveButtons.forEach(button => {
     button.addEventListener('click', function() {
         const projectId = this.getAttribute('data-project-id');

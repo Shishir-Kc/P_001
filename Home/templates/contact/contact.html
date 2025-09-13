@@ -1,7 +1,7 @@
 {% extends "Base/base.html" %}
 {% load static %}
 
-{% block title %}Shree Rastriya Mavi School - Contact Us{% endblock title %}
+{% block title %}Shree Rastriya Secondary School - Contact Us{% endblock title %}
 
 {% block links %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -642,7 +642,7 @@
                     </div>
                     <h3 class="quick-title">Call Us</h3>
                     <p class="quick-description">Speak directly with our admissions team</p>
-                    <button class="quick-action" onclick="window.location.href='tel:+977123456789'">
+                    <button class="quick-action" onclick="window.location.href='tel:025-475766'">
                         Call Now
                     </button>
                 </div>
@@ -652,7 +652,7 @@
                     </div>
                     <h3 class="quick-title">Email Us</h3>
                     <p class="quick-description">Send us your questions anytime</p>
-                    <button class="quick-action" onclick="window.location.href='mailto:info@srmschool.edu.np'">
+                    <button class="quick-action" onclick="window.location.href='mailto:rastriyatecsschool@gmail.com'">
                         Send Email
                     </button>
                 </div>
@@ -683,9 +683,9 @@
                         </div>
                         <div class="info-content">
                             <h4>Address</h4>
-                            <p>Shree Rastriya Mavi School<br>
-                            Kathmandu, Nepal<br>
-                            Postal Code: 44600</p>
+                            <p>Shree Rastriya Secondary School<br>
+                            Itahari, Nepal<br>
+                            Postal Code: 56705</p>
                         </div>
                     </div>
 
@@ -695,9 +695,9 @@
                         </div>
                         <div class="info-content">
                             <h4>Phone Numbers</h4>
-                            <p>Main Office: +977-1-123-4567<br>
-                            Admissions: +977-1-123-4568<br>
-                            Emergency: +977-1-123-4569</p>
+                            <p>Main Office: 025-475766<br>
+                            {% comment %} Admissions: +977-1-123-4568<br>
+                            Emergency: +977-1-123-4569</p> {% endcomment %}
                         </div>
                     </div>
 
@@ -707,9 +707,9 @@
                         </div>
                         <div class="info-content">
                             <h4>Email Addresses</h4>
-                            <p>General: info@srmschool.edu.np<br>
-                            Admissions: admissions@srmschool.edu.np<br>
-                            Principal: principal@srmschool.edu.np</p>
+                            <p>General: rastriyatecsschool@gmail.com<br>
+                            {% comment %} Admissions: admissions@srmschool.edu.np<br>
+                            Principal: principal@srmschool.edu.np</p> {% endcomment %}
                         </div>
                     </div>
 
@@ -719,9 +719,8 @@
                         </div>
                         <div class="info-content">
                             <h4>Office Hours</h4>
-                            <p>Monday - Friday: 8:00 AM - 5:00 PM<br>
-                            Saturday: 9:00 AM - 2:00 PM<br>
-                            Sunday: Closed</p>
+                            <p>Sunday - Friday: 6:30 AM - 4:00 PM<br>
+                            Saturday: Closed</p>
                         </div>
                     </div>
 
@@ -732,7 +731,7 @@
                         <div class="info-content">
                             <h4>Follow Us</h4>
                             <p>Stay connected on social media<br>
-                            Facebook | Instagram | Twitter</p>
+                            Facebook </p>
                         </div>
                     </div>
                 </div>
@@ -820,6 +819,12 @@
 </div>
 
 <script>
+function scrollToMap() {
+    document.getElementById('mapSection').scrollIntoView({
+        behavior: 'smooth'
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contactForm');
     const phoneInput = document.getElementById('phone');
@@ -1015,13 +1020,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const rate = scrolled * -0.3; // Adjust rate for desired effect
             header.style.transform = `translateY(${rate}px)`;
         }, { passive: true });
-    }
-
-    // Smooth scroll for internal links
-    function scrollToMap() {
-        document.getElementById('mapSection').scrollIntoView({
-            behavior: 'smooth'
-        });
     }
 
     // Performance optimization: Cleanup observers when page is hidden

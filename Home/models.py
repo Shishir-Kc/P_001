@@ -98,7 +98,8 @@ class Achievements (models.Model):
         return " Numbers for achivements"
     
     class Meta:
-        verbose_name_plural = "Achivement"
+        verbose_name = 'Achivement'
+        verbose_name_plural = "Achivements"
 
 
 class Academics(models.Model):
@@ -166,6 +167,7 @@ class Contact(models.Model):
 
     class Meta:
         verbose_name = "Applicant"
+        verbose_name_plural = 'Applicants'
 
     def __str__(self):
         return f"admission inquerry from {self.full_name}"

@@ -109,55 +109,11 @@ class YEAR_MONTH(models.Model):
   
     current_year = models.IntegerField(default=get_current_year)  
 
+    class Meta:
+        verbose_name = 'Year'
+        verbose_name_plural = 'years'
+
     def __str__(self):
         return f"{self.month} {self.current_year}"
-
-
-"""
-
-    to do ! 
-
-    1 )     make  the layout of partner program new like change the stats layout to upper  
-
-    2) test the back end properly ! 
-
-    3) make the backend flow proper - Done ! 
-
-    4) add a option to upload student image from student dashboard not directly from login page !  - done
-
-    5) make a proper class / Grade section  !  - Done
-
-    6) add an option to change refrence code !  - Done 
-
-    7) add middleware ! to check if user is logged in or not !  - Done
-
-    8) add an ability to update the refrence code , only if teacher removes the student !  - Done
-
-    9) ui improvements ! 
-
-    10 ) add an option like to send a context msg why the teacher rejected the submitted project ! 
-
-    11) add image upload limit for student max 200kb ! 
-    
-    12) fix images changes for teacher also ! 
-
-    13) add a functionality for teacher : shorter project title , a btn to view full project detail , and an rejection description box where teacher will write whats wrong about student project !  - Done
-
-    14) add a background worker ! for sending email ! w
-
-    
-    15) proper class filteration per school
-    ! Max time this week ! 
-
-
-    16) check for the class model and teacher model
-
-    
-    u better do it ! 
-
-
-"""
-
-
 
 

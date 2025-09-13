@@ -337,20 +337,20 @@
       <span class="breadcrumb-current">Notice Details</span>
     </nav>
 
-     Responsive news title 
     <h1 class="news-title">{{ news.title }}</h1>
 
 
-    {% if news.file %}
+    {% if news.image %}
     <div class="news-image-container">
-  <img 
-    src="{% if news.file %}{{ news.file.url }}{% else %}{% static 'home/images/nope.jpg' %}{% endif %}" 
-    alt="News article image" 
-    class="news-image"
-  >
-</div>
+      <img 
+        id="newsDetailImage"
+        src="{% if news.image %}{{ news.image.url }}{% else %}{% static 'home/images/nope.jpg' %}{% endif %}" 
+        alt="News article image" 
+        class="news-image"
+        style="cursor: pointer;"
+      >
+    </div>
     {% else %}
-    
     {% endif %}
 
     <section class="news-section">
@@ -371,7 +371,7 @@
             </svg>
           </div>
           <div class="attachment-details">
-            <div class="attachment-name">{{ news.title|truncatechars:50 }}.pdf</div>
+            <div class="attachment-name">{{ news.title|truncatechars:50 }}</div>
             <div class="attachment-size">{{ news.file.size|filesizeformat }}</div>
           </div>
         </div>
@@ -389,6 +389,43 @@
     </div>
   </div>
 </div>
+
+<!-- Image Fullscreen Modal -->
+<div id="imageModalOverlay" style="display:none; position:fixed; z-index:9999; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); align-items:center; justify-content:center;">
+  <img id="imageModalImg" src="" alt="Full Image" style="max-width:90vw; max-height:90vh; border-radius:12px; box-shadow:0 4px 32px rgba(0,0,0,0.5);">
+  <button id="closeImageModalBtn" style="position:absolute; top:32px; right:32px; background:none; border:none; color:white; font-size:2rem; cursor:pointer; z-index:10001;" aria-label="Close image">&times;</button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var img = document.getElementById('newsDetailImage');
+  var modal = document.getElementById('imageModalOverlay');
+  var modalImg = document.getElementById('imageModalImg');
+  var closeBtn = document.getElementById('closeImageModalBtn');
+  if (img && modal && modalImg && closeBtn) {
+    img.addEventListener('click', function() {
+      modal.style.display = 'flex';
+      modalImg.src = img.src;
+    });
+    closeBtn.addEventListener('click', function() {
+      modal.style.display = 'none';
+      modalImg.src = '';
+    });
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        modalImg.src = '';
+      }
+    });
+    document.addEventListener('keydown', function(e) {
+      if (modal.style.display === 'flex' && (e.key === 'Escape' || e.key === 'Esc')) {
+        modal.style.display = 'none';
+        modalImg.src = '';
+      }
+    });
+  }
+});
+</script>
 {% endblock content %}
 {% block footer %}
 
