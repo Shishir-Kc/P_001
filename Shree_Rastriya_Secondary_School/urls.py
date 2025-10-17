@@ -26,7 +26,6 @@ app_name = 'Shree_Rastriya_secondary_School'
 urlpatterns = [
     path('admin/', admin.site.urls,name="admin_profile"),
     path('accounts/login/',include('login.urls'),name="login"),
-    path('home/',include('Home.urls'),name="home"),
     path('',include('Home.urls'),name="home"),
     path('student/',include("student.urls"),name="student"),
     path('teacher/',include("teacher.urls"),name="teacher_dashboard"),
