@@ -35,5 +35,8 @@ class Teacher(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Teacher_Account'
+        verbose_name_plural = "Teacher_Accounts"
 
 
