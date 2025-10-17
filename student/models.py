@@ -42,7 +42,8 @@ class Student_info(models.Model):
 
 
     class Meta:
-        verbose_name = "student_info" 
+        verbose_name = "Student_Account"
+        verbose_name_plural = "Student_Accounts" 
 
     def __str__(self):
         return self.first_name  + " " +self.last_name
@@ -62,7 +63,7 @@ class Attendence(models.Model):
     attended_class = models.BooleanField(verbose_name='class_attended')
 
     class Meta:
-        verbose_name = 'attendence'
+        verbose_name = 'Student_Attendence'
         constraints = [
             models.UniqueConstraint(fields=['student', 'date_month'], name='unique_student_date')
         ]
