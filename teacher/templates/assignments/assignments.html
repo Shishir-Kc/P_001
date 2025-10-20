@@ -4,7 +4,7 @@
 
 {% block title %}Upload Notes - Teacher Dashboard{% endblock %}
 
-{% block user_avatar %} {{teacher.teacher_image.url}} {% endblock %}
+{% block user_avatar %}  {% if teacher.teacher_image %} {{teacher.teacher_image.url}} {% else %} {% static 'teacher/images/default_user.png' %} {% endif %} {% endblock %}
 
 {% block header_title %}Upload Notes{% endblock %}
 
