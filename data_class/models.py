@@ -112,6 +112,7 @@ class YEAR_MONTH(models.Model):
     class Meta:
         verbose_name = 'Year'
         verbose_name_plural = 'years'
+        unique_together = ('month','current_year')
 
     def __str__(self):
         return f"{self.month} {self.current_year}"
