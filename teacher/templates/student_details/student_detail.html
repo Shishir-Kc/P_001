@@ -5,7 +5,7 @@
 
 {% block header_title %}Edit Student{% endblock %}
 
-{% block user_avatar %}{{teacher.teacher_image.url}}{% endblock %}
+{% block user_avatar %} {% if teacher.teacher_image %} {{teacher.teacher_image.url}} {% else %} {% static 'teacher/images/default_user.png' %} {% endif %} {% endblock %}
 
 {% block user_name %}{{teacher.first_name}} {{teacher.last_name}}{% endblock %}
 

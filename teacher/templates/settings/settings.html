@@ -4,7 +4,7 @@
 {% block title %}Settings - Teacher Dashboard{% endblock %}
 
 {% block header_title %}Settings{% endblock %}
-{% block user_avatar %} {{teacher.teacher_image.url}} {% endblock %}
+{% block user_avatar %}  {% if teacher.teacher_image %} {{teacher.teacher_image.url}} {% else %} {% static 'teacher/images/default_user.png' %} {% endif %}  {% endblock %}
 {% block extra_css %}
 <style>
     /* Settings page specific styles - FULL SCREEN */
@@ -424,7 +424,7 @@
 
             <!-- Profile Info Display -->
             <div class="profile-info-section">
-                <img src="{{teacher.teacher_image.url}}" alt="Profile Photo" class="profile-avatar">
+                <img src=" {% if teacher.teacher_image %} {{teacher.teacher_image.url}} {% else %} {% static 'teacher/images/default_user.png' %} {% endif %} " alt="Profile Photo" class="profile-avatar">
                 <div class="profile-details">
                     <h3>{{teacher.first_name}} {{teacher.last_name}}</h3>
                     <p><strong>Email:</strong> {{teacher.email}}</p>

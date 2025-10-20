@@ -4,7 +4,7 @@
 {% block title %}My Students - Teacher Dashboard{% endblock %}
 
 {% block header_title %}My Students{% endblock %}
-{% block user_avatar %} {{teacher.teacher_image.url}} {% endblock %}
+{% block user_avatar %}  {% if teacher.teacher_image %} {{teacher.teacher_image.url}} {% else %} {% static 'teacher/images/default_user.png' %} {% endif %}  {% endblock %}
 {% block extra_css %}
 <style>
     /* Students page specific styles - FULL SCREEN */

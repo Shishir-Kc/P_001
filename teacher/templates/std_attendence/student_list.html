@@ -4,7 +4,9 @@
 {% block title %}Student List - Teacher Dashboard{% endblock %}
 
 {% block header_title %}Student List{% endblock %}
-{% block user_avatar %}{{teacher.teacher_image.url}}{% endblock %}
+
+{% block user_avatar %} {% if teacher.teacher_image %} {{teacher.teacher_image.url}} {% else %} {% static 'teacher/images/nope.jpg' %} {% endif %}  {% endblock %}
+
 
 {% block extra_css %}
 <style>
