@@ -770,7 +770,7 @@
              data-phone="{{ teacher.contact|default:'+977 (98000-0000)' }}" 
              data-office="{{ teacher.office|default:'Office TBA' }}" hidden>
             <div class="flex items-start">
-                <img src="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %}/placeholder.svg?height=60&width=60{% endif %}" 
+                <img src="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %} {% static 'student/images/default_user.png' %}{% endif %}" 
                      alt="{{ teacher.first_name }} {{ teacher.last_name }}" 
                      class="teacher-avatar" 
                      data-teacher-name="{{ teacher.first_name }} {{ teacher.last_name }}"
@@ -778,14 +778,14 @@
                      data-teacher-subjects="{% for subject in teacher.subject.all %}{{ subject.name }}{% if not forloop.last %}, {% endif %}{% endfor %}"
                      data-teacher-phone="{{ teacher.contact|default:'+1 (555) 000-0000' }}"
            
-                     data-teacher-image="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %}/placeholder.svg?height=120&width=120{% endif %}">
+                     data-teacher-image="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %}{% static 'student/images/default_user.png' %}{% endif %}">
                 <div class="teacher-info flex-1">
                     <h3 data-teacher-name="{{ teacher.first_name }} {{ teacher.last_name }}"
                        data-teacher-email="{{ teacher.email }}"
                        data-teacher-subjects="{% for subject in teacher.subject.all %}{{ subject.name }}{% if not forloop.last %}, {% endif %}{% endfor %}"
                        data-teacher-phone="{{ teacher.contact|default:'+1 (555) 000-0000' }}"
         
-                       data-teacher-image="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %}/placeholder.svg?height=120&width=120{% endif %}">{{ teacher.first_name }} {{ teacher.last_name }}</h3>
+                       data-teacher-image="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %}{% static 'student/images/default_user.png' %}{% endif %}">{{ teacher.first_name }} {{ teacher.last_name }}</h3>
                     <p class="flex items-center gap-2">
                         <svg class="email-icon" fill="currentColor" viewBox="0 0 256 256">
                             <path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM203.43,64,128,133.15,52.57,64ZM216,192H40V74.19l82.59,75.71a8,8,0,0,0,10.82,0L216,74.19V192Z"></path>
@@ -839,19 +839,19 @@
                 <tr class="fade-in-element" data-name="{{ teacher.first_name }} {{ teacher.last_name }}">
 
                     <td>
-                        <img src="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %}{% endif %}" 
+                        <img src="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %} {% static 'student/images/default_user.png' %}{% endif %}" 
                              alt="{{ teacher.first_name }} {{ teacher.last_name }}" 
                              class="table-avatar" 
                              data-teacher-name="{{ teacher.first_name }} {{ teacher.last_name }}"
                              data-teacher-email="{{ teacher.email }}"
                              data-teacher-phone="{{ teacher.contact|default:'+977 000000-0000' }}"
-                             data-teacher-image="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %}/placeholder.svg?height=120&width=120{% endif %}">
+                             data-teacher-image="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %}{% static 'student/images/default_user.png' %}{% endif %}">
                     </td>
                     <td class="teacher-name" 
                         data-teacher-name="{{ teacher.first_name }} {{ teacher.last_name }}"
                         data-teacher-email="{{ teacher.email }}"
                         data-teacher-office="{{ teacher.office|default:'Office TBA' }}"
-                        data-teacher-image="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %}/placeholder.svg?height=120&width=120{% endif %}">{{ teacher.first_name }} {{ teacher.last_name }}</td>
+                        data-teacher-image="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %}{% static 'student/images/default_user.png' %}{% endif %}">{{ teacher.first_name }} {{ teacher.last_name }}</td>
                     <td>
                         <a href="" class="email-link" onclick="contactTeacher('{{ teacher.email }}')">
                             <svg class="email-icon" fill="currentColor" viewBox="0 0 256 256">
