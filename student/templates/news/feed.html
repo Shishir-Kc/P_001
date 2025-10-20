@@ -753,7 +753,7 @@
                  data-title="{{news.title}}"
                  data-description="{{news.description}}"
                  data-date="{{news.created_at}}"
-                 data-image="{% if news.image %}{{news.image.url}}{% else %}https://via.placeholder.com/400x225/007bff/ffffff?text=News{% endif %}"
+                 data-image="{% if news.image %}{{news.image.url}}{% else %}{% static 'student/images/nope.jpg' %}{% endif %}"
                  onclick="openNewsModal(this)">
                 <div class="news-content">
                     <div class="news-category">{{news.category}}</div>
