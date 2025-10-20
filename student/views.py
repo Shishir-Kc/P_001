@@ -1,3 +1,8 @@
+
+
+
+
+
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from . import models as std_md
@@ -6,8 +11,8 @@ from data_class import models as Data
 from django.contrib.auth import logout
 from teacher import models as teach
 from django.contrib import messages
-from django.core.mail import send_mail
-from teacher.utils import filtered_month,total_days,current_month,total_class_attained_missed_this_month
+from u_task.task import send_email
+from teacher.utils import total_days,current_month,total_class_attained_missed_this_month
 import datetime
 
 
@@ -131,13 +136,7 @@ def student_project(request):
         for i in teacher:
            teacher_mail.append(i.email)
 
-        send_mail(
-            subject="Project submission",
-            message=full_message,
-            from_email= email,
-            recipient_list=teacher_mail,  #
-            fail_silently=False,
-        )
+        send_email.delay(subject="Project submission",message=full_message,sender=email,recivers=teacher_mail)
 
         messages.success(request,"uploaded Sucessfully ! ")
         return redirect ("student:project")
@@ -195,7 +194,7 @@ def attendence(request):
             'class_attained':total_class_attained_missed_this_month(pk=std_id,type_request='attained'),
             'class_missed':total_class_attained_missed_this_month(pk=std_id,type_request='missed'),
             'total_days':total_days(),
-            'current_month':current_month(date=filtered_month(date=datetime.date.today())),
+            'current_month':current_month(date=datetime.date.today().month),
         }
     return render(request,'attendence/attendence.html',context)
 
