@@ -14,22 +14,18 @@ def is_std_data_filled(pk):
         return False
 
 
-def filtered_month(date):
-    month = str(date)
-    filtered_month = int((month[6:][:-3]))
-    return filtered_month
-
-
 def total_days():
+
     current_month = YEAR_MONTH.objects.get(
-        current_year=datetime.date.today().year,
-        month=filtered_month(date=datetime.date.today())
-    )
+         current_year=datetime.date.today().year,
+         month=datetime.date.today().month
+     )
     data = {
         'number_of_days': current_month.number_of_days,
         'number_of_holidays': current_month.holiday,
         'number_of_unexpected_holidays': current_month.unexpected_holiday,
     }
+
     return data
 
 
