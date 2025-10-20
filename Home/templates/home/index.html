@@ -1,8 +1,6 @@
 {% extends "Base/base.html" %}
 {% load static %}
-
 {% block title %}{{title|default:"Shree Rastriya Secondary School"}}{% endblock title %}
-
 {% block links %}  
 <!-- Google Fonts - Optimized loading -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +9,6 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 {% endblock links %}
-
 {% block content %}
 <style>
 /* ========== OPTIMIZED STYLES ========== */
@@ -30,12 +27,10 @@
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --border-radius: 12px;
 }
-
 /* Main content offset for fixed header */
 main {
   margin-top: 60px;
 }
-
 /* ========== HERO SECTION ========== */
 .hero-section {
   height: 100vh;
@@ -47,7 +42,6 @@ main {
   margin-top: -60px;
   overflow: hidden;
 }
-
 .hero-slideshow {
   position: absolute;
   top: 0;
@@ -56,7 +50,6 @@ main {
   height: 100%;
   z-index: 1;
 }
-
 .hero-slide {
   position: absolute;
   top: 0;
@@ -66,18 +59,15 @@ main {
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
-
 .hero-slide.active {
   opacity: 1;
 }
-
 .hero-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
 }
-
 .hero-slide::before {
   content: '';
   position: absolute;
@@ -88,7 +78,6 @@ main {
   background: linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%);
   z-index: 1;
 }
-
 .hero-content {
   text-align: center;
   max-width: 900px;
@@ -96,7 +85,6 @@ main {
   z-index: 2;
   position: relative;
 }
-
 .hero-content h1 {
   color: var(--white);
   font-size: clamp(2rem, 5vw, 4rem);
@@ -106,7 +94,6 @@ main {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
   font-family: 'Playfair Display', serif;
 }
-
 .hero-content h2 {
   color: var(--white);
   font-size: clamp(1rem, 2.5vw, 1.25rem);
@@ -116,7 +103,6 @@ main {
   text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
   font-family: 'Inter', sans-serif;
 }
-
 /* Animation on load */
 .hero-content h1,
 .hero-content h2,
@@ -125,19 +111,15 @@ main {
   transform: translateY(40px);
   animation: fadeSlideUp 0.8s ease-out forwards;
 }
-
 .hero-content h1 {
   animation-delay: 0.2s;
 }
-
 .hero-content h2 {
   animation-delay: 0.5s;
 }
-
 .hero-content .explore-btn {
   animation-delay: 0.8s;
 }
-
 /* Keyframes */
 @keyframes fadeSlideUp {
   to {
@@ -145,7 +127,6 @@ main {
     transform: translateY(0);
   }
 }
-
 .explore-btn {
   padding: 1rem 2rem;
   border-radius: 50px;
@@ -163,12 +144,10 @@ main {
   gap: 0.5rem;
   text-decoration: none;
 }
-
 .explore-btn:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-heavy);
 }
-
 /* Slideshow Indicators */
 .slideshow-indicators {
   position: absolute;
@@ -179,7 +158,6 @@ main {
   gap: 12px;
   z-index: 3;
 }
-
 .indicator {
   width: 12px;
   height: 12px;
@@ -189,16 +167,13 @@ main {
   transition: var(--transition-smooth);
   border: none;
 }
-
 .indicator.active {
   background-color: var(--white);
   transform: scale(1.2);
 }
-
 .indicator:hover {
   background-color: rgba(255, 255, 255, 0.8);
 }
-
 /* ========== CONTENT SECTIONS ========== */
 .content-section {
   width: 100%;
@@ -207,13 +182,11 @@ main {
   align-items: center;
   justify-content: center;
 }
-
 .container {
   max-width: 1200px;
   width: 100%;
   padding: 0 2rem;
 }
-
 .content-section h2 {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 700;
@@ -226,11 +199,9 @@ main {
   justify-content: center;
   gap: 0.75rem;
 }
-
 .content-section h2 i {
   color: var(--primary-blue);
 }
-
 .content-section p {
   font-size: 1.1rem;
   line-height: 1.6;
@@ -242,7 +213,6 @@ main {
   font-family: 'Inter', sans-serif;
   color: var(--text-light);
 }
-
 /* ========== COURSES AND NOTIFICATIONS LAYOUT - RIGHT POSITIONED ========== */
 .courses-notifications-wrapper {
   display: grid;
@@ -251,12 +221,10 @@ main {
   align-items: start;
   margin-top: 2rem;
 }
-
 .courses-main-content {
   width: 100%;
   order: 1;
 }
-
 /* ========== NOTIFICATIONS SECTION - RIGHT SIDEBAR LAYOUT ========== */
 .notifications-section {
   background: var(--white);
@@ -270,7 +238,6 @@ main {
   width: 100%;
   order: 2;
 }
-
 /* Mobile notification toggle button */
 .notification-toggle {
   display: none;
@@ -289,16 +256,13 @@ main {
   z-index: 1000;
   transition: var(--transition-smooth);
 }
-
 .notification-toggle:hover {
   transform: scale(1.1);
   box-shadow: var(--shadow-heavy);
 }
-
 .notification-toggle.active {
   background: linear-gradient(135deg, var(--teal-color) 0%, var(--dark-teal) 100%);
 }
-
 .notifications-header {
   background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
   color: var(--white);
@@ -308,18 +272,15 @@ main {
   gap: 0.75rem;
   position: relative;
 }
-
 .notifications-header h3 {
   font-size: 1.1rem;
   font-weight: 700;
   margin: 0;
   font-family: 'Poppins', sans-serif;
 }
-
 .notifications-header i {
   font-size: 1rem;
 }
-
 .notifications-table {
   max-height: calc(100vh - 180px);
   overflow-y: auto;
@@ -327,20 +288,16 @@ main {
   scrollbar-color: var(--primary-blue) transparent;
   background: var(--white);
 }
-
 .notifications-table::-webkit-scrollbar {
   width: 6px;
 }
-
 .notifications-table::-webkit-scrollbar-track {
   background: transparent;
 }
-
 .notifications-table::-webkit-scrollbar-thumb {
   background: var(--primary-blue);
   border-radius: 3px;
 }
-
 .notification-row {
   padding: 1rem;
   border-bottom: 1px solid #f1f5f9;
@@ -349,16 +306,13 @@ main {
   position: relative;
   background: var(--white);
 }
-
 .notification-row:hover {
   background: #f8fafc;
   transform: translateX(-3px);
 }
-
 .notification-row:last-child {
   border-bottom: none;
 }
-
 .notification-title {
   font-size: 0.9rem;
   font-weight: 600;
@@ -371,7 +325,6 @@ main {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
 .notification-preview {
   font-size: 0.8rem;
   color: var(--text-light);
@@ -382,7 +335,6 @@ main {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
 .notification-meta {
   display: flex;
   justify-content: space-between;
@@ -390,14 +342,12 @@ main {
   font-size: 0.7rem;
   color: var(--text-light);
 }
-
 .notification-date {
   background: var(--bg-gray);
   padding: 0.2rem 0.4rem;
   border-radius: 10px;
   font-weight: 500;
 }
-
 .notification-category {
   display: flex;
   align-items: center;
@@ -405,23 +355,19 @@ main {
   color: var(--primary-blue);
   font-weight: 500;
 }
-
 .notification-category i {
   font-size: 0.7rem;
 }
-
 .no-notifications {
   text-align: center;
   padding: 2rem 1rem;
   color: var(--text-light);
 }
-
 .no-notifications i {
   font-size: 2rem;
   margin-bottom: 1rem;
   opacity: 0.5;
 }
-
 /* ========== CURRICULUM GRID ========== */
 .curriculum-grid {
   display: grid;
@@ -429,7 +375,6 @@ main {
   gap: 2rem;
   margin-bottom: 3rem;
 }
-
 .curriculum-card {
   background: var(--white);
   padding: 2.5rem 2rem;
@@ -442,7 +387,6 @@ main {
   position: relative;
   overflow: hidden;
 }
-
 .curriculum-card::before {
   content: '';
   position: absolute;
@@ -453,17 +397,14 @@ main {
   background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.1), transparent);
   transition: var(--transition-smooth);
 }
-
 .curriculum-card:hover {
   transform: translateY(-8px);
   box-shadow: var(--shadow-heavy);
   border-color: var(--primary-blue);
 }
-
 .curriculum-card:hover::before {
   left: 100%;
 }
-
 .card-icon {
   width: 80px;
   height: 80px;
@@ -477,11 +418,9 @@ main {
   font-size: 2rem;
   transition: var(--transition-smooth);
 }
-
 .curriculum-card:hover .card-icon {
   transform: scale(1.1) rotate(5deg);
 }
-
 .curriculum-card h3 {
   font-size: 1.25rem;
   font-weight: 700;
@@ -489,19 +428,16 @@ main {
   color: var(--text-dark);
   font-family: 'Poppins', sans-serif;
 }
-
 .curriculum-card p {
   color: var(--text-light);
   line-height: 1.6;
   margin-bottom: 0;
 }
-
 /* ========== SECTION DIVIDER ========== */
 .section-divider {
   text-align: center;
   margin: 4rem 0;
 }
-
 .section-divider h1 {
   font-size: clamp(2rem, 4vw, 2.5rem);
   font-weight: 800;
@@ -510,7 +446,6 @@ main {
   margin: 0;
   position: relative;
 }
-
 .section-divider .underline {
   width: 60px;
   height: 4px;
@@ -518,7 +453,6 @@ main {
   margin: 12px auto 0;
   border-radius: 2px;
 }
-
 /* ========== PROGRAM MODAL STYLES ========== */
 .program-modal {
   position: fixed;
@@ -536,12 +470,10 @@ main {
   transition: all 0.3s ease;
   backdrop-filter: blur(5px);
 }
-
 .program-modal.active {
   opacity: 1;
   visibility: visible;
 }
-
 .program-modal-content {
   background: var(--white);
   border-radius: 20px;
@@ -554,16 +486,13 @@ main {
   transition: var(--transition-smooth);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
 }
-
 .program-modal.active .program-modal-content {
   transform: scale(1) translateY(0);
 }
-
 .program-modal-header {
   position: relative;
   padding: 0;
 }
-
 .program-modal-title {
   background: linear-gradient(135deg, var(--teal-color) 0%, var(--dark-teal) 100%);
   color: var(--white);
@@ -571,21 +500,18 @@ main {
   border-radius: 20px 20px 0 0;
   margin: 0;
 }
-
 .program-modal-title h2 {
   font-size: 1.75rem;
   font-weight: 700;
   margin: 0 0 0.5rem 0;
   font-family: 'Poppins', sans-serif;
 }
-
 .program-modal-title p {
   font-size: 1rem;
   margin: 0;
   opacity: 0.9;
   font-family: 'Inter', sans-serif;
 }
-
 .program-modal-close {
   position: absolute;
   top: 1rem;
@@ -604,23 +530,19 @@ main {
   transition: var(--transition-smooth);
   z-index: 10;
 }
-
 .program-modal-close:hover {
   background: rgba(255, 255, 255, 0.3);
   transform: scale(1.1);
 }
-
 .program-modal-body {
   padding: 2rem;
 }
-
 .program-info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   margin-bottom: 2rem;
 }
-
 .program-info-item h4 {
   font-size: 1rem;
   font-weight: 600;
@@ -628,18 +550,15 @@ main {
   margin: 0 0 0.5rem 0;
   font-family: 'Poppins', sans-serif;
 }
-
 .program-info-item p {
   font-size: 0.95rem;
   color: var(--text-light);
   margin: 0;
   font-family: 'Inter', sans-serif;
 }
-
 .program-section {
   margin-bottom: 2rem;
 }
-
 .program-section h3 {
   font-size: 1.2rem;
   font-weight: 600;
@@ -647,13 +566,11 @@ main {
   margin: 0 0 1rem 0;
   font-family: 'Poppins', sans-serif;
 }
-
 .core-subjects-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 .core-subjects-list li {
   padding: 0.5rem 0;
   color: var(--text-light);
@@ -661,7 +578,6 @@ main {
   position: relative;
   padding-left: 1.5rem;
 }
-
 .core-subjects-list li::before {
   content: '•';
   color: var(--teal-color);
@@ -670,24 +586,20 @@ main {
   position: absolute;
   left: 0;
 }
-
 .career-pathways-text {
   color: var(--text-light);
   font-family: 'Inter', sans-serif;
   line-height: 1.6;
   margin: 0;
 }
-
 /* ========== FACULTY SECTION ========== */
 .faculty-section {
   position: relative;
   overflow: hidden;
 }
-
 .faculty-container {
   position: relative;
 }
-
 /* ========== FACULTY FILTER STYLES ========== */
 .faculty-filter-container {
   display: flex;
@@ -697,7 +609,6 @@ main {
   gap: 1rem;
   flex-wrap: wrap;
 }
-
 .filter-label {
   font-size: 1rem;
   font-weight: 600;
@@ -707,18 +618,15 @@ main {
   align-items: center;
   gap: 0.5rem;
 }
-
 .filter-label i {
   color: var(--primary-blue);
 }
-
 .faculty-filter-buttons {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
   justify-content: center;
 }
-
 .filter-btn {
   padding: 0.75rem 1.5rem;
   border: 2px solid var(--primary-blue);
@@ -733,7 +641,6 @@ main {
   position: relative;
   overflow: hidden;
 }
-
 .filter-btn::before {
   content: '';
   position: absolute;
@@ -745,23 +652,19 @@ main {
   transition: var(--transition-smooth);
   z-index: -1;
 }
-
 .filter-btn:hover::before,
 .filter-btn.active::before {
   left: 0;
 }
-
 .filter-btn:hover,
 .filter-btn.active {
   color: var(--white);
   transform: translateY(-2px);
   box-shadow: var(--shadow-medium);
 }
-
 .filter-btn:active {
   transform: translateY(0);
 }
-
 /* Loading animation for filter */
 .faculty-loading {
   display: none;
@@ -771,11 +674,9 @@ main {
   color: var(--text-light);
   font-family: 'Inter', sans-serif;
 }
-
 .faculty-loading.active {
   display: flex;
 }
-
 .loading-spinner {
   width: 24px;
   height: 24px;
@@ -785,12 +686,10 @@ main {
   animation: spin 1s linear infinite;
   margin-right: 1rem;
 }
-
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
 .faculty-slider {
   display: flex;
   gap: 2rem;
@@ -801,11 +700,9 @@ main {
   -ms-overflow-style: none;
   transition: var(--transition-smooth);
 }
-
 .faculty-slider::-webkit-scrollbar {
   display: none;
 }
-
 .faculty-card {
   background: var(--white);
   border-radius: 20px;
@@ -817,21 +714,17 @@ main {
   opacity: 1;
   transform: scale(1);
 }
-
 .faculty-card.filtering {
   opacity: 0;
   transform: scale(0.8);
   pointer-events: none;
 }
-
 .faculty-card.filtered-out {
   display: none;
 }
-
 .faculty-card.filtered-in {
   animation: fadeInScale 0.6s ease-out forwards;
 }
-
 @keyframes fadeInScale {
   0% {
     opacity: 0;
@@ -842,33 +735,27 @@ main {
     transform: scale(1) translateY(0);
   }
 }
-
 .faculty-card:hover {
   transform: translateY(-10px);
   box-shadow: var(--shadow-heavy);
 }
-
 .faculty-card.filtering:hover {
   transform: scale(0.8);
 }
-
 .faculty-image {
   position: relative;
   height: 300px;
   overflow: hidden;
 }
-
 .faculty-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: var(--transition-smooth);
 }
-
 .faculty-card:hover .faculty-image img {
   transform: scale(1.1);
 }
-
 .faculty-overlay {
   position: absolute;
   top: 0;
@@ -882,22 +769,18 @@ main {
   align-items: center;
   justify-content: center;
 }
-
 .faculty-card:hover .faculty-overlay {
   opacity: 0.9;
 }
-
 .faculty-social {
   display: flex;
   gap: 1rem;
   transform: translateY(20px);
   transition: var(--transition-smooth);
 }
-
 .faculty-card:hover .faculty-social {
   transform: translateY(0);
 }
-
 .faculty-social a {
   width: 50px;
   height: 50px;
@@ -910,15 +793,12 @@ main {
   text-decoration: none;
   transition: var(--transition-smooth);
 }
-
 .faculty-social a:hover {
   transform: scale(1.1);
 }
-
 .faculty-info {
   padding: 2rem;
 }
-
 .faculty-info h3 {
   font-size: 1.5rem;
   font-weight: 700;
@@ -926,19 +806,16 @@ main {
   color: var(--text-dark);
   font-family: 'Poppins', sans-serif;
 }
-
 .faculty-role {
   color: var(--primary-blue);
   font-weight: 600;
   margin-bottom: 1rem;
 }
-
 .faculty-description {
   color: var(--text-light);
   line-height: 1.6;
   font-family: 'Inter', sans-serif;
 }
-
 /* Faculty Navigation */
 .faculty-nav {
   position: absolute;
@@ -959,20 +836,16 @@ main {
   box-shadow: var(--shadow-medium);
   z-index: 10;
 }
-
 .faculty-nav:hover {
   transform: translateY(-50%) scale(1.1);
   box-shadow: var(--shadow-heavy);
 }
-
 .faculty-nav.prev {
   left: -30px;
 }
-
 .faculty-nav.next {
   right: -30px;
 }
-
 /* ========== PRINCIPAL MESSAGE CARD ========== */
 .principal-card {
   position: relative;
@@ -992,13 +865,11 @@ main {
   background-color: var(--white);
   transition: var(--transition-smooth);
 }
-
 .principal-card:hover {
   box-shadow: 8px 8px var(--primary-blue);
   border-color: var(--primary-blue);
   transform: translate(-8px, -8px);
 }
-
 .principal-image img {
   width: 240px;
   height: 300px;
@@ -1007,11 +878,9 @@ main {
   border: 2px solid var(--primary-blue);
   transition: var(--transition-smooth);
 }
-
 .principal-card:hover .principal-image img {
   transform: scale(1.03);
 }
-
 .principal-content {
   display: flex;
   flex-direction: column;
@@ -1021,7 +890,6 @@ main {
   color: var(--text-dark);
   transition: var(--transition-smooth);
 }
-
 .principal-header h2 {
   font-size: 1.5rem;
   color: var(--primary-blue);
@@ -1030,26 +898,22 @@ main {
   margin: 0;
   font-family: 'Poppins', sans-serif;
 }
-
 .principal-message {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-
 .quote-icon {
   width: 48px;
   height: 48px;
   color: var(--primary-blue);
 }
-
 .principal-text {
   font-size: 1rem;
   line-height: 1.6;
   color: var(--text-light);
   font-family: 'Inter', sans-serif;
 }
-
 .principal-signature {
   font-style: italic;
   color: var(--text-dark);
@@ -1057,24 +921,20 @@ main {
   font-family: 'Inter', sans-serif;
   margin-top: 1rem;
 }
-
 /* ========== ENHANCED STUDENT REVIEWS SECTION ========== */
 .reviews-section {
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   padding: 5rem 0;
   overflow: hidden;
 }
-
 .reviews-container {
   margin-top: 3rem;
 }
-
 .review-row {
   margin-bottom: 2rem;
   overflow: hidden;
   position: relative;
 }
-
 .review-row::before,
 .review-row::after {
   content: '';
@@ -1085,28 +945,23 @@ main {
   z-index: 10;
   pointer-events: none;
 }
-
 .review-row::before {
   left: 0;
   background: linear-gradient(90deg, #f8fafc 0%, transparent 100%);
 }
-
 .review-row::after {
   right: 0;
   background: linear-gradient(270deg, #f8fafc 0%, transparent 100%);
 }
-
 .review-track {
   display: flex;
   gap: 1.5rem;
   animation: scrollLeft 30s linear infinite;
   width: fit-content;
 }
-
 .review-row[data-direction="right"] .review-track {
   animation: scrollRight 35s linear infinite;
 }
-
 @keyframes scrollLeft {
   0% {
     transform: translateX(0);
@@ -1115,7 +970,6 @@ main {
     transform: translateX(-50%);
   }
 }
-
 @keyframes scrollRight {
   0% {
     transform: translateX(-50%);
@@ -1124,7 +978,6 @@ main {
     transform: translateX(0);
   }
 }
-
 .review-card {
   background: var(--white);
   border-radius: 20px;
@@ -1138,7 +991,6 @@ main {
   position: relative;
   overflow: hidden;
 }
-
 .review-card::before {
   content: '';
   position: absolute;
@@ -1150,28 +1002,23 @@ main {
   transform: scaleX(0);
   transition: var(--transition-smooth);
 }
-
 .review-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 15px 40px rgba(37, 99, 235, 0.15);
   border-color: var(--primary-blue);
 }
-
 .review-card:hover::before {
   transform: scaleX(1);
 }
-
 .review-header {
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
 }
-
 .review-avatar {
   position: relative;
 }
-
 .review-avatar img {
   width: 60px;
   height: 60px;
@@ -1180,15 +1027,12 @@ main {
   border: 3px solid var(--primary-blue);
   transition: var(--transition-smooth);
 }
-
 .review-card:hover .review-avatar img {
   transform: scale(1.1);
 }
-
 .review-info {
   flex: 1;
 }
-
 .review-name {
   font-size: 1.1rem;
   font-weight: 700;
@@ -1196,24 +1040,20 @@ main {
   margin: 0 0 0.25rem 0;
   font-family: 'Poppins', sans-serif;
 }
-
 .review-rating {
   display: flex;
   gap: 2px;
   margin-bottom: 0.25rem;
 }
-
 .review-rating i {
   color: #fbbf24;
   font-size: 0.9rem;
 }
-
 .review-class {
   font-size: 0.85rem;
   color: var(--text-light);
   font-weight: 500;
 }
-
 .review-text {
   color: var(--text-light);
   line-height: 1.6;
@@ -1224,13 +1064,11 @@ main {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
 .review-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 .review-subject {
   background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
   color: var(--white);
@@ -1239,7 +1077,6 @@ main {
   font-size: 0.8rem;
   font-weight: 600;
 }
-
 .read-more-btn {
   background: none;
   border: 2px solid var(--primary-blue);
@@ -1251,13 +1088,11 @@ main {
   cursor: pointer;
   transition: var(--transition-smooth);
 }
-
 .read-more-btn:hover {
   background: var(--primary-blue);
   color: var(--white);
   transform: scale(1.05);
 }
-
 /* ========== REVIEW MODAL STYLES ========== */
 .review-modal-overlay {
   position: fixed;
@@ -1275,12 +1110,10 @@ main {
   transition: all 0.3s ease;
   backdrop-filter: blur(5px);
 }
-
 .review-modal-overlay.active {
   opacity: 1;
   visibility: visible;
 }
-
 .review-modal-content {
   background: var(--white);
   border-radius: 24px;
@@ -1294,11 +1127,9 @@ main {
   transition: var(--transition-smooth);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
 }
-
 .review-modal-overlay.active .review-modal-content {
   transform: scale(1) translateY(0);
 }
-
 .review-modal-close {
   position: absolute;
   top: 1rem;
@@ -1316,12 +1147,10 @@ main {
   justify-content: center;
   transition: var(--transition-smooth);
 }
-
 .review-modal-close:hover {
   background: #f1f5f9;
   color: var(--text-dark);
 }
-
 .review-modal-header {
   display: flex;
   align-items: center;
@@ -1330,7 +1159,6 @@ main {
   padding-bottom: 1.5rem;
   border-bottom: 2px solid #f1f5f9;
 }
-
 .review-modal-avatar img {
   width: 80px;
   height: 80px;
@@ -1338,7 +1166,6 @@ main {
   object-fit: cover;
   border: 4px solid var(--primary-blue);
 }
-
 .review-modal-info h3 {
   font-size: 1.5rem;
   font-weight: 700;
@@ -1346,18 +1173,15 @@ main {
   margin: 0 0 0.5rem 0;
   font-family: 'Poppins', sans-serif;
 }
-
 .review-modal-rating {
   display: flex;
   gap: 3px;
   margin-bottom: 0.5rem;
 }
-
 .review-modal-rating i {
   color: #fbbf24;
   font-size: 1.1rem;
 }
-
 .review-modal-info span {
   display: inline-block;
   background: var(--bg-gray);
@@ -1369,7 +1193,6 @@ main {
   color: var(--text-dark);
   font-weight: 500;
 }
-
 .review-modal-body h4 {
   font-size: 1.2rem;
   font-weight: 600;
@@ -1377,21 +1200,18 @@ main {
   margin-bottom: 1rem;
   font-family: 'Poppins', sans-serif;
 }
-
 .review-modal-body p {
   color: var(--text-light);
   line-height: 1.7;
   font-size: 1rem;
   margin-bottom: 2rem;
 }
-
 .review-modal-stats {
   display: flex;
   gap: 2rem;
   padding-top: 1.5rem;
   border-top: 2px solid #f1f5f9;
 }
-
 .review-stat-item {
   display: flex;
   align-items: center;
@@ -1399,11 +1219,9 @@ main {
   color: var(--text-light);
   font-size: 0.9rem;
 }
-
 .review-stat-item i {
   color: var(--primary-blue);
 }
-
 /* ========== CONTACT FORM STYLES ========== */
 .contact-container {
   display: grid;
@@ -1411,7 +1229,6 @@ main {
   gap: 4rem;
   margin-top: 2rem;
 }
-
 .map-section {
   background: var(--white);
   border-radius: var(--border-radius);
@@ -1419,7 +1236,6 @@ main {
   box-shadow: var(--shadow-medium);
   height: fit-content;
 }
-
 .map-title {
   font-size: 1.5rem;
   font-weight: 700;
@@ -1430,24 +1246,20 @@ main {
   gap: 0.75rem;
   font-family: 'Poppins', sans-serif;
 }
-
 .map-title i {
   color: var(--primary-blue);
   font-size: 1.25rem;
 }
-
 .map-container {
   border-radius: var(--border-radius);
   overflow: hidden;
   box-shadow: var(--shadow-light);
   margin-bottom: 2rem;
 }
-
 .quick-contact-info {
   display: grid;
   gap: 1rem;
 }
-
 .contact-info-card {
   display: flex;
   align-items: center;
@@ -1457,12 +1269,10 @@ main {
   border-radius: 8px;
   transition: var(--transition-smooth);
 }
-
 .contact-info-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-light);
 }
-
 .contact-icon {
   width: 40px;
   height: 40px;
@@ -1474,7 +1284,6 @@ main {
   color: white;
   font-size: 1rem;
 }
-
 .contact-details h4 {
   font-size: 0.9rem;
   font-weight: 600;
@@ -1482,14 +1291,12 @@ main {
   margin-bottom: 0.25rem;
   font-family: 'Poppins', sans-serif;
 }
-
 .contact-details p {
   font-size: 0.85rem;
   color: var(--text-light);
   margin: 0;
   font-family: 'Inter', sans-serif;
 }
-
 .form-section {
   background: var(--white);
   border-radius: var(--border-radius);
@@ -1497,7 +1304,6 @@ main {
   box-shadow: var(--shadow-medium);
   height: fit-content;
 }
-
 .form-title {
   font-size: 1.5rem;
   font-weight: 700;
@@ -1508,16 +1314,13 @@ main {
   gap: 0.75rem;
   font-family: 'Poppins', sans-serif;
 }
-
 .form-title i {
   color: var(--primary-blue);
   font-size: 1.25rem;
 }
-
 .form-group {
   margin-bottom: 1.5rem;
 }
-
 .form-label {
   display: block;
   font-size: 0.9rem;
@@ -1526,7 +1329,6 @@ main {
   margin-bottom: 0.5rem;
   font-family: 'Inter', sans-serif;
 }
-
 .form-input,
 .form-select,
 .form-textarea {
@@ -1539,7 +1341,6 @@ main {
   transition: var(--transition-smooth);
   background: white;
 }
-
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
@@ -1547,12 +1348,10 @@ main {
   border-color: var(--primary-blue);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
-
 .form-textarea {
   min-height: 120px;
   resize: vertical;
 }
-
 .form-button {
   width: 100%;
   padding: 1rem 2rem;
@@ -1570,16 +1369,13 @@ main {
   justify-content: center;
   gap: 0.5rem;
 }
-
 .form-button:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-heavy);
 }
-
 .form-button:active {
   transform: translateY(0);
 }
-
 /* ========== NOTICE DETAIL MODAL ========== */
 .notice-modal-overlay {
   position: fixed;
@@ -1597,12 +1393,10 @@ main {
   transition: all 0.3s ease;
   backdrop-filter: blur(5px);
 }
-
 .notice-modal-overlay.active {
   opacity: 1;
   visibility: visible;
 }
-
 .notice-modal-content {
   background: var(--white);
   border-radius: 20px;
@@ -1615,11 +1409,9 @@ main {
   transition: var(--transition-smooth);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
 }
-
 .notice-modal-overlay.active .notice-modal-content {
   transform: scale(1) translateY(0);
 }
-
 .notice-modal-header {
   background: linear-gradient(135deg, var(--teal-color) 0%, var(--dark-teal) 100%);
   color: var(--white);
@@ -1627,7 +1419,6 @@ main {
   border-radius: 20px 20px 0 0;
   position: relative;
 }
-
 .notice-modal-close {
   position: absolute;
   top: 1rem;
@@ -1645,12 +1436,10 @@ main {
   justify-content: center;
   transition: var(--transition-smooth);
 }
-
 .notice-modal-close:hover {
   background: rgba(255, 255, 255, 0.3);
   transform: scale(1.1);
 }
-
 .notice-modal-title h2 {
   font-size: 1.75rem;
   font-weight: 700;
@@ -1658,24 +1447,20 @@ main {
   font-family: 'Poppins', sans-serif;
   line-height: 1.3;
 }
-
 .notice-modal-meta {
   display: flex;
   gap: 1rem;
   font-size: 0.9rem;
   opacity: 0.9;
 }
-
 .notice-modal-meta span {
   background: rgba(255, 255, 255, 0.2);
   padding: 0.25rem 0.75rem;
   border-radius: 15px;
 }
-
 .notice-modal-body {
   padding: 2rem;
 }
-
 .notice-modal-body h3 {
   color: var(--text-dark);
   font-size: 1.2rem;
@@ -1683,21 +1468,18 @@ main {
   margin-bottom: 1rem;
   font-family: 'Poppins', sans-serif;
 }
-
 .notice-modal-body p {
   color: var(--text-light);
   line-height: 1.7;
   font-size: 1rem;
   margin-bottom: 1.5rem;
 }
-
 /* ========== NOTICE IMAGE STYLES ========== */
 .notice-image-container {
   margin-top: 1.5rem;
   text-align: center;
   display: none;
 }
-
 .notice-image {
   max-width: 100%;
   max-height: 300px;
@@ -1706,17 +1488,14 @@ main {
   cursor: pointer;
   transition: transform 0.3s ease;
 }
-
 .notice-image:hover {
   transform: scale(1.02);
 }
-
 /* ========== DOWNLOAD BUTTON STYLES ========== */
 .notice-download-container {
   margin-top: 1rem;
   display: none;
 }
-
 .notice-download-btn {
   display: inline-flex;
   align-items: center;
@@ -1731,18 +1510,15 @@ main {
   transition: var(--transition-smooth);
   box-shadow: var(--shadow-medium);
 }
-
 .notice-download-btn:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-heavy);
   color: white;
   text-decoration: none;
 }
-
 .notice-download-btn i {
   font-size: 1rem;
 }
-
 /* ========== IMAGE MODAL STYLES ========== */
 .image-modal-overlay {
   position: fixed;
@@ -1759,24 +1535,20 @@ main {
   visibility: hidden;
   transition: all 0.3s ease;
 }
-
 .image-modal-overlay.active {
   opacity: 1;
   visibility: visible;
 }
-
 .image-modal-content {
   position: relative;
   max-width: 90%;
   max-height: 90%;
 }
-
 .fullscreen-image {
   max-width: 100%;
   max-height: 90vh;
   object-fit: contain;
 }
-
 .image-modal-close {
   position: absolute;
   top: -40px;
@@ -1794,12 +1566,10 @@ main {
   transition: var(--transition-smooth);
   font-size: 1.5rem;
 }
-
 .image-modal-close:hover {
   background: rgba(255, 255, 255, 0.3);
   transform: scale(1.1);
 }
-
 /* Loading animation for image */
 .notice-image-loading {
   display: inline-block;
@@ -1810,7 +1580,6 @@ main {
   border-top-color: var(--primary-blue);
   animation: spin 1s ease-in-out infinite;
 }
-
 .stats-bridge {
   display: flex;
   justify-content: center;
@@ -1824,48 +1593,39 @@ main {
   position: relative;
   z-index: 2;
 }
-
 .stats-bridge .stat-item {
   text-align: center;
 }
-
 .stats-bridge .stat-number {
   font-size: 2rem;
   font-weight: 700;
   color: var(--primary-blue);
   margin-bottom: 0.25rem;
 }
-
 .stats-bridge .stat-label {
   font-size: 0.95rem;
   color: var(--text-light);
 }
-
 /* ========== MOBILE RESPONSIVENESS ========== */
 @media (max-width: 768px) {
   .container {
     padding: 0 1rem;
   }
-  
   .hero-content {
     padding: 1rem;
   }
-  
   .content-section {
     padding: 3rem 0;
   }
-  
   /* Mobile Layout Changes - Stack vertically */
   .courses-notifications-wrapper {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
   /* Show notification toggle button on mobile */
   .notification-toggle {
     display: block;
   }
-  
   /* Hide notifications by default on mobile */
   .notifications-section {
     position: fixed;
@@ -1877,261 +1637,207 @@ main {
     transition: right 0.3s ease;
     order: 1;
   }
-  
   /* Show notifications when toggled */
   .notifications-section.mobile-open {
     right: 10px;
   }
-  
   .courses-main-content {
     order: 1;
     width: 100%;
   }
-  
   .curriculum-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
   .notification-row {
     padding: 0.75rem;
   }
-  
   .notification-title {
     font-size: 0.85rem;
   }
-  
   .notification-preview {
     font-size: 0.75rem;
   }
-  
   .notification-meta {
     font-size: 0.65rem;
     flex-direction: column;
     align-items: flex-start;
     gap: 0.25rem;
   }
-  
   .faculty-card {
     flex: 0 0 280px;
   }
-  
   .faculty-nav {
     display: none;
   }
-  
   .faculty-slider {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-
   /* Mobile Faculty Filter */
   .faculty-filter-container {
     flex-direction: column;
     gap: 1rem;
     margin-bottom: 2rem;
   }
-
   .faculty-filter-buttons {
     gap: 0.25rem;
   }
-
   .filter-btn {
     padding: 0.5rem 1rem;
     font-size: 0.8rem;
   }
-  
   .principal-card {
     flex-direction: column;
     text-align: center;
     padding: 1.5rem;
     margin: 2rem 1rem;
   }
-  
   .principal-image img {
     width: 200px;
     height: 250px;
     margin: 0 auto;
   }
-  
   .slideshow-indicators {
     bottom: 20px;
   }
-  
   .indicator {
     width: 10px;
     height: 10px;
   }
-  
   .program-modal-content {
     margin: 1rem;
     max-height: 95vh;
   }
-  
   .program-info-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
   .program-modal-title {
     padding: 1.5rem;
   }
-  
   .program-modal-title h2 {
     font-size: 1.5rem;
   }
-  
   .program-modal-body {
     padding: 1.5rem;
   }
-  
   .reviews-section {
     padding: 3rem 0;
   }
-  
   .review-card {
     min-width: 300px;
     max-width: 300px;
     padding: 1.25rem;
   }
-  
   .review-track {
     gap: 1rem;
   }
-  
   .review-modal-content {
     padding: 1.5rem;
     margin: 1rem;
   }
-  
   .review-modal-header {
     flex-direction: column;
     text-align: center;
     gap: 1rem;
   }
-  
   .review-modal-stats {
     flex-direction: column;
     gap: 1rem;
   }
-  
   .contact-container {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
-  
   .notice-modal-content {
     margin: 1rem;
     max-height: 90vh;
   }
-  
   .notice-modal-header {
     padding: 1.5rem;
   }
-  
   .notice-modal-title h2 {
     font-size: 1.5rem;
   }
-  
   .notice-modal-body {
     padding: 1.5rem;
   }
 }
-
 @media (max-width: 480px) {
   .hero-content h1 {
     font-size: 1.75rem;
   }
-  
   .hero-content h2 {
     font-size: 0.9rem;
   }
-  
   .explore-btn {
     padding: 0.75rem 1.5rem;
     font-size: 0.9rem;
   }
-  
   .curriculum-card {
     padding: 2rem 1.5rem;
   }
-  
   .card-icon {
     width: 60px;
     height: 60px;
     font-size: 1.5rem;
   }
-  
   .notifications-section {
     right: -300px;
     width: 290px;
   }
-  
   .notifications-section.mobile-open {
     right: 5px;
   }
-  
   .notification-toggle {
     right: 10px;
     width: 45px;
     height: 45px;
     font-size: 1.1rem;
   }
-  
   .notification-row {
     padding: 0.5rem;
   }
-  
   .notification-title {
     font-size: 0.8rem;
   }
-  
   .notification-preview {
     font-size: 0.7rem;
   }
-  
   .notification-meta {
     font-size: 0.6rem;
   }
-  
   .principal-card {
     padding: 1rem;
   }
-  
   .principal-image img {
     width: 150px;
     height: 200px;
   }
-  
   .program-modal-title h2 {
     font-size: 1.25rem;
   }
-  
   .review-card {
     min-width: 280px;
     max-width: 280px;
   }
-  
   .review-row::before,
   .review-row::after {
     width: 50px;
   }
-  
   .notice-modal-title h2 {
     font-size: 1.25rem;
   }
-  
   .notice-modal-meta {
     flex-direction: column;
     gap: 0.5rem;
   }
-
   .filter-btn {
     padding: 0.4rem 0.8rem;
     font-size: 0.75rem;
   }
 }
-
 /* ========== ACCESSIBILITY IMPROVEMENTS ========== */
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -2140,7 +1846,6 @@ main {
     transition-duration: 0.01ms !important;
   }
 }
-
 /* Focus styles for keyboard navigation */
 .explore-btn:focus,
 .faculty-nav:focus,
@@ -2156,19 +1861,16 @@ main {
   outline: 2px solid var(--primary-blue);
   outline-offset: 2px;
 }
-
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .hero-slide::before {
     background: rgba(0, 0, 0, 0.7);
   }
 }
-
 /* Pause animation on hover */
 .review-row:hover .review-track {
   animation-play-state: paused;
 }
-
 /* Added styles for the View Full Info button */
 .view-full-info-btn {
   background: linear-gradient(135deg, var(--teal-color) 0%, var(--dark-teal) 100%);
@@ -2187,17 +1889,14 @@ main {
   text-decoration: none;
   font-family: 'Poppins', sans-serif;
 }
-
 .view-full-info-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 150, 136, 0.3);
 }
-
 .view-full-info-btn i {
   font-size: 0.9rem;
 }
 </style>
-
 <main>
   <!-- Hero Section with Dynamic Slideshow -->
   <section id="home" class="hero-section" role="banner">
@@ -2218,7 +1917,6 @@ main {
       </div>
       {% endfor %}
     </div>
-    
     <div class="hero-content">
       <h1>Welcome to {{title|default:"Shree Rastriya Secondary School"}}</h1>
       <h2>Nurturing Excellence in Education Since 1995</h2>
@@ -2227,7 +1925,6 @@ main {
         Explore Our Facilities
       </a>
     </div>
-    
     <div class="slideshow-indicators" role="tablist" aria-label="Slideshow navigation">
       {% for slide in slides %}
       <button class="indicator {% if forloop.first %}active{% endif %}" 
@@ -2242,13 +1939,11 @@ main {
       {% endfor %}
     </div>
   </section>
-
   <!-- Our Courses Section with Notifications -->
   <section id="courses" class="content-section">
     <div class="container">
       <h2><i class="fas fa-graduation-cap" aria-hidden="true"></i> Courses We Offer ! </h2>
       <p>Comprehensive academic programs designed to nurture young minds and prepare them for future success</p>
-      
       <div class="courses-notifications-wrapper">
         <!-- Courses Main Content -->
         <div class="courses-main-content">
@@ -2257,7 +1952,6 @@ main {
             <h1>+2 Program</h1>
             <div class="underline"></div>
           </div>
-
           <div class="curriculum-grid">
             <div class="curriculum-card" data-program="plus2-science" tabindex="0" role="button" aria-label="Learn more about +2 Science program">
               <div class="card-icon">
@@ -2266,7 +1960,6 @@ main {
               <h3>Science</h3>
               <p>Advanced scientific studies preparing students for higher education in STEM fields</p>
             </div>
-
             <div class="curriculum-card" data-program="computer-science" tabindex="0" role="button" aria-label="Learn more about Computer Science program">
               <div class="card-icon">
                 <i class="fa-solid fa-computer" aria-hidden="true"></i>
@@ -2274,7 +1967,6 @@ main {
               <h3>Computer Science</h3>
               <p>Advanced scientific studies preparing students for higher education!</p>
             </div>
-
             <div class="curriculum-card" data-program="management" tabindex="0" role="button" aria-label="Learn more about Management program">
               <div class="card-icon">
                 <i class="fa-solid fa-users-gear" aria-hidden="true"></i>
@@ -2282,7 +1974,6 @@ main {
               <h3>Management</h3>
               <p>Developing analytical and leadership skills for future business and management careers</p>
             </div>
-
             <div class="curriculum-card" data-program="Management" tabindex="0" role="button" aria-label="Learn more about Education program">
               <div class="card-icon">
                 <i class="fas fa-book-open" aria-hidden="true"></i>
@@ -2290,7 +1981,6 @@ main {
               <h3>Education</h3>
               <p>Understanding society through literature, arts, culture, and social sciences</p>
             </div>
-
             <div class="curriculum-card" data-program="Hotel-Management" tabindex="0" role="button" aria-label="Learn more about Hotel Management program">
               <div class="card-icon">
                 <i class="fa-solid fa-hotel" aria-hidden="true"></i>
@@ -2298,7 +1988,6 @@ main {
               <h3>Hotel Management</h3>
               <p>Understanding society through literature, arts, culture, and social sciences</p>
             </div>
-
             <div class="curriculum-card" data-program="Future" tabindex="0" role="button" aria-label="What to do next  ? ">
               <div class="card-icon">
                 <i class="fa-solid fa-chart-line" aria-hidden="true" ></i>
@@ -2307,7 +1996,6 @@ main {
               <p>whats the next thing you can do after +2  ? </p>
             </div>
           </div>
-
           <div class="section-divider">
             <h1> DCE & PRE DCE </h1>
             <div class="underline"></div>
@@ -2321,7 +2009,6 @@ main {
               <h3>DCE 3 Years</h3> 
               <p>A full-length program providing in-depth knowledge and skills in civil engineering for professional and technical careers.</p>
             </div>
-
             <div class="curriculum-card" data-program="DCE18" tabindex="0" role="button" aria-label="Learn more about DEC(18/Month)program">
               <div class="card-icon">
                 <i class="fa-solid fa-user-graduate" aria-hidden="true"></i>
@@ -2329,11 +2016,8 @@ main {
               <h3>DCE 18 Months  </h3>
               <p>A fast-track, practical program focused on hands-on skills for construction and site supervision roles.</p>
             </div>
-
-            
           </div>
         </div>
-
         <!-- Notifications Section - Now positioned on the right -->
         <div class="notifications-section" id="notificationsPanel">
           <div class="notifications-header">
@@ -2342,7 +2026,6 @@ main {
           </div>
           <div class="notifications-table">
             {% for notice in news %}
-             <!-- Replaced Django template syntax with actual static HTML using the notice UUIDs -->
             <div class="notification-row" data-notice-id="{{notice.id}}" tabindex="0" role="button" aria-label="notice.title">
               <div class="notification-title">{{notice.title|truncatechars:10}}</div>
               <div class="notification-preview">{{notice.description|truncatechars:20}}</div>
@@ -2359,23 +2042,6 @@ main {
               <p>No new notices available</p>
             </div>
             {% endfor %} 
-            <!-- {% for notice in news %}
-            <div class="notification-row" data-notice-id="{{ notice.id }}" tabindex="0" role="button" aria-label="Read notice: {{ notice.title }}">
-              <div class="notification-title">{{ notice.title|truncatechars:45 }}</div>
-              <div class="notification-preview">{{ notice.description|truncatechars:70 }}</div>
-              <div class="notification-meta">
-                <span class="notification-category">
-                  <i class="fas fa-tag"></i> Notice
-                </span>
-                <span class="notification-date">{{ notice.created_at|date:"M d" }}</span>
-              </div>
-            </div>
-            {% empty %}
-            <div class="no-notifications">
-              <i class="fas fa-bell-slash"></i>
-              <p>No new notices available</p>
-            </div>
-            {% endfor %} -->
           </div>
         </div>
       </div>
@@ -2385,7 +2051,6 @@ main {
   <button class="notification-toggle" id="notificationToggle" aria-label="Toggle notifications">
     <i class="fas fa-bell"></i>
   </button>
-
   <!-- Principal Message Section -->
   <section class="content-section">
     <div class="container">
@@ -2417,13 +2082,11 @@ main {
       </div>
     </div>
   </section>
-
   <!-- Faculty Section -->
   <section id="faculty" class="content-section faculty-section">
     <div class="container">
       <h2><i class="fas fa-chalkboard-teacher" aria-hidden="true"></i> Meet Our Teachers</h2>
       <p>Dedicated educators empowering students with knowledge, care, and guidance</p>
-      
       <!-- Faculty Filter -->
       <div class="faculty-filter-container">
         <div class="filter-label">
@@ -2439,13 +2102,11 @@ main {
           <button class="filter-btn" data-filter="Management">Management</button>
         </div>
       </div>
-
       <!-- Loading Animation -->
       <div class="faculty-loading" id="facultyLoading">
         <div class="loading-spinner"></div>
         <span>Filtering teachers...</span>
       </div>
-      
       <div class="faculty-container">
         <button class="faculty-nav prev" id="facultyPrev" aria-label="Previous teachers">
           <i class="fas fa-chevron-left" aria-hidden="true"></i>
@@ -2453,7 +2114,6 @@ main {
         <button class="faculty-nav next" id="facultyNext" aria-label="Next teachers">
           <i class="fas fa-chevron-right" aria-hidden="true"></i>
         </button>
-        
         <!-- Faculty Slider -->
         <div class="faculty-slider" id="facultySlider">
           {% for faculty in facultys %} 
@@ -2472,7 +2132,6 @@ main {
       </div>
     </div>
   </section>
-
   <!-- Student Reviews Section -->
   <section class="content-section reviews-section">
     <div class="container">
@@ -2480,7 +2139,6 @@ main {
         <h1><i class="fas fa-quote-left" aria-hidden="true"></i> What Our Students Say About Us!</h1>
         <div class="underline"></div>
       </div>
-
       <div class="reviews-container">
         <!-- First Row - Left to Right -->
         <div class="review-row" data-direction="left">
@@ -2508,7 +2166,6 @@ main {
                 <span class="review-subject">Science</span>
               </div>
             </div>
-
             <div class="review-card" data-review-id="2">
               <div class="review-header">
                 <div class="review-avatar">
@@ -2531,7 +2188,6 @@ main {
                 <span class="review-subject">Science</span>
               </div>
             </div>
-
             <div class="review-card" data-review-id="3">
               <div class="review-header">
                 <div class="review-avatar">
@@ -2554,7 +2210,6 @@ main {
                 <span class="review-subject">Education</span>
               </div>
             </div>
-
             <div class="review-card" data-review-id="4">
               <div class="review-header">
                 <div class="review-avatar">
@@ -2577,7 +2232,6 @@ main {
                 <span class="review-subject">Management</span>
               </div>
             </div>
-
             <div class="review-card" data-review-id="5">
               <div class="review-header">
                 <div class="review-avatar">
@@ -2602,7 +2256,6 @@ main {
             </div>
           </div>
         </div>
-
         <!-- Second Row - Right to Left -->
         <div class="review-row" data-direction="right">
           <div class="review-track" id="reviewTrack2">
@@ -2628,7 +2281,6 @@ main {
                 <span class="review-subject">Arts</span>
               </div>
             </div>
-
             <div class="review-card" data-review-id="7">
               <div class="review-header">
                 <div class="review-avatar">
@@ -2651,7 +2303,6 @@ main {
                 <span class="review-subject">Computer Science</span>
               </div>
             </div>
-
             <div class="review-card" data-review-id="8">
               <div class="review-header">
                 <div class="review-avatar">
@@ -2674,7 +2325,6 @@ main {
                 <span class="review-subject">Literature</span>
               </div>
             </div>
-
             <div class="review-card" data-review-id="9">
               <div class="review-header">
                 <div class="review-avatar">
@@ -2697,7 +2347,6 @@ main {
                 <span class="review-subject">Business Studies</span>
               </div>
             </div>
-
             <div class="review-card" data-review-id="10">
               <div class="review-header">
                 <div class="review-avatar">
@@ -2725,7 +2374,6 @@ main {
       </div>
     </div>
   </section>
-
   <!-- Contact Form Section -->
   <section id="contact" class="content-section" style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 5rem 0;">
     <div class="container">
@@ -2736,7 +2384,6 @@ main {
           Get in touch with us for admissions, inquiries, or any questions about our school. We're here to help!
         </p>
       </div>
-
       <div class="contact-container">
         <!-- Map Section -->
         <div class="map-section" id="mapSection">
@@ -2755,7 +2402,6 @@ main {
               referrerpolicy="no-referrer-when-downgrade">
             </iframe>
           </div>
-          
           <!-- Quick Contact Info -->
           <div class="quick-contact-info">
             <div class="contact-info-card">
@@ -2767,7 +2413,6 @@ main {
                 <p>+977-21-123456</p>
               </div>
             </div>
-            
             <div class="contact-info-card">
               <div class="contact-icon">
                 <i class="fas fa-envelope"></i>
@@ -2777,7 +2422,6 @@ main {
                 <p>info@srss.edu.np</p>
               </div>
             </div>
-            
             <div class="contact-info-card">
               <div class="contact-icon">
                 <i class="fas fa-clock"></i>
@@ -2789,7 +2433,6 @@ main {
             </div>
           </div>
         </div>
-
         <!-- Contact Form Section -->
         <div class="form-section">
           <div class="form-container">
@@ -2797,24 +2440,20 @@ main {
               <i class="fas fa-paper-plane"></i>
               Send us a Message
             </h2>
-            
             <form id="contactForm" method="POST" action="{% url 'home:contact' %}">
               {% csrf_token %}
               <div class="form-group">
                 <label class="form-label" for="name">Full Name *</label>
                 <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
               </div>
-              
               <div class="form-group">
                 <label class="form-label" for="email">Email Address *</label>
                 <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email address" required>
               </div>
-              
               <div class="form-group">
                 <label class="form-label" for="phone">Phone Number</label>
                 <input type="tel" id="phone" name="phone" class="form-input" placeholder="Enter your phone number">
               </div>
-              
               <div class="form-group">
                 <label class="form-label" for="subject">Subject *</label>
                 <select id="subject" name="subject" class="form-select" required>
@@ -2827,12 +2466,10 @@ main {
                   <option value="other">Other</option>
                 </select>
               </div>
-              
               <div class="form-group">
                 <label class="form-label" for="message">Message *</label>
                 <textarea id="message" name="message" class="form-textarea" placeholder="Enter your message here..." required></textarea>
               </div>
-              
               <button type="submit" class="form-button" id="submitBtn">
                 <i class="fas fa-paper-plane"></i>
                 Send Message
@@ -2844,7 +2481,6 @@ main {
     </div>
   </section>
 </main>
-
 <!-- Program Modal -->
 <div id="programModal" class="program-modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
   <div class="program-modal-content">
@@ -2858,7 +2494,6 @@ main {
         <p id="modalDescription">Foundation for scientific and technical careers</p>
       </div>
     </div>
-    
     <div class="program-modal-body">
       <div class="program-info-grid">
         <div class="program-info-item">
@@ -2870,7 +2505,6 @@ main {
           <p id="modalStreams">Physics, Chemistry, Biology, Mathematics</p>
         </div>
       </div>
-
       <div class="program-section">
         <h3>Core Subjects</h3>
         <ul class="core-subjects-list" id="modalCoreSubjects">
@@ -2881,7 +2515,6 @@ main {
           <li>Research & Laboratory Work</li>
         </ul>
       </div>
-
       <div class="program-section">
         <h3>Career Pathways</h3>
         <p class="career-pathways-text" id="modalCareerPathways">
@@ -2891,7 +2524,6 @@ main {
     </div>
   </div>
 </div>
-
 <!-- Review Modal -->
 <div id="reviewModal" class="review-modal-overlay">
   <div class="review-modal-content">
@@ -2925,7 +2557,6 @@ main {
     </div>
   </div>
 </div>
-
 <!-- Notice Detail Modal with Image Support -->
 <div id="noticeModal" class="notice-modal-overlay">
   <div class="notice-modal-content">
@@ -2944,12 +2575,10 @@ main {
     <div class="notice-modal-body">
       <h3>Notice Details</h3>
       <p id="noticeModalContent">Notice content will be loaded here...</p>
-      
       <!-- Notice image container -->
       <div class="notice-image-container" id="noticeImageContainer">
         <img id="noticeModalImage" src="/placeholder.svg" alt="Notice image" class="notice-image" />
       </div>
-      
       <!-- Download button container -->
       <div class="notice-download-container" id="noticeDownloadContainer">
         <a id="noticeDownloadBtn" href="#" download class="notice-download-btn">
@@ -2959,7 +2588,6 @@ main {
     </div>
   </div>
 </div>
-
 <!-- Image Fullscreen Modal -->
 <div id="imageModal" class="image-modal-overlay">
   <div class="image-modal-content">
@@ -2969,7 +2597,6 @@ main {
     <img id="fullscreenImage" src="/placeholder.svg" alt="Fullscreen image" class="fullscreen-image" />
   </div>
 </div>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   // ========== PROGRAM DATA ==========
@@ -2999,12 +2626,10 @@ document.addEventListener('DOMContentLoaded', function() {
       streams: 'Construction Supervision,Surveying,Materials,Project Work /OJT (6 months)',
       coreSubjects: [
         'Construction Materials',
-        
         'Building Construction Techniques',
         'Engineering Drawing',
         'Workshop Practice',
         'Computer Applications',
-
       ],
       careerPathways: 'Sub-overseer,Assistant Surveyor,Construction Foreman,Site Supervisor,and Many More ! '
     },
@@ -3097,12 +2722,8 @@ document.addEventListener('DOMContentLoaded', function() {
   ],
   careerPathways: 'Further study (Bachelor’s), professional diplomas, vocational training, or entry-level jobs in respective fields'
 }
-
   };
-
   // ========== NOTICE DATA FROM DJANGO ==========
-
-
 const noticeData = {
   {% for notice in news %}
     "{{ notice.id }}": {
@@ -3113,8 +2734,6 @@ const noticeData = {
     }{% if not forloop.last %},{% endif %}
   {% endfor %}
 };
-
-
   const reviewData = {
     'review-1': {
       name: 'Priya Sharma',
@@ -3138,17 +2757,50 @@ const noticeData = {
     }
   };
 
+  // ========== MOBILE NOTIFICATION TOGGLE ==========
+  const notificationToggleBtn = document.getElementById('notificationToggle');
+  const notificationsPanel = document.getElementById('notificationsPanel');
+
+  if (notificationToggleBtn && notificationsPanel) {
+    notificationToggleBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      notificationsPanel.classList.toggle('mobile-open');
+      const isExpanded = notificationsPanel.classList.contains('mobile-open');
+      notificationToggleBtn.setAttribute('aria-expanded', isExpanded);
+      notificationToggleBtn.classList.toggle('active', isExpanded);
+    });
+
+    // Close panel if clicked outside
+    document.addEventListener('click', function(e) {
+      if (
+        notificationsPanel.classList.contains('mobile-open') &&
+        !notificationsPanel.contains(e.target) &&
+        e.target !== notificationToggleBtn
+      ) {
+        notificationsPanel.classList.remove('mobile-open');
+        notificationToggleBtn.setAttribute('aria-expanded', 'false');
+        notificationToggleBtn.classList.remove('active');
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && notificationsPanel.classList.contains('mobile-open')) {
+        notificationsPanel.classList.remove('mobile-open');
+        notificationToggleBtn.setAttribute('aria-expanded', 'false');
+        notificationToggleBtn.classList.remove('active');
+      }
+    });
+  }
+
   // ========== NOTIFICATION FUNCTIONALITY ==========
   const notificationToggle = document.getElementById('notificationToggle');
   const notificationDropdown = document.getElementById('notificationDropdown');
-
   if (notificationToggle && notificationDropdown) {
     notificationToggle.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      
       const isOpen = notificationDropdown.classList.contains('active');
-      
       if (isOpen) {
         notificationDropdown.classList.remove('active');
         notificationToggle.setAttribute('aria-expanded', 'false');
@@ -3157,7 +2809,6 @@ const noticeData = {
         notificationToggle.setAttribute('aria-expanded', 'true');
       }
     });
-
     document.addEventListener('click', function(e) {
       if (!notificationToggle.contains(e.target) && !notificationDropdown.contains(e.target)) {
         notificationDropdown.classList.remove('active');
@@ -3165,7 +2816,6 @@ const noticeData = {
       }
     });
   }
-
   // ========== FACULTY FILTER FUNCTIONALITY ==========
   const filterButtons = document.querySelectorAll('.filter-btn');
   const facultyCards = document.querySelectorAll('.faculty-card');
@@ -3173,66 +2823,52 @@ const noticeData = {
   const facultyLoading = document.getElementById('facultyLoading');
   const facultyPrev = document.getElementById('facultyPrev');
   const facultyNext = document.getElementById('facultyNext');
-  
   let currentFilter = 'all';
   let isFiltering = false;
   let facultyCurrentIndex = 0;
-
   function initFacultyFilter() {
     filterButtons.forEach(button => {
       button.addEventListener('click', function() {
         if (isFiltering) return;
-        
         const filter = this.getAttribute('data-filter');
         if (filter === currentFilter) return;
-        
         filterFaculty(filter, this);
       });
     });
   }
-
   function filterFaculty(filter, activeButton) {
     isFiltering = true;
     currentFilter = filter;
-    
     // Update active button
     filterButtons.forEach(btn => btn.classList.remove('active'));
     activeButton.classList.add('active');
-    
     // Show loading if available
     if (facultyLoading) {
       facultyLoading.classList.add('active');
     }
-    
     // Add filtering class to all cards
     facultyCards.forEach(card => {
       card.classList.add('filtering');
     });
-    
     setTimeout(() => {
       if (facultyLoading) {
         facultyLoading.classList.remove('active');
       }
-      
       let visibleCount = 0;
       facultyCards.forEach((card, index) => {
         const faculty = card.getAttribute('data-faculty');
         const shouldShow = filter === 'all' || faculty === filter;
-        
         if (shouldShow) {
           card.classList.remove('filtering', 'filtered-out');
           card.classList.add('filtered-in');
           card.style.display = 'block';
-          
           setTimeout(() => {
             card.classList.remove('filtered-in');
           }, 100 + (visibleCount * 100));
-          
           visibleCount++;
         } else {
           card.classList.remove('filtering', 'filtered-in');
           card.classList.add('filtered-out');
-          
           setTimeout(() => {
             if (card.classList.contains('filtered-out')) {
               card.style.display = 'none';
@@ -3240,64 +2876,49 @@ const noticeData = {
           }, 300);
         }
       });
-      
       // Reset slider position
       facultyCurrentIndex = 0;
       if (facultySlider) {
         facultySlider.scrollTo({ left: 0, behavior: 'smooth' });
       }
-      
       setTimeout(() => {
         updateFacultySlider();
       }, 600);
-      
       isFiltering = false;
     }, 400);
   }
-
   function getVisibleCards() {
     return Array.from(facultyCards).filter(card => 
       card.style.display !== 'none' && !card.classList.contains('filtered-out')
     );
   }
-
   function getVisibleCardsCount() {
     return Math.max(1, Math.floor(facultySlider.parentElement.offsetWidth / 352));
   }
-  
   function updateFacultySlider() {
     if (!facultySlider || !facultyPrev || !facultyNext) return;
-    
     const visibleCards = getVisibleCards();
     const visibleCardsCount = getVisibleCardsCount();
     const maxIndex = Math.max(0, visibleCards.length - visibleCardsCount);
-    
     if (facultyCurrentIndex > maxIndex) {
       facultyCurrentIndex = maxIndex;
     }
-    
     const cardWidth = 320 + 32;
     const scrollPosition = facultyCurrentIndex * cardWidth;
-    
     facultySlider.scrollTo({
       left: scrollPosition,
       behavior: 'smooth'
     });
-    
     facultyPrev.disabled = facultyCurrentIndex === 0;
     facultyNext.disabled = facultyCurrentIndex >= maxIndex || visibleCards.length <= visibleCardsCount;
-    
     facultyPrev.style.opacity = facultyPrev.disabled ? '0.5' : '1';
     facultyNext.style.opacity = facultyNext.disabled ? '0.5' : '1';
   }
-  
   function nextFaculty() {
     if (!facultySlider) return;
-    
     const visibleCards = getVisibleCards();
     const visibleCardsCount = getVisibleCardsCount();
     const maxIndex = Math.max(0, visibleCards.length - visibleCardsCount);
-    
     if (facultyCurrentIndex < maxIndex) {
       facultyCurrentIndex++;
     } else {
@@ -3305,14 +2926,11 @@ const noticeData = {
     }
     updateFacultySlider();
   }
-  
   function prevFaculty() {
     if (!facultySlider) return;
-    
     const visibleCards = getVisibleCards();
     const visibleCardsCount = getVisibleCardsCount();
     const maxIndex = Math.max(0, visibleCards.length - visibleCardsCount);
-    
     if (facultyCurrentIndex > 0) {
       facultyCurrentIndex--;
     } else {
@@ -3320,19 +2938,15 @@ const noticeData = {
     }
     updateFacultySlider();
   }
-
   if (facultyNext) {
     facultyNext.addEventListener('click', nextFaculty);
   }
-  
   if (facultyPrev) {
     facultyPrev.addEventListener('click', prevFaculty);
   }
-
   window.addEventListener('resize', () => {
     setTimeout(updateFacultySlider, 250);
   });
-
   // ========== ENHANCED NOTIFICATION SYSTEM WITH IMAGE & FILE DOWNLOAD SUPPORT ==========
   const noticeModal = document.getElementById('noticeModal');
   const closeNoticeModal = document.getElementById('closeNoticeModal');
@@ -3343,21 +2957,17 @@ const noticeData = {
   const noticeModalImage = document.getElementById('noticeModalImage');
   const downloadBtn = document.getElementById('noticeDownloadBtn');
   const downloadContainer = document.getElementById('noticeDownloadContainer');
-
   window.openNoticeModal = function(noticeId) {
     const notice = noticeData[noticeId];
     if (!notice || !noticeModal) return;
-
     document.getElementById('noticeModalTitle').textContent = notice.title;
     document.getElementById('noticeModalDate').textContent = notice.date;
     document.getElementById('noticeModalContent').textContent = notice.description;
-
     // Handle image display
     if (notice.image && notice.image.trim() !== '') {
       if (noticeImageContainer) {
         noticeImageContainer.style.display = 'block';
         noticeImageContainer.innerHTML = '<div class="notice-image-loading"></div>';
-
         const img = new Image();
         img.onload = function() {
           if (noticeModalImage) {
@@ -3377,12 +2987,10 @@ const noticeData = {
         noticeImageContainer.style.display = 'none';
       }
     }
-
     const existingButton = document.getElementById('viewFullInfoBtn');
     if (existingButton) {
       existingButton.remove();
     }
-
     const viewFullInfoBtn = document.createElement('button');
     viewFullInfoBtn.id = 'viewFullInfoBtn';
     viewFullInfoBtn.className = 'view-full-info-btn';
@@ -3390,25 +2998,19 @@ const noticeData = {
     viewFullInfoBtn.onclick = function() {
       window.location.href = `/shared/${noticeId}/view/`;
     };
-
     const modalBody = document.querySelector('.notice-modal-body');
     if (modalBody) {
       modalBody.appendChild(viewFullInfoBtn);
     }
-
     noticeModal.classList.add('active');
     document.body.style.overflow = 'hidden';
-    
     if (closeNoticeModal) closeNoticeModal.focus();
   };
-
   <!-- Added debug logging and improved notice modal event listeners -->
   const noticeItems = document.querySelectorAll('.notification-row[data-notice-id]');
   console.log('[v0] Found notice items:', noticeItems.length); // Debug log
-  
   noticeItems.forEach(item => {
     console.log('[v0] Setting up listener for notice:', item.getAttribute('data-notice-id')); // Debug log
-    
     item.addEventListener('click', function(e) {
       e.preventDefault();
       const noticeId = this.getAttribute('data-notice-id');
@@ -3417,7 +3019,6 @@ const noticeData = {
         openNoticeModal(noticeId);
       }
     });
-
     item.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -3429,7 +3030,6 @@ const noticeData = {
       }
     });
   });
-
   // Close notice modal functionality
   if (closeNoticeModal) {
     closeNoticeModal.addEventListener('click', function() {
@@ -3437,7 +3037,6 @@ const noticeData = {
       document.body.style.overflow = '';
     });
   }
-
   if (noticeModal) {
     noticeModal.addEventListener('click', function(e) {
       if (e.target === noticeModal) {
@@ -3446,23 +3045,19 @@ const noticeData = {
       }
     });
   }
-
   // ========== MODAL FUNCTIONALITY ==========
   const modal = document.getElementById('programModal');
   const closeBtn = document.getElementById('closeModal');
   const curriculumCards = document.querySelectorAll('.curriculum-card[data-program]');
-
   function openModal(programKey) {
     const program = programData[programKey];
     if (!program || !modal) return;
-
     document.getElementById('modalTitle').textContent = program.title;
     document.getElementById('modalSubtitle').textContent = program.subtitle;
     document.getElementById('modalDescription').textContent = program.description;
     document.getElementById('modalDuration').textContent = program.duration;
     document.getElementById('modalStreams').textContent = program.streams;
     document.getElementById('modalCareerPathways').textContent = program.careerPathways;
-
     const coreSubjectsList = document.getElementById('modalCoreSubjects');
     if (coreSubjectsList) {
       coreSubjectsList.innerHTML = '';
@@ -3472,20 +3067,16 @@ const noticeData = {
         coreSubjectsList.appendChild(li);
       });
     }
-
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
-    
     if (closeBtn) closeBtn.focus();
   }
-
   function closeModal() {
     if (modal) {
       modal.classList.remove('active');
       document.body.style.overflow = '';
     }
   }
-
   curriculumCards.forEach(card => {
     card.addEventListener('click', function() {
       const program = this.getAttribute('data-program');
@@ -3493,7 +3084,6 @@ const noticeData = {
         openModal(program);
       }
     });
-
     card.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -3504,11 +3094,9 @@ const noticeData = {
       }
     });
   });
-
   if (closeBtn) {
     closeBtn.addEventListener('click', closeModal);
   }
-
   if (modal) {
     modal.addEventListener('click', function(e) {
       if (e.target === modal) {
@@ -3516,7 +3104,6 @@ const noticeData = {
       }
     });
   }
-
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       if (modal && modal.classList.contains('active')) {
@@ -3528,26 +3115,21 @@ const noticeData = {
       }
     }
   });
-
   // ========== REVIEW MODAL FUNCTIONALITY ==========
   const reviewModal = document.getElementById('reviewModal');
   const closeReviewBtn = document.getElementById('closeReviewModal');
   const reviewCards = document.querySelectorAll('.review-card');
-
   function initInfiniteReviews() {
     const tracks = document.querySelectorAll('.review-track');
-    
     tracks.forEach(track => {
       const cards = track.innerHTML;
       track.innerHTML = cards + cards;
     });
   }
-
   reviewCards.forEach(card => {
     card.addEventListener('click', () => {
       const reviewId = card.getAttribute('data-review-id');
       const review = reviewData[reviewId];
-      
       if (review && reviewModal) {
         const modalAvatar = document.getElementById('modalAvatar');
         const modalName = document.getElementById('modalName');
@@ -3556,7 +3138,6 @@ const noticeData = {
         const modalFullReview = document.getElementById('modalFullReview');
         const modalDate = document.getElementById('modalDate');
         const modalLikes = document.getElementById('modalLikes');
-        
         if (modalAvatar) {
           modalAvatar.src = review.avatar;
           modalAvatar.alt = review.name;
@@ -3567,7 +3148,6 @@ const noticeData = {
         if (modalFullReview) modalFullReview.textContent = review.fullReview;
         if (modalDate) modalDate.textContent = review.date;
         if (modalLikes) modalLikes.textContent = review.likes;
-        
         const ratingContainer = document.getElementById('modalRating');
         if (ratingContainer) {
           ratingContainer.innerHTML = '';
@@ -3582,20 +3162,17 @@ const noticeData = {
             ratingContainer.appendChild(star);
           }
         }
-        
         reviewModal.classList.add('active');
         document.body.style.overflow = 'hidden';
       }
     });
   });
-
   if (closeReviewBtn) {
     closeReviewBtn.addEventListener('click', () => {
       reviewModal.classList.remove('active');
       document.body.style.overflow = '';
     });
   }
-
   if (reviewModal) {
     reviewModal.addEventListener('click', (e) => {
       if (e.target === reviewModal) {
@@ -3604,20 +3181,16 @@ const noticeData = {
       }
     });
   }
-
   // ========== FORM ENHANCEMENTS ==========
   const formInputs = document.querySelectorAll('.form-group input, .form-group textarea');
-  
   formInputs.forEach(input => {
     input.addEventListener('focus', function() {
       this.parentElement.style.transform = 'translateY(-2px)';
     });
-    
     input.addEventListener('blur', function() {
       this.parentElement.style.transform = 'translateY(0)';
     });
   });
-
   // ========== ENHANCED SLIDESHOW FUNCTIONALITY ==========
   const slides = document.querySelectorAll('.hero-slide');
   const indicators = document.querySelectorAll('.slideshow-indicators .indicator');
@@ -3625,10 +3198,8 @@ const noticeData = {
   let slideInterval = null;
   let heroSectionVisible = false;
   let isInitialized = false;
-
   function initSlideshow() {
     if (slides.length === 0 || isInitialized) return;
-    
     slides.forEach((slide, index) => {
       slide.classList.remove('active');
       if (indicators[index]) {
@@ -3636,7 +3207,6 @@ const noticeData = {
         indicators[index].setAttribute('aria-selected', 'false');
       }
     });
-    
     // Set first slide as active
     if (slides[0]) {
       slides[0].classList.add('active');
@@ -3645,15 +3215,12 @@ const noticeData = {
         indicators[0].setAttribute('aria-selected', 'true');
       }
     }
-    
     currentSlide = 0;
-    
     indicators.forEach((indicator, index) => {
       indicator.addEventListener('click', () => {
         showSlide(index);
         resetAutoSlide();
       });
-      
       indicator.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -3662,26 +3229,21 @@ const noticeData = {
         }
       });
     });
-    
     setupHeroVisibilityObserver();
     isInitialized = true;
   }
-
   function setupHeroVisibilityObserver() {
     const heroSection = document.querySelector('.hero-section');
     if (!heroSection) return;
-
     const observerOptions = {
       root: null,
       rootMargin: '0px',
       threshold: 0.5
     };
-
     const heroObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         const wasVisible = heroSectionVisible;
         heroSectionVisible = entry.isIntersecting;
-        
         if (heroSectionVisible && !wasVisible) {
           startAutoSlide();
         } else if (!heroSectionVisible && wasVisible) {
@@ -3689,13 +3251,10 @@ const noticeData = {
         }
       });
     }, observerOptions);
-
     heroObserver.observe(heroSection);
   }
-
   function showSlide(index) {
     if (index < 0 || index >= slides.length) return;
-    
     // Remove active class from all slides and indicators
     slides.forEach((slide, i) => {
       slide.classList.remove('active');
@@ -3704,42 +3263,34 @@ const noticeData = {
         indicators[i].setAttribute('aria-selected', 'false');
       }
     });
-    
     // Add active class to current slide and indicator
     slides[index].classList.add('active');
     if (indicators[index]) {
       indicators[index].classList.add('active');
       indicators[index].setAttribute('aria-selected', 'true');
     }
-    
     currentSlide = index;
   }
-
   function nextSlide() {
     if (slides.length <= 1) return;
     const nextIndex = (currentSlide + 1) % slides.length;
     showSlide(nextIndex);
   }
-
   function startAutoSlide() {
     if (!heroSectionVisible || slides.length <= 1) return;
-    
     stopAutoSlide();
-    
     slideInterval = setInterval(() => {
       if (heroSectionVisible && document.visibilityState === 'visible') {
         nextSlide();
       }
     }, 4000);
   }
-
   function stopAutoSlide() {
     if (slideInterval) {
       clearInterval(slideInterval);
       slideInterval = null;
     }
   }
-
   function resetAutoSlide() {
     stopAutoSlide();
     if (heroSectionVisible && slides.length > 1) {
@@ -3750,21 +3301,16 @@ const noticeData = {
       }, 1000);
     }
   }
-
   // Initialize slideshow
   initSlideshow();
-
   // Initialize infinite reviews
   initInfiniteReviews();
-
   // Initialize faculty filter
   initFacultyFilter();
-
   // Update faculty slider on load
   setTimeout(() => {
     updateFacultySlider();
   }, 100);
-
   // Handle page visibility changes for slideshow
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible' && heroSectionVisible) {
@@ -3775,11 +3321,4 @@ const noticeData = {
   });
 });
 </script>
-
-
-
-
-
-
-
 {% endblock content %}
