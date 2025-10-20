@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from student.models import Student_info
 from teacher.models import Teacher
 from django.contrib.auth.models import User,Group
+from .utils import does_user_exists
 
 
 def user_login(request):
@@ -85,7 +86,11 @@ def user_signup(request):
      gender = request.POST.get('gender')
  
      user_name = first_name+' '+last_name
-     if not User.objects.filter(username=user_name).exists(): 
+     if does_user_exists(email=email): 
+        messages.error(request,'User with that email already exists !')
+
+
+     else:
         user_account = User.objects.create_user(username=user_name,first_name=first_name,last_name=last_name,email=email,password=password)
         user_account.save()
         group = Group.objects.get(name='Student')  
@@ -94,9 +99,6 @@ def user_signup(request):
         user_std_account.save()
         messages.success(request,'You will have Acess To Your Account in a Short Period of time ! ')
         return redirect("login:login")
-
-     else:
-        messages.error(request,'username already exist !')
 
    return redirect('login:login')
       
