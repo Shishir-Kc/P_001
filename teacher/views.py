@@ -6,11 +6,11 @@ from student import models as std
 from data_class.models import Project, Assignments, Class, Subject,YEAR_MONTH
 from django.contrib import messages
 from django.contrib.auth import logout
-from django.core.mail import send_mail
+from u_task.task import send_email
 from student import models as stu
 from Home import models as H
 import datetime
-from .utils import is_std_data_filled,filtered_month,total_days,current_month,total_class_attained_missed_this_month
+from .utils import is_std_data_filled,total_days,total_class_attained_missed_this_month,current_month
 
 @login_required
 def teacher_dashboard(request):
@@ -137,14 +137,11 @@ def upload_assignment(request):
    """
  )
 
-        send_mail(
-            subject=f"Assignment Uploaded for : {subject}",
-            message=full_message,
-            from_email=email,
-            recipient_list=student_email,  
-            fail_silently=False,
-        )
 
+        subject=f"Assignment Uploaded for : {subject}"
+
+        send_email.delay(
+            subject = subject,recivers=student_email,sender=email,message=full_message)
         messages.success(
             request, " Uploaded successfully! Your students can now access this note."
         )
@@ -274,7 +271,8 @@ def upload_news(request):
             supporting_file = request.FILES.get('pdf_file') 
             notify = request.POST.get('send_notification')
             teacher = models.Teacher.objects.get(user=request.user)
-            
+            print("=======================")
+            print(notify)
             
             if notify == "on":
              list_std = []
@@ -283,27 +281,21 @@ def upload_news(request):
               list_std.append(i.email)
 
              full_message = (f"""   
-        From: {teacher.first_name} {teacher.last_name} ({teacher.email})\n
-        Subject: New Notice - {title}\n\n
-        Dear Students,\n\n
-        A new notice has been issued under the category *{category}*.\n\n
-         Title:  {title}\n\n
-        {content}\n\n
+                  From: {teacher.first_name} {teacher.last_name} ({teacher.email})\n
+                 Subject: New Notice - {title}\n\n
+                     Dear Students,\n\n
+                     A new notice has been issued under the category *{category}*.\n\n
+                    Title:  {title}\n\n
+                 {content}\n\n
 
-        Please review this notice at your earliest convenience.\n\n
-        Best regards,\n
-        {teacher.first_name} {teacher.last_name} 
-    """)
-
-             send_mail(
-             subject=title,
-             message=full_message,
-             from_email=teacher.email,
-             recipient_list=list_std,  
-             fail_silently=False,
-             )
+                 Please review this notice at your earliest convenience.\n\n
+                Best regards,\n
+                 {teacher.first_name} {teacher.last_name} 
+                    """)
+             print('================================')
+             print(list_std)
+             send_email.delay(subject=title,recivers=list_std,message=full_message,sender=teacher.email)
             
-
             data = H.News(
                 title=title, description=content, image=image_file, category=category , file =supporting_file
             )
@@ -606,7 +598,7 @@ def student_attendence_list(request):
     }
     return render(request,'std_attendence/student_list.html',context)
 
-# to show user stact / add attendence 
+# to show user stast / add attendence 
 @login_required
 def student_add_attendence(request,pk):
     if not request.user.groups.filter(name='Teacher').exists():
@@ -621,7 +613,8 @@ def student_add_attendence(request,pk):
             'class_attained':total_class_attained_missed_this_month(pk,type_request='attained'),
             'class_missed':total_class_attained_missed_this_month(pk,type_request='missed'),
             'total_days':total_days(),
-            'current_month':current_month(date=filtered_month(date=datetime.date.today()))
+            #'current_month':current_month(date=filtered_month(date=datetime.date.today()))
+            'current_month':datetime.date.today().month
         }
         return render(request,'std_attendence/attendence.html',context)
     else:
@@ -634,7 +627,8 @@ def student_add_attendence(request,pk):
             'class_attained':total_class_attained_missed_this_month(pk,type_request='attained'),
             'class_missed':total_class_attained_missed_this_month(pk,type_request='missed'),
             'total_days':total_days(),
-            'current_month':current_month(date=filtered_month(date=datetime.date.today())),
+            'current_month':current_month(date=datetime.date.today().month),
+            # 'current_month':datetime.date.today().month
         }
         return render(request,'std_attendence/attendence.html',context)
 
@@ -650,7 +644,7 @@ def save_attendence(request,pk):
         attained = request.POST.get('attended_class') 
         student_detail = std.Student_info.objects.get(id=student_id)
         
-        current_month = YEAR_MONTH.objects.get(current_year=datetime.date.today().year, month=filtered_month(datetime.date.today())) 
+        current_month = YEAR_MONTH.objects.get(current_year=datetime.date.today().year, month=datetime.date.today().month) 
         try:  
          attendance = std.Attendence.objects.create(
          student=student_detail,
