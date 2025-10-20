@@ -29,7 +29,6 @@ class Student_info(models.Model):
     Roll_num = models.IntegerField(verbose_name="student_roll number",default=0,null=True,blank=True)
     refrence_code = models.CharField(verbose_name='refrence_code',default='n?A')
     joined = models.BooleanField(default=False,blank=True,null=True)
-
     # parent information ! 
 
     father_name = models.CharField(verbose_name='father_name',blank=True,null=True)
