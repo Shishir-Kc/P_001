@@ -12,7 +12,7 @@
     padding: 1rem;
     max-width: 100%;
     margin: 0;
-    min-height: calc(100vh - 60px); /* Full screen minus header */
+    min-height: calc(100vh - 60px);
     display: flex;
     flex-direction: column;
 }
@@ -34,7 +34,6 @@
     font-size: 0.875rem;
 }
 
-/* Enhanced Search and Filter controls */
 .search-filter-container {
     background: var(--bg-primary);
     border: 1px solid var(--border-color);
@@ -94,6 +93,7 @@
     width: 20px;
     height: 20px;
     display: none;
+    text-decoration: none;
 }
 
 .clear-search.show {
@@ -128,6 +128,7 @@
     transition: all 0.3s ease;
     white-space: nowrap;
     font-weight: 500;
+    text-decoration: none !important;
 }
 
 .filter-button:hover {
@@ -148,7 +149,6 @@
     height: 16px;
 }
 
-/* Active filters */
 .active-filters {
     display: flex;
     flex-wrap: wrap;
@@ -187,7 +187,6 @@
     background: rgba(255, 255, 255, 0.3);
 }
 
-/* Results info */
 .results-info {
     display: flex;
     justify-content: space-between;
@@ -213,12 +212,13 @@
     text-decoration: underline;
 }
 
-/* News items container - FULL HEIGHT */
+/* News items container - FIXED LAYOUT */
 .news-content-area {
     flex: 1;
     display: flex;
     flex-direction: column;
     min-height: 0;
+    overflow: hidden;
 }
 
 .news-list {
@@ -239,6 +239,8 @@
     overflow: hidden;
     transition: all 0.3s ease;
     cursor: pointer;
+    /* Add max-height to prevent oversized cards */
+    max-height: 350px;
 }
 
 .news-item:hover {
@@ -252,6 +254,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    /* Constrain content height to prevent overflow */
+    flex: 0 0 auto;
 }
 
 .news-category {
@@ -273,6 +277,11 @@
     font-weight: 700;
     line-height: 1.3;
     margin: 0.5rem 0;
+    /* Limit title to 2 lines with ellipsis */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .news-description {
@@ -280,6 +289,11 @@
     font-size: 0.875rem;
     line-height: 1.5;
     margin-bottom: 0.5rem;
+    /* Limit description to 2 lines with ellipsis */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .news-date {
@@ -291,13 +305,21 @@
     gap: 0.25rem;
 }
 
+/* Fixed image container sizing */
+.news-image-container {
+    flex: 1;
+    min-height: 150px;
+    max-height: 200px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--accent-color), #4dabf7);
+}
+
 .news-image {
     width: 100%;
-    aspect-ratio: 16/9;
+    height: 100%;
     object-fit: cover;
 }
 
-/* Enhanced No results message */
 .no-results {
     display: none;
     text-align: center;
@@ -336,7 +358,6 @@
     margin: 0 auto;
 }
 
-/* Search highlighting */
 .highlight {
     background-color: yellow;
     color: black;
@@ -345,7 +366,6 @@
     font-weight: 600;
 }
 
-/* Loading state */
 .loading {
     display: none;
     text-align: center;
@@ -502,7 +522,6 @@
     transform: translateY(-2px);
 }
 
-/* Animations */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -528,7 +547,6 @@
     animation: slideIn 0.3s ease;
 }
 
-/* Responsive styles */
 @media (min-width: 768px) {
     .news-feed-container {
         padding: 2rem;
@@ -538,15 +556,21 @@
     
     .news-item {
         flex-direction: row;
+        /* Reset max-height for row layout */
+        max-height: none;
     }
     
     .news-content {
         flex: 2;
+        /* Allow content to grow naturally */
+        flex: 2 1 auto;
     }
     
     .news-image-container {
         flex: 1;
         max-width: 300px;
+        min-height: 200px;
+        max-height: 200px;
     }
     
     .news-image {
@@ -590,13 +614,23 @@
 @media (min-width: 1024px) {
     .news-list {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-        gap: 2rem;
+        /* Improved grid to prevent oversized cards */
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 1.5rem;
     }
     
     .news-item {
         flex-direction: column;
-        height: fit-content;
+        /* Set fixed max-height for grid layout */
+        height: 100%;
+        max-height: 400px;
+    }
+    
+    .news-image-container {
+        flex: 1;
+        max-width: none;
+        min-height: 180px;
+        max-height: 180px;
     }
     
     .news-modal-content {
@@ -604,7 +638,6 @@
     }
 }
 
-/* Dark mode enhancements */
 [data-theme="dark"] .search-filter-container {
     background: var(--bg-secondary);
     border-color: var(--border-color);
@@ -640,111 +673,89 @@
         <p>Stay updated with the latest campus news and announcements</p>
     </div>
     
-    <!-- Enhanced Search and Filter Container -->
     <div class="search-filter-container">
-        <!-- Search Input -->
         <div class="search-container">
-            <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-            <input 
-                type="text" 
-                class="search-input" 
-                id="searchInput" 
-                placeholder="Search news by title, description, or category..."
-                autocomplete="off"
-            >
-            <button class="clear-search" id="clearSearch">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            <form method="GET" action="{% url 'student:news_feed' %}" style="display: flex; width: 100%; position: relative; align-items: center;">
+                <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
-            </button>
+                <input 
+                    type="text" 
+                    name="q"
+                    class="search-input" 
+                    id="searchInput" 
+                    placeholder="Search news by title, description, or category..."
+                    autocomplete="off"
+                    value="{{ query|default:'' }}"
+                >
+                {% if query %}
+                <a href="{% url 'student:news_feed' %}" class="clear-search" style="display: block;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </a>
+                {% endif %}
+            </form>
         </div>
         
-        <!-- Filter Controls -->
         <div class="filter-controls">
             <div class="filter-row">
-                <button class="filter-button active" data-category="all">
+                <a href="?category=all{% if query %}&q={{ query }}{% endif %}" class="filter-button {% if not current_category or current_category == 'all' %}active{% endif %}">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14-7H3m16 14H5"></path>
                     </svg>
                     All News
-                </button>
-                <!-- Hardcoded categories -->
-                <button class="filter-button" data-category="Notice">
+                </a>
+                <a href="?category=Notice{% if query %}&q={{ query }}{% endif %}" class="filter-button {% if current_category == 'Notice' %}active{% endif %}">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                     </svg>
                     Notice
-                </button>
-                <button class="filter-button" data-category="Event">
+                </a>
+                <a href="?category=Event{% if query %}&q={{ query }}{% endif %}" class="filter-button {% if current_category == 'Event' %}active{% endif %}">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                     </svg>
                     Event
-                </button>
-                <button class="filter-button" data-category="Announcements">
+                </a>
+                <a href="?category=Announcements{% if query %}&q={{ query }}{% endif %}" class="filter-button {% if current_category == 'Announcements' %}active{% endif %}">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                     </svg>
                     Announcements
-                </button>
-                <button class="filter-button" data-category="Sports">
+                </a>
+                <a href="?category=Sports{% if query %}&q={{ query }}{% endif %}" class="filter-button {% if current_category == 'Sports' %}active{% endif %}">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                     </svg>
                     Sports
-                </button>
-                <button class="filter-button" data-category="Student Life">
+                </a>
+                <a href="?category=Student Life{% if query %}&q={{ query }}{% endif %}" class="filter-button {% if current_category == 'Student Life' %}active{% endif %}">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                     </svg>
                     Student Life
-                </button>
-                <button class="filter-button" data-category="Academics">
+                </a>
+                <a href="?category=Academics{% if query %}&q={{ query }}{% endif %}" class="filter-button {% if current_category == 'Academics' %}active{% endif %}">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                     </svg>
                     Academics
-                </button>
-                
-                
-
-               
+                </a>
             </div>
-            
-            <!-- Active filters display -->
-            <div class="active-filters" id="activeFilters"></div>
         </div>
     </div>
     
-    <!-- Results Info -->
-    <div class="results-info">
-        <span class="results-count" id="resultsCount">Showing all news</span>
-        <button class="clear-all-filters" id="clearAllFilters" style="display: none;">Clear all filters</button>
-    </div>
-    
-    <!-- News Content Area -->
     <div class="news-content-area">
-        <!-- Loading state -->
-        <div class="loading" id="loading">
-            <svg width="40" height="40" fill="currentColor" viewBox="0 0 256 256">
-                <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z" opacity="0.2"></path>
-                <path d="M232,128a104,104,0,0,1-208,0c0-41,23.81-78.36,60.66-95.27a8,8,0,0,1,6.68,14.54C60.15,61.59,40,93.27,40,128a88,88,0,0,0,176,0c0-34.73-20.15-66.41-51.34-80.73a8,8,0,0,1,6.68-14.54C208.19,49.64,232,87,232,128Z">
-                    <animateTransform attributeName="transform" type="rotate" dur="2s" values="0 128 128;360 128 128" repeatCount="indefinite"></animateTransform>
-                </path>
-            </svg>
-            <p>Loading news...</p>
-        </div>
-        
-        <!-- Enhanced No results message -->
-        <div class="no-results" id="noResults">
+        {% if not new_s %}
+        <div class="no-results" id="noResults" style="display: block;">
             <svg class="no-results-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.137 0-4.146.832-5.636 2.364M6 20.291A7.962 7.962 0 014 15a8 8 0 1116 0 7.962 7.962 0 01-2 5.291"></path>
             </svg>
             <h3>Awh snap! Content not found!</h3>
             <p id="noResultsMessage">No news items match your search or filter criteria. Try adjusting your search terms or selecting a different category.</p>
         </div>
+        {% endif %}
         
         <div class="news-list" id="newsList">
            {% for news in new_s %} 
@@ -769,469 +780,81 @@
                     </div>
                 </div>
                 <div class="news-image-container">
-                    {% if news.image %}
-                    <img src="{{news.image.url}}" alt="{{news.title}}" class="news-image">
-                    {% else %}
-                    <img src="{% static 'student/images/nope.jpg' %}" alt="{{ news.title }}" class="news-image">
-                    {% endif %}
+                    <img class="news-image" src="{% if news.image %}{{news.image.url}}{% else %}{% static 'student/images/nope.jpg' %}{% endif %}" alt="{{news.title}}">
                 </div>
             </div>
-            {% endfor %}
+           {% endfor %}
         </div>
     </div>
 </div>
 
-<!-- News Modal Popup -->
+<!-- Modal HTML (rest of the template content) -->
 <div class="news-modal" id="newsModal">
     <div class="news-modal-content">
         <div class="news-modal-header">
-            <img class="news-modal-image" id="modalImage" src="{% static 'student/images/nope.jpg' %}" alt="News Image">
-            <button class="news-modal-close" onclick="closeNewsModal()">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
+            <img class="news-modal-image" id="modalImage" src="/placeholder.svg" alt="">
+            <button class="news-modal-close" onclick="closeNewsModal()">×</button>
         </div>
         <div class="news-modal-body">
             <div class="news-modal-category" id="modalCategory"></div>
             <h2 class="news-modal-title" id="modalTitle"></h2>
-            <div class="news-modal-date" id="modalDate">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
-                    <path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Z"></path>
-                </svg>
-                <span id="modalDateText"></span>
-            </div>
-            <div class="news-modal-description" id="modalDescription"></div>
+            <div class="news-modal-date" id="modalDate"></div>
+            <p class="news-modal-description" id="modalDescription"></p>
         </div>
-       
+        <div class="news-modal-footer">
+            <div class="news-modal-share">
+                <button class="share-button" onclick="shareNews('facebook')">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5c-.563-.074-1.5-.14-2.9-.14-2.9 0-4.9 1.771-4.9 5.034v1.706z"/>
+                    </svg>
+                </button>
+                <button class="share-button" onclick="shareNews('twitter')">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 7-7 7-7"/>
+                    </svg>
+                </button>
+            </div>
+            <button onclick="closeNewsModal()" style="background: var(--accent-color); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;">Close</button>
+        </div>
     </div>
 </div>
-{% endblock %}
 
-{% block extra_js %}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Enhanced News Feed with Modal Initialized');
+function openNewsModal(element) {
+    const category = element.getAttribute('data-category');
+    const title = element.getAttribute('data-title');
+    const description = element.getAttribute('data-description');
+    const date = element.getAttribute('data-date');
+    const image = element.getAttribute('data-image');
     
-    // Elements
-    const searchInput = document.getElementById('searchInput');
-    const clearSearch = document.getElementById('clearSearch');
-    const filterButtons = document.querySelectorAll('.filter-button');
-    const newsItems = document.querySelectorAll('.news-item');
-    const noResults = document.getElementById('noResults');
-    const noResultsMessage = document.getElementById('noResultsMessage');
-    const newsList = document.getElementById('newsList');
-    const activeFiltersDiv = document.getElementById('activeFilters');
-    const resultsCount = document.getElementById('resultsCount');
-    const clearAllFilters = document.getElementById('clearAllFilters');
-    const loading = document.getElementById('loading');
+    document.getElementById('modalCategory').textContent = category;
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalDescription').textContent = description;
+    document.getElementById('modalDate').textContent = date;
+    document.getElementById('modalImage').src = image;
     
-    // State
-    let activeFilter = 'all';
-    let searchTerm = '';
-    let originalNewsData = [];
-    
-    // Store original news data for search - FIXED VERSION
-    newsItems.forEach(item => {
-        const titleElement = item.querySelector('.news-title');
-        const descriptionElement = item.querySelector('.news-description');
-        const categoryAttribute = item.getAttribute('data-category');
-        
-        if (titleElement && descriptionElement && categoryAttribute) {
-            const title = titleElement.textContent.toLowerCase().trim();
-            const description = descriptionElement.textContent.toLowerCase().trim();
-            const category = categoryAttribute.toLowerCase().trim();
-            
-            originalNewsData.push({
-                element: item,
-                title: title,
-                description: description,
-                category: category,
-                searchText: `${title} ${description} ${category}`
-            });
-        }
-    });
-    
-    console.log('📊 Loaded news data:', originalNewsData.length, 'items');
-    
-    // Search functionality
-    searchInput.addEventListener('input', function() {
-        searchTerm = this.value.toLowerCase().trim();
-        
-        // Show/hide clear button
-        if (searchTerm) {
-            clearSearch.classList.add('show');
-        } else {
-            clearSearch.classList.remove('show');
-        }
-        
-        // Apply filters with debounce
-        clearTimeout(window.searchTimeout);
-        window.searchTimeout = setTimeout(() => {
-            applyFilters();
-        }, 300);
-    });
-    
-    // Clear search
-    clearSearch.addEventListener('click', function() {
-        searchInput.value = '';
-        searchTerm = '';
-        clearSearch.classList.remove('show');
-        applyFilters();
-        searchInput.focus();
-    });
-    
-    // Filter functionality - FIXED VERSION
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const category = this.getAttribute('data-category');
-            console.log('🔍 Filter clicked:', category);
-            
-            // Update active button
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Update active filter
-            activeFilter = category;
-            
-            // Update UI
-            updateActiveFilters();
-            applyFilters();
-        });
-    });
-    
-    // Clear all filters
-    clearAllFilters.addEventListener('click', function() {
-        // Reset search
-        searchInput.value = '';
-        searchTerm = '';
-        clearSearch.classList.remove('show');
-        
-        // Reset filter
-        activeFilter = 'all';
-        filterButtons.forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.getAttribute('data-category') === 'all') {
-                btn.classList.add('active');
-            }
-        });
-        
-        // Update UI
-        updateActiveFilters();
-        applyFilters();
-    });
-    
-    // Update active filters display
-    function updateActiveFilters() {
-        activeFiltersDiv.innerHTML = '';
-        
-        // Show search term as filter
-        if (searchTerm) {
-            const searchTag = createFilterTag(`Search: "${searchTerm}"`, () => {
-                searchInput.value = '';
-                searchTerm = '';
-                clearSearch.classList.remove('show');
-                applyFilters();
-            });
-            activeFiltersDiv.appendChild(searchTag);
-        }
-        
-        // Show category filter
-        if (activeFilter !== 'all') {
-            const categoryButton = document.querySelector(`.filter-button[data-category="${activeFilter}"]`);
-            if (categoryButton) {
-                const categoryName = categoryButton.textContent.trim();
-                const categoryTag = createFilterTag(categoryName, () => {
-                    activeFilter = 'all';
-                    filterButtons.forEach(btn => {
-                        btn.classList.remove('active');
-                        if (btn.getAttribute('data-category') === 'all') {
-                            btn.classList.add('active');
-                        }
-                    });
-                    updateActiveFilters();
-                    applyFilters();
-                });
-                activeFiltersDiv.appendChild(categoryTag);
-            }
-        }
-        
-        // Show/hide clear all button
-        if (searchTerm || activeFilter !== 'all') {
-            clearAllFilters.style.display = 'block';
-        } else {
-            clearAllFilters.style.display = 'none';
-        }
-    }
-    
-    // Create filter tag
-    function createFilterTag(text, onRemove) {
-        const filterTag = document.createElement('div');
-        filterTag.className = 'filter-tag';
-        
-        const label = document.createElement('span');
-        label.textContent = text;
-        
-        const removeBtn = document.createElement('button');
-        removeBtn.innerHTML = '×';
-        removeBtn.addEventListener('click', onRemove);
-        
-        filterTag.appendChild(label);
-        filterTag.appendChild(removeBtn);
-        
-        return filterTag;
-    }
-    
-    // Apply filters and search - FIXED VERSION
-    function applyFilters() {
-        console.log('🔍 Applying filters:', { searchTerm, activeFilter });
-        
-        // Show loading
-        loading.classList.add('show');
-        newsList.style.opacity = '0.5';
-        
-        setTimeout(() => {
-            let visibleCount = 0;
-            
-            originalNewsData.forEach(newsData => {
-                const { element, category, searchText } = newsData;
-                let shouldShow = true;
-                
-                // Apply category filter
-                if (activeFilter !== 'all' && category !== activeFilter.toLowerCase()) {
-                    shouldShow = false;
-                }
-                
-                // Apply search filter
-                if (searchTerm && !searchText.includes(searchTerm)) {
-                    shouldShow = false;
-                }
-                
-                // Show/hide element
-                if (shouldShow) {
-                    element.style.display = 'flex';
-                    visibleCount++;
-                    
-                    // Highlight search terms
-                    if (searchTerm) {
-                        highlightSearchTerms(element, searchTerm);
-                    } else {
-                        removeHighlights(element);
-                    }
-                } else {
-                    element.style.display = 'none';
-                }
-            });
-            
-            // Update results count
-            updateResultsCount(visibleCount);
-            
-            // Show/hide no results message
-            if (visibleCount === 0) {
-                noResults.classList.add('show');
-                newsList.style.display = 'none';
-                
-                // Custom message based on filters
-                if (searchTerm && activeFilter !== 'all') {
-                    noResultsMessage.textContent = `Awh snap! No news found for "${searchTerm}" in ${activeFilter} category. Try a different search term or category.`;
-                } else if (searchTerm) {
-                    noResultsMessage.textContent = `Awh snap! No news found for "${searchTerm}". Try a different search term.`;
-                } else if (activeFilter !== 'all') {
-                    noResultsMessage.textContent = `Awh snap! No news found in ${activeFilter} category. Try a different category.`;
-                } else {
-                    noResultsMessage.textContent = 'Awh snap! Content not found! No news items available.';
-                }
-            } else {
-                noResults.classList.remove('show');
-                newsList.style.display = 'flex';
-            }
-            
-            // Update active filters
-            updateActiveFilters();
-            
-            // Hide loading
-            loading.classList.remove('show');
-            newsList.style.opacity = '1';
-            
-            console.log('✅ Filters applied. Visible items:', visibleCount);
-        }, 300);
-    }
-    
-    // Update results count
-    function updateResultsCount(count) {
-        if (count === 0) {
-            resultsCount.textContent = 'No results found';
-        } else if (count === 1) {
-            resultsCount.textContent = 'Showing 1 news item';
-        } else if (searchTerm || activeFilter !== 'all') {
-            resultsCount.textContent = `Showing ${count} of ${originalNewsData.length} news items`;
-        } else {
-            resultsCount.textContent = `Showing all ${count} news items`;
-        }
-    }
-    
-    // Highlight search terms
-    function highlightSearchTerms(element, term) {
-        const titleElement = element.querySelector('.news-title');
-        const descElement = element.querySelector('.news-description');
-        
-        [titleElement, descElement].forEach(el => {
-            if (el && el.dataset.originalText) {
-                el.innerHTML = el.dataset.originalText;
-            } else if (el) {
-                el.dataset.originalText = el.innerHTML;
-            }
-            
-            if (el && term) {
-                const regex = new RegExp(`(${term})`, 'gi');
-                el.innerHTML = el.innerHTML.replace(regex, '<span class="highlight">$1</span>');
-            }
-        });
-    }
-    
-    // Remove highlights
-    function removeHighlights(element) {
-        const titleElement = element.querySelector('.news-title');
-        const descElement = element.querySelector('.news-description');
-        
-        [titleElement, descElement].forEach(el => {
-            if (el && el.dataset.originalText) {
-                el.innerHTML = el.dataset.originalText;
-            }
-        });
-    }
-    
-    // Keyboard shortcuts
-    document.addEventListener('keydown', function(e) {
-        // Ctrl/Cmd + K to focus search
-        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-            e.preventDefault();
-            searchInput.focus();
-        }
-        
-        // Escape to clear search or close modal
-        if (e.key === 'Escape') {
-            if (document.getElementById('newsModal').classList.contains('show')) {
-                closeNewsModal();
-            } else if (document.activeElement === searchInput) {
-                if (searchInput.value) {
-                    searchInput.value = '';
-                    searchTerm = '';
-                    clearSearch.classList.remove('show');
-                    applyFilters();
-                } else {
-                    searchInput.blur();
-                }
-            }
-        }
-    });
-    
-    // Initialize
-    updateResultsCount(originalNewsData.length);
-    
-    // Add haptic feedback for mobile
-    if (navigator.vibrate) {
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', () => navigator.vibrate(50));
-        });
-    }
-    
-    console.log('✅ Enhanced News Feed Ready!');
-    console.log('💡 Keyboard shortcuts: Ctrl+K (focus search), Escape (clear search/close modal)');
-});
-
-// NEWS MODAL FUNCTIONS
-function openNewsModal(newsElement) {
-    console.log('📰 Opening news modal');
-    
-    const modal = document.getElementById('newsModal');
-    const modalImage = document.getElementById('modalImage');
-    const modalCategory = document.getElementById('modalCategory');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalDateText = document.getElementById('modalDateText');
-    const modalDescription = document.getElementById('modalDescription');
-    
-    // Get data from the news element
-    const title = newsElement.getAttribute('data-title');
-    const description = newsElement.getAttribute('data-description');
-    const category = newsElement.getAttribute('data-category');
-    const date = newsElement.getAttribute('data-date');
-    const image = newsElement.getAttribute('data-image');
-    
-    // Populate modal content
-    modalImage.src = image;
-    modalImage.alt = title;
-    modalCategory.textContent = category;
-    modalTitle.textContent = title;
-    modalDateText.textContent = date;
-    modalDescription.textContent = description;
-    
-    // Show modal
-    modal.classList.add('show');
+    document.getElementById('newsModal').classList.add('show');
     document.body.style.overflow = 'hidden';
-    
-    // Add haptic feedback
-    if (navigator.vibrate) {
-        navigator.vibrate(50);
-    }
 }
 
 function closeNewsModal() {
-    console.log('❌ Closing news modal');
-    
-    const modal = document.getElementById('newsModal');
-    modal.classList.remove('show');
-    document.body.style.overflow = '';
+    document.getElementById('newsModal').classList.remove('show');
+    document.body.style.overflow = 'auto';
 }
 
 function shareNews(platform) {
     const title = document.getElementById('modalTitle').textContent;
-    const description = document.getElementById('modalDescription').textContent;
     const url = window.location.href;
     
-    console.log('📤 Sharing news:', platform, title);
-    
-    switch (platform) {
-        case 'facebook':
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(title)}`, '_blank');
-            break;
-        case 'twitter':
-            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank');
-            break;
-        case 'copy':
-            navigator.clipboard.writeText(`${title}\n\n${description}\n\n${url}`).then(() => {
-                // Show toast notification
-                const toast = document.createElement('div');
-                toast.style.cssText = `
-                    position: fixed;
-                    bottom: 20px;
-                    right: 20px;
-                    background: var(--accent-color);
-                    color: white;
-                    padding: 12px 20px;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-                    z-index: 10000;
-                    font-weight: 500;
-                `;
-                toast.textContent = 'News copied to clipboard!';
-                document.body.appendChild(toast);
-                
-                setTimeout(() => toast.remove(), 3000);
-            });
-            break;
-    }
-    
-    // Add haptic feedback
-    if (navigator.vibrate) {
-        navigator.vibrate(100);
+    if (platform === 'facebook') {
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    } else if (platform === 'twitter') {
+        window.open(`https://twitter.com/intent/tweet?url=${url}&text=${title}`, '_blank');
     }
 }
 
-// Close modal when clicking outside
-document.addEventListener('click', function(e) {
-    const modal = document.getElementById('newsModal');
-    if (e.target === modal) {
+document.getElementById('newsModal').addEventListener('click', function(e) {
+    if (e.target === this) {
         closeNewsModal();
     }
 });

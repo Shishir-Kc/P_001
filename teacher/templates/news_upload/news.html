@@ -149,7 +149,7 @@
                      data-content="{{news.description|truncatechars:60}}" 
                      data-date="{{news.created_at|date:'F d, Y - g:i A'}}"
                      data-news-id="{{news.id}}"
-                     data-share-url="/home/shared/{{news.id}}/view"
+                     data-share-url="{{ request.scheme }}://{{ request.get_host }}/shared/{{news.id}}/view"
                      {% if news.image %} 
                      data-image="{{news.image.url}}"
                      {% else %}
@@ -270,10 +270,12 @@
                 <i class="fab fa-linkedin-in"></i>
                 <span>LinkedIn</span>
             </a>
+             {% endcomment %}
             <a href="#" class="share-option whatsapp" onclick="shareToWhatsApp()" target="_blank">
                 <i class="fab fa-whatsapp"></i>
                 <span>WhatsApp</span>
             </a>
+            {% comment %} 
             <a href="#" class="share-option telegram" onclick="shareToTelegram()" target="_blank">
                 <i class="fab fa-telegram-plane"></i>
                 <span>Telegram</span>
@@ -824,12 +826,12 @@ document.addEventListener('DOMContentLoaded', function() {
     //     showToast('success', 'Shared!', 'Opening LinkedIn share dialog...');
     // };
 
-    // window.shareToWhatsApp = function() {
-    //     const text = encodeURIComponent(`${currentShareData.description} - ${currentShareData.url}`);
-    //     const shareUrl = `https://wa.me/?text=${text}`;
-    //     window.open(shareUrl, '_blank');
-    //     showToast('success', 'Shared!', 'Opening WhatsApp...');
-    // };
+    window.shareToWhatsApp = function() {
+        const text = encodeURIComponent(`${currentShareData.description} - ${currentShareData.url}`);
+        const shareUrl = `https://wa.me/?text=${text}`;
+        window.open(shareUrl, '_blank');
+        showToast('success', 'Shared!', 'Opening WhatsApp...');
+    };
 
     // window.shareToTelegram = function() {
     //     const text = encodeURIComponent(currentShareData.description);

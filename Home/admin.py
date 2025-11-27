@@ -22,14 +22,21 @@ admin.site.register(models.Event)
 
 admin.site.register(models.GalleryImage)
 
-admin.site.register(models.Achievements)
 
 admin.site.register(models.Academics)
 
-admin.site.register(models.Head_faculty)
+admin.site.register(models.Faculty_Teacher_Info)
 
 admin.site.register(models.Academic_resources)
 
 admin.site.register(models.Contact)
 
 admin.site.register(models.Members)
+
+admin.site.register(models.Faculty) 
+
+admin.site.register(models.Member_Role) 
+
+admin.site.register(models.Achievements_stats) 
+
+admin.site.register(models.Student_Reviews) 

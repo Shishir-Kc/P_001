@@ -1530,105 +1530,118 @@
                 </form>
             </div>
 
-            <!-- Search - SAME AS HOME GALLERY -->
+            <!-- Search Section -->
             <div class="search-container">
-                <div class="search-wrapper">
+                <form method="GET" action="{% url 'teacher:upload_gallery' %}" class="search-wrapper">
                     <div class="search-icon">
                         <i class="fas fa-search"></i>
                     </div>
-                    <input 
-                        type="text" 
-                        class="search-input" 
-                        placeholder="Search gallery images..."
-                        id="gallerySearch"
-                    >
-                    <button type="button" class="search-clear" id="searchClear" title="Clear search">
+                    <input type="text" name="q" class="search-input" placeholder="Search images by title or category..." value="{{ query|default:'' }}">
+                    {% if query %}
+                    <a href="{% url 'teacher:upload_gallery' %}{% if current_category %}?category={{ current_category }}{% endif %}" class="search-clear show" title="Clear search">
                         <i class="fas fa-times"></i>
-                    </button>
-                </div>
+                    </a>
+                    {% endif %}
+                </form>
             </div>
 
-            <!-- Filter Tags - SAME AS HOME GALLERY -->
+            <!-- Filter Tags -->
             <div class="filter-container">
-                <div class="filter-tag active" data-filter="all">
-                    <i class="fas fa-th"></i>
-                    All
-                </div>
-                <div class="filter-tag" data-filter="Events">
-                    <i class="fas fa-calendar-alt"></i>
-                    Events
-                </div>
-                <div class="filter-tag" data-filter="Activities">
-                    <i class="fas fa-users"></i>
-                    Activities
-                </div>
-                <div class="filter-tag" data-filter="Achievements">
-                    <i class="fas fa-trophy"></i>
-                    Achievements
-                </div>
-                <div class="filter-tag" data-filter="Sports">
-                    <i class="fas fa-futbol"></i>
-                    Sports
-                </div>
-                <div class="filter-tag" data-filter="Student Life">
-                    <i class="fas fa-graduation-cap"></i>
-                    Student Life
-                </div>
-                <div class="filter-tag" data-filter="Academics">
-                    <i class="fas fa-book"></i>
-                    Academics
-                </div>
-                <div class="filter-tag" data-filter="Announcements">
-                    <i class="fas fa-bullhorn"></i>
-                    Announcements
-                </div>
+                <a href="{% url 'teacher:upload_gallery' %}{% if query %}?q={{ query }}{% endif %}" class="filter-tag {% if not current_category %}active{% endif %}" style="text-decoration: none;">
+                    <i class="fas fa-th-large"></i> All
+                </a>
+                <a href="?category=Activities{% if query %}&q={{ query }}{% endif %}" class="filter-tag {% if current_category == 'Activities' %}active{% endif %}" style="text-decoration: none;">
+                    <i class="fas fa-running"></i> Activities
+                </a>
+                <a href="?category=Events{% if query %}&q={{ query }}{% endif %}" class="filter-tag {% if current_category == 'Events' %}active{% endif %}" style="text-decoration: none;">
+                    <i class="fas fa-calendar-alt"></i> Events
+                </a>
+                <a href="?category=Sports{% if query %}&q={{ query }}{% endif %}" class="filter-tag {% if current_category == 'Sports' %}active{% endif %}" style="text-decoration: none;">
+                    <i class="fas fa-medal"></i> Sports
+                </a>
+                <a href="?category=Student Life{% if query %}&q={{ query }}{% endif %}" class="filter-tag {% if current_category == 'Student Life' %}active{% endif %}" style="text-decoration: none;">
+                    <i class="fas fa-user-graduate"></i> Student Life
+                </a>
+                <a href="?category=Academics{% if query %}&q={{ query }}{% endif %}" class="filter-tag {% if current_category == 'Academics' %}active{% endif %}" style="text-decoration: none;">
+                    <i class="fas fa-book"></i> Academics
+                </a>
+                <a href="?category=Announcements{% if query %}&q={{ query }}{% endif %}" class="filter-tag {% if current_category == 'Announcements' %}active{% endif %}" style="text-decoration: none;">
+                    <i class="fas fa-bullhorn"></i> Announcements
+                </a>
             </div>
 
-            <!-- Gallery Section Title -->
-            <h2 class="gallery-section-title">Gallery Images</h2>
+            <!-- Gallery Grid -->
+            <div class="gallery-section-title">
+                {% if query %}
+                    Search Results for "{{ query }}"
+                {% elif current_category %}
+                    {{ current_category }} Images
+                    All Images
+                {% endif %}
+                <span style="font-size: 1rem; font-weight: normal; color: var(--text-secondary); margin-left: 0.5rem;">
+                    ({{ images.paginator.count }} items)
+                </span>
+            </div>
 
-            <!-- Gallery Grid - SAME AS HOME GALLERY -->
             <div class="gallery-grid" id="galleryGrid">
-                {% if images %}
-                    {% for image in images %}
-                    <div class="gallery-item" 
-                         data-category="{{ image.category }}" 
-                         data-title="{{ image.title|lower }}"
-                         data-image-id="{{ image.id }}">
-                        <img src="{{ image.image.url }}" alt="{{ image.title }}" class="gallery-image">
-                        <div class="gallery-overlay">
-                            <i class="fas fa-expand-alt gallery-icon"></i>
-                            <div class="gallery-title-overlay">{{ image.title }}</div>
-                            <div class="gallery-actions">
-                                <button class="gallery-action-btn gallery-view-btn" onclick="viewImage(this)" title="View full image">
-                                    <i class="fas fa-eye"></i>
-                                    View
-                                </button>
-                                <button class="gallery-action-btn gallery-delete-btn" onclick="confirmDelete(this)" title="Delete image">
-                                    <i class="fas fa-trash"></i>
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
-                        <div class="category-badge">
-                            <i class="{{ image.get_category_icon }}"></i>
-                            {{ image.category }}
+                {% for image in images %}
+                <div class="gallery-item" data-category="{{image.category}}" data-title="{{image.title}}">
+                    <img src="{{image.image.url}}" alt="{{image.title}}" class="gallery-image" loading="lazy">
+                    <div class="category-badge">
+                        <i class="fas fa-tag"></i> {{image.category}}
+                    </div>
+                    <div class="gallery-overlay">
+                        <i class="fas fa-image gallery-icon"></i>
+                        <div class="gallery-title-overlay">{{image.title}}</div>
+                        <div class="gallery-actions">
+                            <button class="gallery-action-btn gallery-view-btn" onclick="openLightbox(this)">
+                                <i class="fas fa-expand"></i> View
+                            </button>
+                            <button class="gallery-action-btn gallery-delete-btn" onclick="confirmDelete('{{image.id}}')">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
                         </div>
                     </div>
-                    {% endfor %}
-                {% else %}
-                    <div class="no-results">
-                        <i class="fas fa-images"></i>
-                        <p>No images have been uploaded to the gallery yet.</p>
-                    </div>
+                </div>
+                {% empty %}
+                <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
+                    <i class="fas fa-images" style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+                    <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;">No images found</h3>
+                    <p style="color: var(--text-secondary);">Try adjusting your search or filter to find what you're looking for.</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if images.has_other_pages %}
+            <div class="pagination-container" style="display: flex; justify-content: center; margin: 3rem 0; gap: 0.5rem;">
+                {% if images.has_previous %}
+                <a href="?page={{ images.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}" 
+                   class="pagination-btn"
+                   style="padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 0.5rem; color: var(--text-primary); text-decoration: none; transition: all 0.3s ease; background: var(--bg-primary);">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                {% endif %}
+
+                {% for num in images.paginator.page_range %}
+                    {% if images.number == num %}
+                        <span class="pagination-btn active" style="padding: 0.5rem 1rem; background: var(--primary-color); color: white; border-radius: 0.5rem;">{{ num }}</span>
+                    {% elif num > images.number|add:'-3' and num < images.number|add:'3' %}
+                        <a href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}" 
+                           class="pagination-btn"
+                           style="padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 0.5rem; color: var(--text-primary); text-decoration: none; transition: all 0.3s ease; background: var(--bg-primary);">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if images.has_next %}
+                <a href="?page={{ images.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}" 
+                   class="pagination-btn"
+                   style="padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 0.5rem; color: var(--text-primary); text-decoration: none; transition: all 0.3s ease; background: var(--bg-primary);">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
                 {% endif %}
             </div>
-
-            <!-- No Results Message (hidden by default) -->
-            <div class="no-results" id="noResults" style="display: none;">
-                <i class="fas fa-search"></i>
-                <p>No images match your search criteria.</p>
-            </div>
+            {% endif %}
         </div>
     </div>
 

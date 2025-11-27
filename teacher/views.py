@@ -3,14 +3,26 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from . import models
 from student import models as std
-from data_class.models import Project, Assignments, Class, Subject,YEAR_MONTH
+from data_class.models import Project, Assignments, Class, Subject,Attendance
 from django.contrib import messages
 from django.contrib.auth import logout
 from u_task.task import send_email
 from student import models as stu
 from Home import models as H
 import datetime
-from .utils import is_std_data_filled,total_days,total_class_attained_missed_this_month,current_month
+import nepali_datetime
+from .utils import (is_today_date_created,
+get_date,
+get_year,
+get_month,
+number_of_absent_students,
+number_of_present_students,
+get_todays_date,
+total_days_absent,
+total_days_present,
+calculate_attendance_percentage,
+is_attendance_taken)
+
 
 @login_required
 def teacher_dashboard(request):
@@ -18,19 +30,24 @@ def teacher_dashboard(request):
         if not request.user.groups.filter(name='Teacher').exists():
          return redirect('home:home')
 
-        teacher = models.Teacher.objects.get(user=request.user)
-
-        teacher_content = models.Teacher.objects.get(user=request.user)
-        teacher_classes = teacher.teacher_class.all()
+        # Optimize: Fetch teacher once. 
+        # Use select_related/prefetch_related if needed.
+        teacher_content = models.Teacher.objects.prefetch_related('teacher_class', 'subject').get(user=request.user)
+        
+        # Optimize: Use the fetched teacher object directly
+        teacher_classes = teacher_content.teacher_class.all()
+        
+        # Optimize: distinct() might be needed if multiple classes point to same student (unlikely but safe)
         total_students = std.Student_info.objects.filter(
             student_class__in=teacher_classes
         ).count()
 
-        students = std.Student_info.objects.filter(refrence_code = teacher.refrence_code)
+        students = std.Student_info.objects.filter(refrence_code = teacher_content.refrence_code)
       
         projects = Project.objects.filter(
-            classs__in=teacher.teacher_class.all(), subject__in=teacher.subject.all()
+            classs__in=teacher_classes, subject__in=teacher_content.subject.all()
         ).order_by("-uploaded_at")[:4]
+        
         context = {
             "teacher": teacher_content,
             "std_num": total_students,
@@ -328,8 +345,34 @@ def upload_gallery(request):
             return redirect("teacher:upload_gallery")
 
         gallery = H.GalleryImage.objects.all()
+        
+        # Handle Search
+        query = request.GET.get('q')
+        if query:
+            from django.db.models import Q
+            gallery = gallery.filter(
+                Q(title__icontains=query) | 
+                Q(category__icontains=query)
+            )
+        
+        # Handle Category Filter
+        category = request.GET.get('category')
+        if category and category != 'all':
+            gallery = gallery.filter(category=category)
+            
+        # Handle Pagination
+        from django.core.paginator import Paginator
+        paginator = Paginator(gallery, 12) # Show 12 images per page
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
         teacher_data = models.Teacher.objects.get(user=request.user)
-        context = {"images": gallery, "teacher": teacher_data}
+        context = {
+            "images": page_obj, 
+            "teacher": teacher_data,
+            "query": query,
+            "current_category": category,
+        }
 
         return render(request, "gallery_upload/gallery.html", context)
 
@@ -557,106 +600,121 @@ def remove_student(request):
 
  
 @login_required
-def student_attendence_list(request):
+def student_attendance_list(request):
+    is_today_date_created()
     if not request.user.groups.filter(name='Teacher').exists():
          return redirect('home:home')
     teacher = models.Teacher.objects.get(user=request.user)
-    students = std.Student_info.objects.filter(refrence_code=teacher.refrence_code).order_by('Roll_num')
-    today = datetime.date.today()
-    year_month_obj = YEAR_MONTH.objects.get(
-        month=today.month,
-        current_year=today.year
-    )
-
-    number_of_present_students = std.Attendence.objects.filter(
-            student__in=students,
-            attendence=year_month_obj,
-            date_month = datetime.date.today(),
-            attended_class=True
-        ).count()
-    number_of_absent_students =  std.Attendence.objects.filter(
-            student__in=students,
-            attendence=year_month_obj,
-            date_month = datetime.date.today(),
-            attended_class=False
-        ).count()
     
-    attendance_dict = {att.student_id: att for att in std.Attendence.objects.filter(
-        student__in=students,
-        attendence=year_month_obj,
-        date_month=today
-    )}
+    # Base queryset
+    students = std.Student_info.objects.filter(refrence_code=teacher.refrence_code).order_by('Roll_num')
+    
+    # Calculate stats on the full list (before search/pagination)
+    absent_count = number_of_absent_students(student_obj=students)
+    present_count = number_of_present_students(student_obj=students)
+    
+    # Handle Search
+    query = request.GET.get('q')
+    if query:
+        from django.db.models import Q
+        students = students.filter(
+            Q(first_name__icontains=query) | 
+            Q(last_name__icontains=query) |
+            Q(Roll_num__icontains=query)
+        )
 
+    # Handle Pagination
+    from django.core.paginator import Paginator
+    paginator = Paginator(students, 20) # Show 20 students per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    attendance = Attendance.objects.get(year=get_year(),month=get_month(),date=get_date())
+    attended_std = std.Student_Attendance.objects.filter(attendance=attendance)
+    attendance_dict = {}
+    for atd_student in  attended_std:
+         attendance_dict[atd_student.student.id] = True
+         
     context =  {
         'teacher':teacher,
-        'students':students,
-        'absent_students' :number_of_absent_students,
-        'present_students':number_of_present_students,
+        'students':page_obj, # Pass page_obj instead of full list
+        'absent_students' : absent_count,
+        'present_students': present_count,
         'attendance_dict': attendance_dict,
-        'today_date':datetime.date.today(),
-
+        'today_date': get_todays_date(),
+        'query': query,
     }
-    return render(request,'std_attendence/student_list.html',context)
+ 
+    return render(request,'std_attendance/student_list.html',context)
 
-# to show user stast / add attendence 
 @login_required
-def student_add_attendence(request,pk):
+def student_attendance_info(request,pk):
     if not request.user.groups.filter(name='Teacher').exists():
          return redirect('home:home')
-    if request.method == "POST":
-        teacher = models.Teacher.objects.get(user=request.user)
-        student = std.Student_info.objects.get(id=pk)
-        context = {
+    
+    # Calendar Logic
+    import nepali_datetime
+    from .utils import get_calendar_data # Import shared utility
+
+    # Use shared utility
+    calendar_data = get_calendar_data(get_year(), get_month(), pk)
+
+    # Fetch records for summary stats if needed separately, or rely on utility.
+    # The context needs 'student_records' list.
+    try:
+        attendance_objs = Attendance.objects.filter(year=get_year(),month=get_month()).order_by('date')
+        student_records = std.Student_Attendance.objects.filter(student=pk,attendance__in=attendance_objs).order_by('attendance__date')
+    except Exception:
+        student_records = []
+
+    teacher = models.Teacher.objects.get(user=request.user)
+    student = std.Student_info.objects.get(id=pk)
+
+    context = {
             'teacher':teacher,
             'student':student,
-            'is_done':is_std_data_filled(pk),
-            'class_attained':total_class_attained_missed_this_month(pk,type_request='attained'),
-            'class_missed':total_class_attained_missed_this_month(pk,type_request='missed'),
-            'total_days':total_days(),
-            #'current_month':current_month(date=filtered_month(date=datetime.date.today()))
-            'current_month':datetime.date.today().month
+            'current_month': get_month(),
+            'current_year':get_year(),
+            'student_records':student_records,
+            'calendar_data': calendar_data,
+            'prefix_range': [], # Not needed with new utility structure, but keeping for template compatibility if it checks it.
+                                # Actually, the new utility puts empty slots in calendar_data directly.
+                                # If template iterates calendar_data, it's fine.
+            'present_count': total_days_present(student_id=pk),
+            'absent_count': total_days_absent(student_id=pk),
+            'attendance_rate':calculate_attendance_percentage(student_id=pk),
+            'is_attendance_taken':is_attendance_taken(student_id=pk),
         }
-        return render(request,'std_attendence/attendence.html',context)
-    else:
-        teacher = models.Teacher.objects.get(user=request.user)
-        student = std.Student_info.objects.get(id=pk)
-        context = {
-            'teacher':teacher,
-            'student':student,
-            'is_done':is_std_data_filled(pk),
-            'class_attained':total_class_attained_missed_this_month(pk,type_request='attained'),
-            'class_missed':total_class_attained_missed_this_month(pk,type_request='missed'),
-            'total_days':total_days(),
-            'current_month':current_month(date=datetime.date.today().month),
-            # 'current_month':datetime.date.today().month
-        }
-        return render(request,'std_attendence/attendence.html',context)
+    return render(request,'std_attendance/attendance.html',context)
 
-
-# to save std attendence !
+# to save std attendance !
 @login_required
-def save_attendence(request,pk):
+def save_attendance(request,pk):
     if not request.user.groups.filter(name='Teacher').exists():
          return redirect('home:home')
     
     if request.method == "POST":
-        student_id = pk
-        attained = request.POST.get('attended_class') 
-        student_detail = std.Student_info.objects.get(id=student_id)
-        
-        current_month = YEAR_MONTH.objects.get(current_year=datetime.date.today().year, month=datetime.date.today().month) 
+        attended = request.POST.get('attended_class') 
+
+        student_detail = std.Student_info.objects.get(id=pk)
+        try:
+            attendance = Attendance.objects.get(year=get_year(),month=get_month(),date=get_date())
+        except Attendance.DoesNotExist:
+            Attendance.objects.create(year=get_year(),month=get_month(),date=get_date())
+
         try:  
-         attendance = std.Attendence.objects.create(
-         student=student_detail,
-         attendence=current_month,
-         date_month=datetime.date.today(),
-         attended_class=attained,
-         )
-         attendance.save()
-        except Exception:
-            messages.success(request,'Student attendence has been saved  !')
-            return redirect("teacher:student_attendence_list")
+         student_attendance = std.Student_Attendance.objects.create(
+            attendance = attendance,
+            student = student_detail,
+            attended  = attended
+            )
+         student_attendance.save()  
+         messages.success(request,'Student attendance has been saved  !')
+        except Exception as e:
+            print(e)
+            messages.error(request,f'{e}')
+            return redirect("teacher:student_attendance_list")
         
-        return redirect('teacher:student_attendence_list')
+        return redirect('teacher:student_attendance_list')
     else:
-         return redirect('teacher:student_attendence_list')
+         return redirect('teacher:student_attendance_list')

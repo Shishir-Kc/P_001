@@ -13,58 +13,46 @@ def user_login(request):
         user_code = request.POST.get('user_code')
         user_pass = request.POST.get('user_pass')
 
+        # Refactored login logic
+        user = None
+        
+        # 1. Try to authenticate with email if provided
         if "@" in user_code:
             try:
                 logging_user = User.objects.get(email=user_code)
-                username = logging_user.username
-                user = authenticate(username=username,password=user_pass)
-                login(request,user)
-                if user is not None:
-                   if user.groups.filter(name='Student').exists():
-                      messages.success(request,'Logged in !')
-                      return redirect("student:student_dashboard")
-                   elif user.groups.filter(name='Teacher').exists():
-                      messages.success(request,'Logged in !')
-                      return redirect ('teacher:teacher_dashboard')
-                else:
-                   messages.error(request,'Gmail not match ! ')
-            
-                   
-                
-            except Exception:
-               messages.error(request,'Credidentials did not match ! ')
-               return redirect("login:login")
-            
-         
+                user = authenticate(username=logging_user.username, password=user_pass)
+            except User.DoesNotExist:
+                # Email not found
+                pass
 
-        try:
-             try:
-              student = Student_info.objects.get(student_code=user_code)
-              user_name = student.user.username
-             except Student_info.DoesNotExist:
-               try: 
-                 teacher = Teacher.objects.get(teacher_code = user_code)
-                 user_name = teacher.user.username
-               except Teacher.DoesNotExist:
-                  messages.error(request,"user with that credentials does not exist ")
-                  return redirect('login:login')
-         
-        except Student_info.DoesNotExist or Teacher.DoesNotExist:
-            messages.error(request, "Failed to Login: Check your credentials!")
-            return render(request, 'login/login.html')
-
-       
-        user = authenticate(username=user_name, password=user_pass)
+        # 2. If not authenticated by email, try by student/teacher code
+        if user is None:
+            try:
+                # Try Student first
+                student = Student_info.objects.select_related('user').get(student_code=user_code)
+                user = authenticate(username=student.user.username, password=user_pass)
+            except Student_info.DoesNotExist:
+                try:
+                    # Try Teacher
+                    teacher = Teacher.objects.select_related('user').get(teacher_code=user_code)
+                    user = authenticate(username=teacher.user.username, password=user_pass)
+                except Teacher.DoesNotExist:
+                    pass
         
+        # 3. Final check
         if user is not None:
             login(request, user)
-            messages.success(request,'Logged in scessfully ')
+            messages.success(request, 'Logged in successfully!')
+            
             if user.groups.filter(name='Student').exists():
-             return redirect("student:student_dashboard")
+                return redirect("student:student_dashboard")
             elif user.groups.filter(name='Teacher').exists():
-               return redirect("teacher:teacher_dashboard")
+                return redirect("teacher:teacher_dashboard")
+            else:
+                 # Fallback for admin or other users
+                 return redirect("home:home") # Or admin dashboard
         else:
-            messages.error(request,'entered credentials are incorrect ! ')
+            messages.error(request, 'Invalid credentials! Please check your email/code and password.')
             return redirect('login:login')
     
     return render(request, 'login/login.html')

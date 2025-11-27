@@ -1,0 +1,535 @@
+{% extends 'teach_base/base.html' %}
+{% load static %}
+
+{% block title %}Attendance - Teacher Dashboard{% endblock %}
+
+{% block header_title %}Student Attendance{% endblock %}
+{% block user_avatar %} {% if teacher.teacher_image %} {{teacher.teacher_image.url}} {% else %} {% static 'teacher/images/default_user.png' %} {% endif %} {% endblock %}
+
+{% block content %}
+
+<div class="attendance-container">
+  <div class="attendance-header">
+    <h1 class="page-title">Mark Attendance</h1>
+  </div>
+
+  <div class="attendance-layout">
+    <!-- Student Info Section (Left Side) -->
+    <div class="student-section">
+      <div class="student-card">
+        <div class="student-image">
+          <img src="{% if student.student_profile %}{{ student.student_profile.url }}{% else %}{% if student.Gender == "Male" %}{% static 'teacher/images/male.png' %}{% else %}{% static 'teacher/images/female.png' %}{% endif %}{% endif %}" 
+               alt="{{ student.first_name }} {{ student.last_name }}" 
+               class="profile-img">
+        </div>
+        
+        <div class="student-info">
+          <h2 class="student-name">{{ student.first_name|capfirst }} {{ student.last_name|capfirst }}</h2>
+          <p class="student-roll">Roll Number: {{ student.Roll_num }}</p>
+        </div>
+
+        <div class="attendance-actions">
+          {% if is_attendance_taken %}
+            <div class="attendance-done">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 12l2 2 4-4"/>
+                <circle cx="12" cy="12" r="10"/>
+              </svg>
+              <span>Attendance Already Recorded!</span>
+            </div>
+          {% else %}
+            <div class="attendance-buttons">
+              <form method="POST" action="{% url 'teacher:add_attendance' student.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="student_id" value="{{ student.id }}">
+                <input type="hidden" name="attended_class" value="True">
+                <button type="submit" class="btn btn-present">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 12l2 2 4-4"/>
+                    <circle cx="12" cy="12" r="10"/>
+                  </svg>
+                  Present
+                </button>
+              </form>
+              
+              <form method="POST" action="{% url 'teacher:add_attendance' student.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="student_id" value="{{ student.id }}">
+                <input type="hidden" name="attended_class" value="False">
+                <button type="submit" class="btn btn-absent">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="m15 9-6 6"/>
+                    <path d="m9 9 6 6"/>
+                  </svg>
+                  Absent
+                </button>
+              </form>
+            </div>
+          {% endif %}
+          
+          <div class="back-button-container">
+            <a href="{% url 'teacher:student_attendance_list' %}" class="back-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m12 19-7-7 7-7"/>
+                <path d="m19 12H5"/>
+              </svg>
+              Back to Student List
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats/Calendar Section (Right Side) -->
+    <div class="stats-section">
+      <div class="stats-card">
+        <div class="calendar-header">
+          <h3 class="calendar-title">
+            <span id="currentMonth">{{ current_month }}</span>
+            <span id="currentYear">{{ current_year }}</span>
+          </h3>
+        </div>
+        
+        <div class="calendar-grid">
+          <div class="calendar-weekdays">
+            <div class="weekday">Sun</div>
+            <div class="weekday">Mon</div>
+            <div class="weekday">Tue</div>
+            <div class="weekday">Wed</div>
+            <div class="weekday">Thu</div>
+            <div class="weekday">Fri</div>
+            <div class="weekday">Sat</div>
+          </div>
+          
+          <div class="calendar-days">
+            {# Calendar days #}
+            {% for item in calendar_data %}
+                {% if item.type == 'empty' %}
+                    <div class="calendar-day empty"></div>
+                {% else %}
+                    <div class="calendar-day {% if item.status == 'present' %}present{% elif item.status == 'absent' %}absent{% endif %} {% if item.is_today %}today{% endif %}">
+                        <span class="day-number">{{ item.day }}</span>
+                        
+                        {% if item.status == 'present' %}
+                            <span class="attendance-marker present-marker"></span>
+                        {% elif item.status == 'absent' %}
+                            <span class="attendance-marker absent-marker"></span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        
+        <div class="calendar-legend">
+          <div class="legend-item">
+            <span class="legend-dot present"></span>
+            <span>Present</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot absent"></span>
+            <span>Absent</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot holiday"></span>
+            <span>Holiday/Weekend</span>
+          </div>
+        </div>
+        
+        <div class="attendance-stats">
+          <div class="stat-row">
+            <span class="stat-label">This Month:</span>
+            <span class="stat-value">
+              <span class="present-count">{{ present_count }}</span> Present / 
+              <span class="absent-count">{{ absent_count }}</span> Absent
+            </span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Attendance Rate:</span>
+            <span class="stat-value">{{ attendance_rate }}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Same CSS as before */
+.attendance-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.attendance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.back-button-container {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.attendance-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.student-section, .stats-section {
+    height: fit-content;
+}
+
+.student-card, .stats-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.student-image {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--primary-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.student-info {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.student-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0 0 0.5rem 0;
+}
+
+.student-roll {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.attendance-actions {
+    text-align: center;
+}
+
+.attendance-done {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.attendance-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 120px;
+    justify-content: center;
+}
+
+.btn-present {
+    background: #22c55e;
+    color: white;
+}
+
+.btn-present:hover {
+    background: #16a34a;
+    transform: translateY(-2px);
+}
+
+.btn-absent {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-absent:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+}
+
+/* Calendar Styles */
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.calendar-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.calendar-grid {
+    margin-bottom: 1.5rem;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: 8px;
+}
+
+.weekday {
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 0.5rem 0;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    position: relative;
+    min-height: 40px;
+    transition: all 0.2s ease;
+}
+
+.calendar-day:not(.empty):hover {
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+    z-index: 1;
+}
+
+.calendar-day.empty {
+    background: transparent;
+    border: none;
+}
+
+.calendar-day.present {
+    background: rgba(34, 197, 94, 0.15) !important;
+    border-color: rgba(34, 197, 94, 0.4) !important;
+}
+
+.calendar-day.absent {
+    background: rgba(239, 68, 68, 0.15) !important;
+    border-color: rgba(239, 68, 68, 0.4) !important;
+}
+
+.calendar-day.holiday {
+    background: rgba(156, 163, 175, 0.1) !important;
+    border-color: rgba(156, 163, 175, 0.3) !important;
+}
+
+.calendar-day.today {
+    border: 2px solid var(--primary-color) !important;
+    font-weight: 700;
+}
+
+.day-number {
+    font-size: 0.875rem;
+    color: var(--text-color);
+}
+
+.attendance-marker {
+    position: absolute;
+    bottom: 2px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.present-marker {
+    background: #22c55e;
+}
+
+.absent-marker {
+    background: #ef4444;
+}
+
+.calendar-legend {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1rem;
+    background: var(--bg-color);
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+.legend-dot.present {
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid #22c55e;
+}
+
+.legend-dot.absent {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid #ef4444;
+}
+
+.legend-dot.holiday {
+    background: rgba(156, 163, 175, 0.1);
+    border: 1px solid #9ca3af;
+}
+
+.attendance-stats {
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 0.875rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.present-count {
+    color: #22c55e;
+}
+
+.absent-count {
+    color: #ef4444;
+}
+
+@media (max-width: 768px) {
+    .attendance-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .attendance-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .attendance-buttons {
+        flex-direction: row;
+        gap: 0.75rem;
+    }
+    
+    .btn {
+        flex: 1;
+        min-width: auto;
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    .back-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 1rem;
+        font-size: 1rem;
+    }
+    
+    .calendar-day {
+        min-height: 35px;
+        font-size: 0.75rem;
+    }
+    
+    .day-number {
+        font-size: 0.75rem;
+    }
+    
+    .calendar-legend {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    
+    .weekday {
+        font-size: 0.75rem;
+    }
+}
+</style>
+{% endblock %}

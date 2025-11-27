@@ -1,6 +1,7 @@
 from django.db import models
 from teacher import models as TD
-import datetime
+from Home import models as HD
+from teacher.utils import get_date,get_month,get_year,get_day
 
 """"
     AUTHOR - MRC ! 
@@ -23,7 +24,7 @@ class Class(models.Model):
 
     grade = models.CharField(verbose_name="Grade/Class")
     section = models.CharField(max_length=30, verbose_name="Section",blank=True,null=True)
-    faculty = models.CharField(max_length=30,verbose_name="Faculty",default="N/A")
+    faculty = models.ForeignKey(HD.Faculty,on_delete=models.CASCADE,default=1)
     subjects = models.ManyToManyField(Subject, verbose_name="Subjects")
     class_image = models.ImageField(upload_to='class_image/',blank=True,verbose_name="class_image")
     class Meta:
@@ -81,40 +82,16 @@ class Project(models.Model):
  
 
 
-def get_current_year():
-
-    return datetime.date.today().year
-
-class YEAR_MONTH(models.Model):
-    MONTH_CHOICES =[
-    (1, 'January'),
-    (2, 'February'),
-    (3, 'March'),
-    (4, 'April'),
-    (5, 'May'),
-    (6, 'June'),
-    (7, 'July'),
-    (8, 'August'),
-    (9, 'September'),
-    (10, 'October'),
-    (11, 'November'),
-    (12, 'December')
-]
 
 
-    holiday = models.IntegerField(verbose_name='number_of_holiday')
-    unexpected_holiday = models.IntegerField(verbose_name='unexpected_holidays')
-    number_of_days = models.IntegerField(verbose_name='number_of_days_in_month')
-    month = models.IntegerField(choices=MONTH_CHOICES, verbose_name="MONTH")
-  
-    current_year = models.IntegerField(default=get_current_year)  
-
+class Attendance(models.Model): # need to make it uneditabe !
+    year = models.CharField(max_length=4,default=get_year,verbose_name='Year')
+    month = models.CharField(max_length=20,default=get_month,verbose_name='Month')
+    date = models.CharField(max_length=2,default=get_date,verbose_name='Date')
+    day = models.CharField(max_length=10,default=get_day)
     class Meta:
-        verbose_name = 'Year'
-        verbose_name_plural = 'years'
-        unique_together = ('month','current_year')
-
+        unique_together = ('year','month','date')
+        verbose_name = "Attendance"
+        verbose_name_plural = "Attendances"
     def __str__(self):
-        return f"{self.month} {self.current_year}"
-
-
+        return f"{self.date} {self.month} {self.year}"

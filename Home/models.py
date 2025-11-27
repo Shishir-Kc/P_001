@@ -1,3 +1,4 @@
+from re import VERBOSE
 from django.db import models
 import uuid
 
@@ -88,7 +89,7 @@ class GalleryImage(models.Model):
     
 
 
-class Achievements (models.Model):
+class Achievements_stats (models.Model):
     student = models.IntegerField(verbose_name="No of Students ")
     teacher = models.IntegerField(verbose_name="No of Teachers")
     experience = models.IntegerField(verbose_name="experience")
@@ -98,16 +99,16 @@ class Achievements (models.Model):
         return " Numbers for achivements"
     
     class Meta:
-        verbose_name = 'Achivement'
-        verbose_name_plural = "Achivements"
+        verbose_name = 'Achivement stats'
+        verbose_name_plural = "Achivement stats"
 
 
 class Academics(models.Model):
-    grade_low = models.ImageField(upload_to='grade/',null=True)
+    grade_low = models.ImageField(upload_to='grade/',null=True,verbose_name="lower grade")
     low_des = models.TextField(verbose_name="Short description ",blank=False)
-    grade_mid = models.ImageField(upload_to='grade/',null=True)
+    grade_mid = models.ImageField(upload_to='grade/',null=True,verbose_name="middle grade")
     mid_des = models.TextField(verbose_name="Short description ",blank=False)
-    grade_high = models.ImageField(upload_to='grade/',null=True)
+    grade_high = models.ImageField(upload_to='grade/',null=True,verbose_name="high grade")
     high_des = models.TextField(verbose_name="Short description ",blank=False)
 
     class Meta:
@@ -117,21 +118,20 @@ class Academics(models.Model):
     def __str__(self):
         return "short info about classes ! "
     
+class Faculty(models.Model):
+    name = models.CharField(max_length=100)
+    class Meta:
+        managed = True
+        verbose_name = 'Add_Faculty'
+        verbose_name_plural = 'Add_Faculties'
+    def __str__(self):
+        return self.name
 
-class Head_faculty(models.Model):
-
-    FACULTY = {
-        "Science":"Science",
-        "Computer Science": "Computer Science",
-        "Education": "Education",
-        "Hotel Management":"Hotel Management",
-        "Management" : "Management"
-    }
-
+class Faculty_Teacher_Info(models.Model):
 
     teacher_image = models.ImageField(upload_to='faculty/')
     teacher_name = models.CharField(max_length=100)
-    teacher_faculty = models.CharField(choices=FACULTY,default="None")
+    teacher_faculty = models.ForeignKey(Faculty,on_delete=models.CASCADE)
     teacher_description = models.TextField(verbose_name="short info about the teacher")
     teacher_subject = models.CharField(verbose_name="teacher_subject_names",default="not given")
     class Meta:
@@ -143,11 +143,8 @@ class Head_faculty(models.Model):
         return f"{self.teacher_name} | {self.teacher_faculty} | "
     
 class Academic_resources(models.Model):
-  Course_Catalogs = models.FileField(upload_to='pdf/')
-  Academic_Policies = models.FileField(upload_to='pdf/')
-  Study_Guides = models.FileField(upload_to='pdf/')
-  Academic_Calendar = models.FileField(upload_to='pdf/')
-
+  academic_calendar = models.FileField(upload_to='pdf/')
+  admission_guide = models.FileField(upload_to='pdf/')
   class Meta:
     db_table = ''
     managed = True
@@ -172,13 +169,21 @@ class Contact(models.Model):
     def __str__(self):
         return f"admission inquerry from {self.full_name}"
     
+class Member_Role(models.Model):
+    name = models.CharField(max_length=100)
+    class Meta:
+        verbose_name = "Member_Role"
+        verbose_name_plural = "Member_Roles"
+        
+    def __str__(self):
+        return self.name
 
 class Members(models.Model):
-
+     
     member_image = models.ImageField(upload_to='member/')
     member_name = models.CharField(verbose_name="Name")
     member_contact = models.EmailField(verbose_name = "Email", max_length=254)
-
+    member_role = models.ForeignKey(Member_Role,on_delete=models.CASCADE,null=True,blank=True)
 
     class Meta:
         verbose_name = "Member"
@@ -186,3 +191,19 @@ class Members(models.Model):
 
     def __str__(self):
         return f'{self.member_name} | {self.member_contact}'
+
+
+
+class Student_Reviews(models.Model):
+    name = models.CharField(max_length=100,verbose_name='name')
+    review = models.TextField(verbose_name='review')
+    image = models.ImageField(upload_to='review/')
+    created_at = models.DateTimeField(auto_now_add=True)
+    faculty = models.ForeignKey(Faculty,on_delete=models.CASCADE,verbose_name='faculty')
+    class_of = models.IntegerField(verbose_name='class_of')
+
+    class Meta:
+        verbose_name = "Student_Review"
+        verbose_name_plural = "Student_Reviews"
+    def __str__(self):
+        return self.name

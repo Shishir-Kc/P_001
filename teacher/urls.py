@@ -19,14 +19,14 @@ urlpatterns = [
     path('upload/Gallery/',views.upload_gallery,name='upload_gallery'),
     path('delete/image/',views.delete_gallery,name="delete_image"),
     path('manage/students/',views.manage_student,name='manage_std'),
-    path('maanage/student/details/<int:pk>/',views.student_details,name='student_details'),
+    path('maanage/student/details/<uuid:pk>/',views.student_details,name='student_details'),
     path('accept/request/',views.accepet_std_request,name='accept_request'),
     path('reject/request/',views.reject_std_request,name='reject_request'),
     path('save/student/',views.edit_student,name='edit_std'),
     path('update/image/teacher/',views.update_profile_image,name="update_profile_pic"),
-    path('studenet/attendence/list/',views.student_attendence_list,name='student_attendence_list'),
-    path('student/<int:pk>/attendence/',views.student_add_attendence,name='student_attendence'),
-    path('add/attendence/<int:pk>/',views.save_attendence,name='add_attendence')
+    path('studenet/attendance/list/',views.student_attendance_list,name='student_attendance_list'),
+    path('student/<uuid:pk>/attendance/',views.student_attendance_info,name='student_attendance'),
+    path('add/attendance/<uuid:pk>/',views.save_attendance,name='add_attendance')
     
 ]
 

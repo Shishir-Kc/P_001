@@ -15,7 +15,48 @@
 
 {% block extra_css %}
 <style>
-    /* Reset and base styles to match your dark theme */
+    /* Theme Variables */
+    :root {
+        /* Light Theme Defaults */
+        --page-bg: #f3f4f6;
+        --card-bg: #ffffff;
+        --text-main: #111827;
+        --text-muted: #6b7280;
+        --text-light: #9ca3af;
+        --border-color: #e5e7eb;
+        --input-bg: #ffffff;
+        --input-border: #6366f1;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --accent-primary: #6366f1;
+        --accent-hover: #4f46e5;
+        --detail-bg: #f9fafb;
+        --count-bg: rgba(99, 102, 241, 0.1);
+        --count-text: #6366f1;
+    }
+
+    /* Dark Theme Overrides */
+    [data-theme="dark"] {
+        --page-bg: #1a1a1a;
+        --card-bg: #2d2d2d;
+        --text-main: #ffffff;
+        --text-muted: rgba(255, 255, 255, 0.8);
+        --text-light: rgba(255, 255, 255, 0.6);
+        --border-color: #404040;
+        --input-bg: #2d2d2d;
+        --input-border: #6366f1;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+        --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.3);
+        --accent-primary: #6366f1;
+        --accent-hover: #5855eb;
+        --detail-bg: #3a3a3a;
+        --count-bg: rgba(255, 255, 255, 0.2);
+        --count-text: #ffffff;
+    }
+
+    /* Reset and base styles */
     * {
         box-sizing: border-box;
     }
@@ -24,11 +65,12 @@
         padding: 0;
         margin: 0;
         min-height: 100vh;
-        background: #1a1a1a; /* Dark background to match your theme */
+        background: var(--page-bg);
+        transition: background-color 0.3s ease;
     }
 
     .content-header {
-        color: white;
+        color: var(--text-main);
         padding: 3rem 2rem;
         text-align: center;
         margin: 0;
@@ -38,14 +80,14 @@
         font-size: 2.5rem;
         font-weight: 700;
         margin: 0 0 0.5rem 0;
-        color: white;
+        color: var(--text-main);
     }
 
     .content-header p {
         font-size: 1.1rem;
         opacity: 0.9;
         margin: 0;
-        color: rgba(255, 255, 255, 0.8);
+        color: var(--text-muted);
     }
 
     .management-container {
@@ -63,7 +105,7 @@
     }
 
     .section-header {
-        color: white;
+        color: var(--text-main);
         padding: 1.5rem 2rem;
         border-radius: 12px;
         margin-bottom: 2rem;
@@ -80,16 +122,17 @@
         display: flex;
         align-items: center;
         gap: 0.75rem;
-        color: white;
+        color: var(--text-main);
     }
 
     .section-title i {
         font-size: 1.25rem;
+        color: var(--accent-primary);
     }
 
     .section-count {
-        background: rgba(255, 255, 255, 0.2);
-        color: white;
+        background: var(--count-bg);
+        color: var(--count-text);
         padding: 0.5rem 1rem;
         border-radius: 25px;
         font-size: 0.875rem;
@@ -110,16 +153,16 @@
     .search-input {
         width: 100%;
         padding: 1rem 1rem 1rem 3rem;
-        border: 2px solid #6366f1; /* Blue border to match your theme */
+        border: 2px solid var(--input-border);
         border-radius: 12px;
-        background: #2d2d2d; /* Dark input background */
-        color: white;
+        background: var(--input-bg);
+        color: var(--text-main);
         font-size: 1rem;
         transition: all 0.3s ease;
     }
 
     .search-input::placeholder {
-        color: rgba(255, 255, 255, 0.6);
+        color: var(--text-light);
     }
 
     .search-input:focus {
@@ -133,7 +176,7 @@
         left: 1rem;
         top: 50%;
         transform: translateY(-50%);
-        color: rgba(255, 255, 255, 0.6);
+        color: var(--text-light);
         font-size: 1.1rem;
     }
 
@@ -145,13 +188,14 @@
     }
 
     .student-card {
-        background: #2d2d2d; /* Dark card background to match your theme */
+        background: var(--card-bg);
         border: none;
         border-radius: 16px;
         padding: 1.5rem;
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
+        box-shadow: var(--shadow-md);
     }
 
     /* Purple top border like in your design */
@@ -167,7 +211,7 @@
 
     .student-card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        box-shadow: var(--shadow-lg);
     }
 
     .student-header {
@@ -182,7 +226,7 @@
         height: 70px;
         border-radius: 50%;
         object-fit: cover;
-        border: 3px solid #6366f1; /* Blue border to match your theme */
+        border: 3px solid var(--accent-primary);
         flex-shrink: 0;
     }
 
@@ -194,14 +238,14 @@
     .student-name {
         font-size: 1.25rem;
         font-weight: 700;
-        color: white; /* White text to match your theme */
+        color: var(--text-main);
         margin-bottom: 0.25rem;
         line-height: 1.2;
     }
 
     .student-id {
         font-size: 0.875rem;
-        color: rgba(255, 255, 255, 0.7); /* Light gray text */
+        color: var(--text-muted);
         font-weight: 500;
     }
 
@@ -217,15 +261,15 @@
         align-items: center;
         gap: 0.75rem;
         font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.8); /* Light text */
+        color: var(--text-muted);
         padding: 0.75rem;
-        background: #3a3a3a; /* Slightly lighter dark background */
+        background: var(--detail-bg);
         border-radius: 8px;
     }
 
     .student-detail i {
         width: 18px;
-        color: #6366f1; /* Blue icons to match your theme */
+        color: var(--accent-primary);
         font-size: 1rem;
     }
 
@@ -253,12 +297,12 @@
     }
 
     .edit-btn {
-        background: #6366f1; /* Blue button to match your theme */
+        background: var(--accent-primary);
         color: white;
     }
 
     .edit-btn:hover {
-        background: #5855eb;
+        background: var(--accent-hover);
         transform: translateY(-2px);
         text-decoration: none;
         color: white;
@@ -268,7 +312,7 @@
         grid-column: 1 / -1;
         text-align: center;
         padding: 4rem 2rem;
-        color: rgba(255, 255, 255, 0.6);
+        color: var(--text-light);
         display: none;
     }
 
@@ -280,13 +324,13 @@
         font-size: 4rem;
         margin-bottom: 1.5rem;
         opacity: 0.5;
-        color: #6366f1;
+        color: var(--accent-primary);
     }
 
     .empty-state h3, .no-results-state h3 {
         font-size: 1.5rem;
         margin-bottom: 0.75rem;
-        color: white;
+        color: var(--text-main);
         font-weight: 600;
     }
 
@@ -295,7 +339,7 @@
         max-width: 400px;
         margin: 0 auto;
         line-height: 1.6;
-        color: rgba(255, 255, 255, 0.7);
+        color: var(--text-muted);
     }
 
     /* Mobile Optimization */
@@ -384,23 +428,23 @@
         scroll-behavior: smooth;
     }
 
-    /* Custom scrollbar for dark theme */
+    /* Custom scrollbar */
     .student-list::-webkit-scrollbar {
         width: 8px;
     }
 
     .student-list::-webkit-scrollbar-track {
-        background: #2d2d2d;
+        background: var(--page-bg);
         border-radius: 4px;
     }
 
     .student-list::-webkit-scrollbar-thumb {
-        background: #6366f1;
+        background: var(--accent-primary);
         border-radius: 4px;
     }
 
     .student-list::-webkit-scrollbar-thumb:hover {
-        background: #5855eb;
+        background: var(--accent-hover);
     }
 
     /* Animation for fade in */

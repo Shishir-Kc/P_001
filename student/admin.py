@@ -36,18 +36,5 @@ admin.site.register(models.Student_info,Student_Admin)
 
 
 
-class Attendence_Admin(admin.ModelAdmin):
-    list_display = [ 
-        'student',
-        'attendence',
-        'date_month',
-        'attended_class',
-    ]
-    list_filter=[
-        'attended_class',
-        'date_month',
-        'attendence',
-        'student__student_class'
-    ]
 
-admin.site.register(models.Attendence,Attendence_Admin)
+admin.site.register(models.Student_Attendance)

@@ -585,8 +585,8 @@
 
                          
                         {% if teacher.head_teacher %} 
-                          <li class="nav-item {% if request.resolver_match.url_name == 'student_attendence_list' %}active{% endif %}">
-                             <a href="{% url "teacher:student_attendence_list" %}">
+                          <li class="nav-item {% if request.resolver_match.url_name == 'student_attendance_list' %}active{% endif %}">
+                             <a href="{% url "teacher:student_attendance_list" %}">
                                  <i class="fa-solid fa-list-check"></i>
                                  <span>Students Attendence </span>
 

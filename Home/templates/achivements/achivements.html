@@ -157,9 +157,99 @@
         .featured-card {
             background: white;
             border-radius: 15px;
-            overflow: hidden;
+            /* overflow: hidden; Removed to allow popup to show */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
+            position: relative; /* Ensure positioning context */
+            cursor: pointer;
+        }
+
+        /* Ensure image maintains border radius since overflow is removed from parent */
+        .featured-image {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        /* Popup Styles - Hidden by default, used as data source */
+        .popup-details {
+            display: none;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            transform: scale(0.8);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #64748b;
+            font-size: 1.2rem;
+        }
+
+        .close-modal:hover {
+            background: #e2e8f0;
+            color: #ef4444;
+            transform: rotate(90deg);
+        }
+
+        .modal-body .popup-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-body .popup-text {
+            font-size: 1rem;
+            color: var(--text-dark);
+            line-height: 1.7;
         }
 
         .featured-card:hover {
@@ -210,6 +300,8 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
             border: 1px solid var(--bg-gray);
+            position: relative; /* Ensure positioning context */
+            cursor: pointer;
         }
 
         .achievement-card:hover {
@@ -475,7 +567,11 @@
                         <div class="featured-image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAP5x5I6Vs8VBYzx1n--qOX5F41SjqpXwYt6GaPJPLNwWZ30Sc9T9lNStnZG7prGgqMARUrNsM1mGoP5D25uhBFulEkVyQ1bQW8BSz_aDGrtP62kQYt-f-PzZcFofjUM8LGRdzWFJ88TNEpNThh8aXQk9VqF6-V-eYVs4cFH0Y3tw13lJli1qZynS8CQinF8x1wt0Dd2hj05JI6HgayRjJBYT5wkpOSv37m57mDCa8Er0GXW6cDted4vUnCryNZB8demYGbESmkMgw');"></div>
                         <div class="featured-content">
                             <h3 class="featured-title">Academic Excellence Awards</h3>
-                            <p class="featured-description">Recognizing outstanding academic performance and dedication to learning excellence.</p>
+                            <p class="featured-description">securing Second Position with highest Score .</p>
+                        </div>
+                        <div class="popup-details">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAP5x5I6Vs8VBYzx1n--qOX5F41SjqpXwYt6GaPJPLNwWZ30Sc9T9lNStnZG7prGgqMARUrNsM1mGoP5D25uhBFulEkVyQ1bQW8BSz_aDGrtP62kQYt-f-PzZcFofjUM8LGRdzWFJ88TNEpNThh8aXQk9VqF6-V-eYVs4cFH0Y3tw13lJli1qZynS8CQinF8x1wt0Dd2hj05JI6HgayRjJBYT5wkpOSv37m57mDCa8Er0GXW6cDted4vUnCryNZB8demYGbESmkMgw" alt="Academic Excellence" class="popup-image">
+                            <p class="popup-text">Our school secured the Second Position in Itahari Sub-Metropolitan City with the highest score. As per the ERO report, this achievement is a testament to our exceptional learning outcomes and the successful adoption of new and effective educational practices.</p>
                         </div>
                     </div>
                     <div class="featured-card fade-in-element">
@@ -484,12 +580,20 @@
                             <h3 class="featured-title">Sports Championship Victory</h3>
                             <p class="featured-description">Celebrating the triumph of our sports teams in regional and national competitions.</p>
                         </div>
+                        <div class="popup-details">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3mcLUkkIGNFsisDfp4PBfWm5zcylkvlPkvSnG9cjGrzgKaWCCUlmuw96Hes30-LpQrHERGfg7VMNMlclszE3IUBIJKiE3qzsAyAXaYLIBE1JLdFKNETtUi8S9BNWySfJOh1fCGEu3WhAqxZTJdIugQt30pEjYhyAUXTpvmEW2kF8g_hQTfPEA8_eUKAm5M9ctLJf4TwwHXiAc5PW6hA4kwyScJK0dIEPAePh5_d2sXKytVDDNNwpHN8NFNqJi8tj09EM3gxFC3lk" alt="Sports Victory" class="popup-image">
+                            <p class="popup-text">From football to athletics, our teams have brought home numerous trophies. This victory highlights not just physical prowess but also teamwork, discipline, and the spirit of fair play.</p>
+                        </div>
                     </div>
                     <div class="featured-card fade-in-right">
-                        <div class="featured-image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDqZ0suzKQMOWCdEW59wvoTtLHf7Sbn16AQ_QJC5UfJY-xdSw51gyiZ_kKRD6DjGsPC-DuLQR9G2YiMg0-1aXQ-uFrKEgeQzGbI84cmEVTRLTFi-pjTYBoPkS3FvtOkgnP8j_67VZArWd_gUOCo_8COfZYlURCU8r6BUM5ukJN_pb0KActw6ADTXFEe-IwymJhzR2id5ZGEFSH3wrAXJFEzAiA6scGJjlhk17jKFbQhuy0yizLtquS712f21BehW9vlggt_9-nvCpA');"></div>
+                        <div class="featured-image" style="background-image: url('{% static 'home/images/achivements/dance.jpeg' %}');"></div>
                         <div class="featured-content">
                             <h3 class="featured-title">Arts & Cultural Excellence</h3>
                             <p class="featured-description">Highlighting the creativity and talent of our students in arts and cultural programs.</p>
+                        </div>
+                        <div class="popup-details">
+                            <img src="{% static 'home/images/achivements/dance.jpeg' %}" alt="Arts Excellence" class="popup-image">
+                            <p class="popup-text">Our students consistently excel in music, dance, and fine arts, reflecting their vibrant creativity and our school's dedication to holistic development. Notably, we secured first place and a cash prize of 20,000 in the cultural dance competition organized by the 'Raja Club', a testament to our active participation and success in cultural events.</p>
                         </div>
                     </div>
                 </div>
@@ -503,15 +607,23 @@
                         <div class="achievement-icon">
                             <i class="fas fa-graduation-cap"></i>
                         </div>
-                        <h3 class="achievement-title">National Merit Scholars</h3>
-                        <p class="achievement-description">Students recognized for exceptional academic performance and leadership qualities.</p>
+                        <h3 class="achievement-title">SEE Examination Results</h3>
+                        <p class="achievement-description">Achieved an outstanding 84.34% pass rate in the SEE examinations.</p>
+                        <div class="popup-details">
+                            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="SEE Results" class="popup-image">
+                            <p class="popup-text">Our students have demonstrated remarkable academic prowess with an 84.34% success rate in the Secondary Education Examination (SEE), reflecting their hard work and our rigorous academic preparation.</p>
+                        </div>
                     </div>
                     <div class="achievement-card fade-in-element">
                         <div class="achievement-icon">
-                            <i class="fas fa-trophy"></i>
+                            <i class="fas fa-chart-line"></i>
                         </div>
-                        <h3 class="achievement-title">Science Fair Winners</h3>
-                        <p class="achievement-description">Multiple awards in regional and national science competitions.</p>
+                        <h3 class="achievement-title">Grade 12 Results</h3>
+                        <p class="achievement-description">Secured a commendable 66.65% pass rate in Grade 12 board exams.</p>
+                        <div class="popup-details">
+                            <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Grade 12 Results" class="popup-image">
+                            <p class="popup-text">Our Grade 12 students have achieved a 66.65% pass rate, showcasing their dedication and readiness for higher education. We continue to strive for excellence and support every student's academic journey.</p>
+                        </div>
                     </div>
                     <div class="achievement-card fade-in-element">
                         <div class="achievement-icon">
@@ -519,6 +631,10 @@
                         </div>
                         <h3 class="achievement-title">Research Publications</h3>
                         <p class="achievement-description">Students' research papers published in academic journals and conferences.</p>
+                        <div class="popup-details">
+                            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Research" class="popup-image">
+                            <p class="popup-text">A rare feat for high schoolers, our students have contributed original research in fields like biology and computer science, recognized by the academic community.</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -533,6 +649,10 @@
                         </div>
                         <h3 class="achievement-title">Regional Champions</h3>
                         <p class="achievement-description">Basketball and football teams win regional championships.</p>
+                        <div class="popup-details">
+                            <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Regional Champions" class="popup-image">
+                            <p class="popup-text">Our teams demonstrated exceptional skill and strategy, dominating the regional leagues and bringing pride to our school.</p>
+                        </div>
                     </div>
                     <div class="achievement-card fade-in-scale">
                         <div class="achievement-icon">
@@ -540,6 +660,10 @@
                         </div>
                         <h3 class="achievement-title">Individual Excellence</h3>
                         <p class="achievement-description">Athletes receive individual awards for outstanding performance.</p>
+                        <div class="popup-details">
+                            <img src="https://images.unsplash.com/photo-1552674605-4695231af347?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Individual Excellence" class="popup-image">
+                            <p class="popup-text">Several of our student-athletes were named MVPs in their respective sports, setting new records and inspiring their peers.</p>
+                        </div>
                     </div>
                     <div class="achievement-card fade-in-rotate">
                         <div class="achievement-icon">
@@ -547,6 +671,10 @@
                         </div>
                         <h3 class="achievement-title">Team Spirit Award</h3>
                         <p class="achievement-description">Recognizing teams with the best spirit and sportsmanship.</p>
+                        <div class="popup-details">
+                            <img src="https://images.unsplash.com/photo-1526676037777-05a232554f77?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Team Spirit" class="popup-image">
+                            <p class="popup-text">Beyond winning, our teams are known for their integrity, respect for opponents, and positive attitude on and off the field.</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -620,6 +748,18 @@
                     </button>
                 </a>
             </section>
+        </div>
+    </div>
+</div>
+
+<!-- Shared Modal -->
+<div class="modal-overlay" id="achievementModal">
+    <div class="modal-content">
+        <div class="close-modal">
+            <i class="fas fa-times"></i>
+        </div>
+        <div class="modal-body">
+            <!-- Content will be injected here -->
         </div>
     </div>
 </div>
@@ -729,6 +869,48 @@
         if (statsSection) {
             statsObserver.observe(statsSection);
         }
+
+        // Modal Logic
+        const modal = document.getElementById('achievementModal');
+        const modalBody = modal.querySelector('.modal-body');
+        const closeModal = modal.querySelector('.close-modal');
+
+        function openModal(content) {
+            modalBody.innerHTML = content;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModalFunc() {
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // Click event for cards
+        document.querySelectorAll('.achievement-card, .featured-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                const popupContent = this.querySelector('.popup-details');
+                if (popupContent) {
+                    openModal(popupContent.innerHTML);
+                }
+            });
+        });
+
+        // Close modal events
+        closeModal.addEventListener('click', closeModalFunc);
+        
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModalFunc();
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModalFunc();
+            }
+        });
 
         // Enhanced card hover effects with performance optimization
         let isHovering = false;

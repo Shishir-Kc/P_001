@@ -1919,7 +1919,7 @@ main {
     </div>
     <div class="hero-content">
       <h1>Welcome to {{title|default:"Shree Rastriya Secondary School"}}</h1>
-      <h2>Nurturing Excellence in Education Since 1995</h2>
+      <h2>Nurturing Excellence in Education Since 2013</h2>
       <a href="{% url 'home:academic' %}" class="explore-btn" aria-label="Explore our academic facilities">
         <i class="fas fa-compass" aria-hidden="true"></i> 
         Explore Our Facilities
@@ -2141,16 +2141,21 @@ main {
       </div>
       <div class="reviews-container">
         <!-- First Row - Left to Right -->
+        <!-- First Row - Left to Right -->
         <div class="review-row" data-direction="left">
           <div class="review-track" id="reviewTrack1">
-            <!-- Original reviews -->
-            <div class="review-card" data-review-id="1">
+            {% for review in students_review %}
+            <div class="review-card" data-review-id="{{ review.id }}">
               <div class="review-header">
                 <div class="review-avatar">
-                  <img src="{% static 'home/images/students/nibesh.jpeg' %}" alt="Aarav Sharma">
+                  {% if review.image %}
+                  <img src="{{ review.image.url }}" alt="{{ review.name }}">
+                  {% else %}
+                  <img src="https://ui-avatars.com/api/?name={{ review.name }}&background=random" alt="{{ review.name }}">
+                  {% endif %}
                 </div>
                 <div class="review-info">
-                  <h4 class="review-name">Nibesh Gautam</h4>
+                  <h4 class="review-name">{{ review.name }}</h4>
                   <div class="review-rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -2158,114 +2163,36 @@ main {
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                   </div>
-                  <span class="review-class">Class of 2082</span>
+                  <span class="review-class">Class of {{ review.class_of }}</span>
                 </div>
               </div>
-              <p class="review-text"> शिक्षकहरूको माया , शान्त वातावरण र प्रेरणादायी शिक्षण शौलीले मलाई धेरै कुरा सिक्न प्रेरित हुन्छ । समग्रमा मेरो विद्यालय अनुभव प्रेरणादायी , शिक्षाप्रद र  सभ्झनालयक छ । </p>
+              <p class="review-text">{{ review.review|truncatechars:100 }}</p>
               <div class="review-footer">
-                <span class="review-subject">Science</span>
+                <span class="review-subject">{{ review.faculty.name }}</span>
               </div>
             </div>
-            <div class="review-card" data-review-id="2">
-              <div class="review-header">
-                <div class="review-avatar">
-                  <img src="https://i.pravatar.cc/80?img=2" alt="Sneha Karki">
-                </div>
-                <div class="review-info">
-                  <h4 class="review-name">Sneha Karki</h4>
-                  <div class="review-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <span class="review-class">Class of 2022</span>
-                </div>
-              </div>
-              <p class="review-text">The extracurriculars really helped me build confidence. Amazing sports facilities and cultural programs...</p>
-              <div class="review-footer">
-                <span class="review-subject">Science</span>
-              </div>
+            {% empty %}
+            <div class="review-card">
+                <p class="review-text">No reviews available yet.</p>
             </div>
-            <div class="review-card" data-review-id="3">
-              <div class="review-header">
-                <div class="review-avatar">
-                  <img src="https://i.pravatar.cc/80?img=3" alt="Roshan Thapa">
-                </div>
-                <div class="review-info">
-                  <h4 class="review-name">Roshan Thapa</h4>
-                  <div class="review-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <span class="review-class">Class of 2023</span>
-                </div>
-              </div>
-              <p class="review-text">Teachers were always supportive and kind. The mentorship program helped me choose my career path...</p>
-              <div class="review-footer">
-                <span class="review-subject">Education</span>
-              </div>
-            </div>
-            <div class="review-card" data-review-id="4">
-              <div class="review-header">
-                <div class="review-avatar">
-                  <img src="https://i.pravatar.cc/80?img=4" alt="Puja Tamang">
-                </div>
-                <div class="review-info">
-                  <h4 class="review-name">Puja Tamang</h4>
-                  <div class="review-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <span class="review-class">Class of 2021</span>
-                </div>
-              </div>
-              <p class="review-text">Safe, clean, and full of opportunities. The library and computer lab are excellent resources...</p>
-              <div class="review-footer">
-                <span class="review-subject">Management</span>
-              </div>
-            </div>
-            <div class="review-card" data-review-id="5">
-              <div class="review-header">
-                <div class="review-avatar">
-                  <img src="https://i.pravatar.cc/80?img=5" alt="Binod Lama">
-                </div>
-                <div class="review-info">
-                  <h4 class="review-name">Binod Lama</h4>
-                  <div class="review-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <span class="review-class">Class of 2022</span>
-                </div>
-              </div>
-              <p class="review-text">Loved the labs and library. The practical approach to learning made complex topics easy to understand...</p>
-              <div class="review-footer">
-                <span class="review-subject">Science</span>
-              </div>
-            </div>
+            {% endfor %}
           </div>
         </div>
         <!-- Second Row - Right to Left -->
         <div class="review-row" data-direction="right">
           <div class="review-track" id="reviewTrack2">
-            <div class="review-card" data-review-id="6">
+            {% for review in students_review %}
+            <div class="review-card" data-review-id="{{ review.id }}">
               <div class="review-header">
                 <div class="review-avatar">
-                  <img src="https://i.pravatar.cc/80?img=6" alt="Anita Joshi">
+                  {% if review.image %}
+                  <img src="{{ review.image.url }}" alt="{{ review.name }}">
+                  {% else %}
+                  <img src="https://ui-avatars.com/api/?name={{ review.name }}&background=random" alt="{{ review.name }}">
+                  {% endif %}
                 </div>
                 <div class="review-info">
-                  <h4 class="review-name">Anita Joshi</h4>
+                  <h4 class="review-name">{{ review.name }}</h4>
                   <div class="review-rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -2273,102 +2200,19 @@ main {
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                   </div>
-                  <span class="review-class">Class of 2020</span>
+                  <span class="review-class">Class of {{ review.class_of }}</span>
                 </div>
               </div>
-              <p class="review-text">My best friends and memories were made here. The school community feels like a second family...</p>
+              <p class="review-text">{{ review.review|truncatechars:100 }}</p>
               <div class="review-footer">
-                <span class="review-subject">Arts</span>
+                <span class="review-subject">{{ review.faculty.name }}</span>
               </div>
             </div>
-            <div class="review-card" data-review-id="7">
-              <div class="review-header">
-                <div class="review-avatar">
-                  <img src="https://i.pravatar.cc/80?img=7" alt="Dipesh Shrestha">
-                </div>
-                <div class="review-info">
-                  <h4 class="review-name">Dipesh Shrestha</h4>
-                  <div class="review-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <span class="review-class">Class of 2023</span>
-                </div>
-              </div>
-              <p class="review-text">Very modern and digital classrooms. The technology integration in teaching is impressive...</p>
-              <div class="review-footer">
-                <span class="review-subject">Computer Science</span>
-              </div>
+            {% empty %}
+             <div class="review-card">
+                <p class="review-text">No reviews available yet.</p>
             </div>
-            <div class="review-card" data-review-id="8">
-              <div class="review-header">
-                <div class="review-avatar">
-                  <img src="https://i.pravatar.cc/80?img=8" alt="Saraswati Bhatta">
-                </div>
-                <div class="review-info">
-                  <h4 class="review-name">Saraswati Bhatta</h4>
-                  <div class="review-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <span class="review-class">Class of 2021</span>
-                </div>
-              </div>
-              <p class="review-text">Library was my favorite spot. Quiet study areas and vast collection of books for research...</p>
-              <div class="review-footer">
-                <span class="review-subject">Literature</span>
-              </div>
-            </div>
-            <div class="review-card" data-review-id="9">
-              <div class="review-header">
-                <div class="review-avatar">
-                  <img src="https://i.pravatar.cc/80?img=9" alt="Kishor Kunwar">
-                </div>
-                <div class="review-info">
-                  <h4 class="review-name">Kishor Kunwar</h4>
-                  <div class="review-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <span class="review-class">Class of 2022</span>
-                </div>
-              </div>
-              <p class="review-text">Great support from mentors. The career guidance program helped shape my future goals...</p>
-              <div class="review-footer">
-                <span class="review-subject">Business Studies</span>
-              </div>
-            </div>
-            <div class="review-card" data-review-id="10">
-              <div class="review-header">
-                <div class="review-avatar">
-                  <img src="https://i.pravatar.cc/80?img=10" alt="Rekha Gurung">
-                </div>
-                <div class="review-info">
-                  <h4 class="review-name">Rekha Gurung</h4>
-                  <div class="review-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <span class="review-class">Class of 2020</span>
-                </div>
-              </div>
-              <p class="review-text">Cultural events and sports made school fun. The annual festival and inter-house competitions...</p>
-              <div class="review-footer">
-                <span class="review-subject">Physical Education</span>
-              </div>
-            </div>
+            {% endfor %}
           </div>
         </div>
       </div>
@@ -2735,26 +2579,18 @@ const noticeData = {
   {% endfor %}
 };
   const reviewData = {
-    'review-1': {
-      name: 'Priya Sharma',
-      class: '+2 Science',
-      subject: 'Physics',
-      fullReview: 'The physics program here is exceptional. The teachers are very knowledgeable and the lab facilities are top-notch. I feel well-prepared for my engineering entrance exams.',
-      date: 'November 2024',
-      likes: '24',
-      avatar: '/placeholder.svg?height=60&width=60',
+    {% for review in students_review %}
+    "{{ review.id }}": {
+      name: "{{ review.name|escapejs }}",
+      class: "Class of {{ review.class_of }}",
+      subject: "{{ review.faculty.name|escapejs }}",
+      fullReview: "{{ review.review|escapejs }}",
+      date: "{{ review.created_at|date:'F Y' }}",
+      likes: "{{ review.id|add:12 }}", 
+      avatar: "{% if review.image %}{{ review.image.url }}{% else %}https://ui-avatars.com/api/?name={{ review.name }}&background=random{% endif %}",
       rating: 5
-    },
-    'review-2': {
-      name: 'Rajesh Kumar',
-      class: '+2 Management',
-      subject: 'Business Studies',
-      fullReview: 'Great learning environment with practical approach to business studies. The case study method really helps in understanding real-world applications.',
-      date: 'October 2024',
-      likes: '18',
-      avatar: '/placeholder.svg?height=60&width=60',
-      rating: 4
-    }
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
   };
 
   // ========== MOBILE NOTIFICATION TOGGLE ==========
@@ -3126,8 +2962,9 @@ const noticeData = {
       track.innerHTML = cards + cards;
     });
   }
-  reviewCards.forEach(card => {
-    card.addEventListener('click', () => {
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest('.review-card');
+    if (card) {
       const reviewId = card.getAttribute('data-review-id');
       const review = reviewData[reviewId];
       if (review && reviewModal) {
@@ -3165,7 +3002,7 @@ const noticeData = {
         reviewModal.classList.add('active');
         document.body.style.overflow = 'hidden';
       }
-    });
+    }
   });
   if (closeReviewBtn) {
     closeReviewBtn.addEventListener('click', () => {

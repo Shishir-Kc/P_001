@@ -127,6 +127,7 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-decoration: none;
         }
 
         .filter-tag:hover {
@@ -414,32 +415,38 @@
                 </p>
             </div>
 
-            <!-- Search - SAME AS NEWS -->
+            <!-- Search -->
             <div class="search-container">
-                <div class="search-wrapper">
+                <form method="GET" action="{% url 'home:gallery' %}" class="search-wrapper">
                     <div class="search-icon">
                         <i class="fas fa-search"></i>
                     </div>
                     <input 
                         type="text" 
+                        name="q"
                         class="search-input" 
                         placeholder="Search gallery images..."
                         id="gallerySearch"
+                        value="{{ query|default:'' }}"
                     >
-                </div>
+                    {% if query %}
+                    <a href="{% url 'home:gallery' %}" style="display: flex; align-items: center; padding: 0 1rem; color: #64748b; text-decoration: none;">
+                        <i class="fas fa-times"></i>
+                    </a>
+                    {% endif %}
+                </form>
             </div>
 
-            <!-- Filter Tags - SAME AS NEWS -->
-                        <div class="filter-container">
-                <div class="filter-tag active" data-filter="all">All</div>
-                <div class="filter-tag" data-filter="Academics">Academics</div>
-                <div class="filter-tag" data-filter="Events">Events</div>
-                <div class="filter-tag" data-filter="Activities">Activities</div>
-                <div class="filter-tag" data-filter="Achievements">Achievements</div>
-                <div class="filter-tag" data-filter="Student Life">Student Life</div>
-                <div class="filter-tag" data-filter="Sports">Sports</div>
-                <div class="filter-tag" data-filter="Announcements">Announcements</div>
-                 <div class="filter-tag" data-filter="Notice">Notice</div>
+            <!-- Filter Tags -->
+            <div class="filter-container">
+                <a href="?category=all{% if query %}&q={{ query }}{% endif %}" class="filter-tag {% if not current_category or current_category == 'all' %}active{% endif %}">All</a>
+                <a href="?category=Academics{% if query %}&q={{ query }}{% endif %}" class="filter-tag {% if current_category == 'Academics' %}active{% endif %}">Academics</a>
+                <a href="?category=Events{% if query %}&q={{ query }}{% endif %}" class="filter-tag {% if current_category == 'Events' %}active{% endif %}">Events</a>
+                <a href="?category=Activities{% if query %}&q={{ query }}{% endif %}" class="filter-tag {% if current_category == 'Activities' %}active{% endif %}">Activities</a>
+                <a href="?category=Achievements{% if query %}&q={{ query }}{% endif %}" class="filter-tag {% if current_category == 'Achievements' %}active{% endif %}">Achievements</a>
+                <a href="?category=Student Life{% if query %}&q={{ query }}{% endif %}" class="filter-tag {% if current_category == 'Student Life' %}active{% endif %}">Student Life</a>
+                <a href="?category=Sports{% if query %}&q={{ query }}{% endif %}" class="filter-tag {% if current_category == 'Sports' %}active{% endif %}">Sports</a>
+                <a href="?category=Announcements{% if query %}&q={{ query }}{% endif %}" class="filter-tag {% if current_category == 'Announcements' %}active{% endif %}">Announcements</a>
             </div>
 
             <!-- Gallery Section Title -->
@@ -466,6 +473,37 @@
                     </div>
                 {% endif %}
             </div>
+
+            <!-- Pagination -->
+            {% if images.has_other_pages %}
+            <div class="pagination-container" style="display: flex; justify-content: center; margin-top: 3rem; gap: 0.5rem;">
+                {% if images.has_previous %}
+                <a href="?page={{ images.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}" 
+                   class="pagination-btn"
+                   style="padding: 0.5rem 1rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; color: var(--text-dark); text-decoration: none; transition: all 0.3s ease;">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                {% endif %}
+
+                {% for num in images.paginator.page_range %}
+                    {% if images.number == num %}
+                        <span class="pagination-btn active" style="padding: 0.5rem 1rem; background: var(--primary-blue); color: white; border-radius: 0.5rem;">{{ num }}</span>
+                    {% elif num > images.number|add:'-3' and num < images.number|add:'3' %}
+                        <a href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}" 
+                           class="pagination-btn"
+                           style="padding: 0.5rem 1rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; color: var(--text-dark); text-decoration: none; transition: all 0.3s ease;">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if images.has_next %}
+                <a href="?page={{ images.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}" 
+                   class="pagination-btn"
+                   style="padding: 0.5rem 1rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; color: var(--text-dark); text-decoration: none; transition: all 0.3s ease;">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                {% endif %}
+            </div>
+            {% endif %}
 
             <!-- No Results Message (hidden by default) - SAME AS NEWS -->
             <div class="no-results" id="noResults" style="display: none;">
@@ -494,12 +532,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Get DOM elements - SAME AS NEWS
-        const filterTags = document.querySelectorAll('.filter-tag');
         const galleryItems = document.querySelectorAll('.gallery-item');
-        const searchInput = document.getElementById('gallerySearch');
-        const noResults = document.getElementById('noResults');
-        const galleryGrid = document.getElementById('galleryGrid');
         const lightbox = document.getElementById('lightbox');
         const lightboxImage = document.getElementById('lightboxImage');
         const lightboxClose = document.getElementById('lightboxClose');
@@ -507,77 +540,8 @@
         const lightboxNext = document.getElementById('lightboxNext');
         
         let currentImageIndex = 0;
-        let visibleImages = Array.from(galleryItems);
-
-        // Filter functionality - SAME AS NEWS
-        filterTags.forEach(tag => {
-            tag.addEventListener('click', function() {
-                // Remove active class from all tags
-                filterTags.forEach(t => t.classList.remove('active'));
-                // Add active class to clicked tag
-                this.classList.add('active');
-                
-                const filter = this.getAttribute('data-filter');
-                
-                // Clear search input when filtering
-                searchInput.value = '';
-                
-                // Filter gallery items
-                filterGalleryItems(filter, '');
-            });
-        });
-        
-        // Search functionality - SAME AS NEWS
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const activeFilter = document.querySelector('.filter-tag.active').getAttribute('data-filter');
-            
-            // Filter gallery items based on search and active filter
-            filterGalleryItems(activeFilter, searchTerm);
-        });
-        
-        // Combined filter function - ADAPTED FROM NEWS
-        function filterGalleryItems(categoryFilter, searchTerm) {
-            let visibleCount = 0;
-            
-            galleryItems.forEach(item => {
-                const category = item.getAttribute('data-category');
-                const title = item.getAttribute('data-title').toLowerCase();
-                
-                // Check category filter
-                const categoryMatch = categoryFilter === 'all' || category === categoryFilter;
-                
-                // Check search term
-                const searchMatch = searchTerm === '' || 
-                                  title.includes(searchTerm) || 
-                                  category.toLowerCase().includes(searchTerm);
-                
-                if (categoryMatch && searchMatch) {
-                    item.classList.remove('hidden');
-                    item.style.display = 'block';
-                    // Reset animation
-                    item.style.animation = 'none';
-                    setTimeout(() => {
-                        item.style.animation = 'fadeInUp 0.6s ease forwards';
-                    }, 10);
-                    visibleCount++;
-                } else {
-                    item.classList.add('hidden');
-                    item.style.display = 'none';
-                }
-            });
-            
-            // Show/hide no results message - SAME AS NEWS
-            if (visibleCount === 0) {
-                noResults.style.display = 'block';
-                galleryGrid.style.display = 'none';
-            } else {
-                noResults.style.display = 'none';
-                galleryGrid.style.display = 'grid';
-            }
-            
-            updateVisibleImages();
-        }
+        // Since we don't filter client-side anymore, all items are visible
+        const visibleImages = Array.from(galleryItems);
 
         // Lightbox functionality
         galleryItems.forEach((item, index) => {
@@ -598,12 +562,6 @@
         function closeLightbox() {
             lightbox.classList.remove('active');
             document.body.style.overflow = '';
-        }
-
-        function updateVisibleImages() {
-            visibleImages = Array.from(galleryItems).filter(item => 
-                !item.classList.contains('hidden') && item.style.display !== 'none'
-            );
         }
 
         function showNextImage() {
@@ -677,8 +635,7 @@
             }
         }
 
-        // Initialize visible images and animations
-        updateVisibleImages();
+        // Initialize animations
         galleryItems.forEach((item, index) => {
             item.style.animationDelay = `${(index % 6) * 0.1}s`;
         });

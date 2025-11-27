@@ -4,1133 +4,1164 @@
 {% block title %}Shree Rastriya Secondary School - Academics{% endblock title %}
 
 {% block links %}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="{% static "home/css/academics/style.css" %}">
-    
-    <style>
-        /* Essential styles to ensure content visibility */
-        :root {
-            --primary-blue: #2563EB;
-            --secondary-blue: #3B82F6;
-            --dark-blue: #1E40AF;
-            --light-blue: #EFF6FF;
-            --accent-blue: #DBEAFE;
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="{% static 'home/css/academics/style.css' %}">
 
-            --primary-green: #059669;
-            --secondary-green: #10B981;
-            --dark-green: #047857;
-            --light-green: #ECFDF5;
+<style>
+    /* Essential styles to ensure content visibility */
+    :root {
+        --primary-blue: #2563EB;
+        --secondary-blue: #3B82F6;
+        --dark-blue: #1E40AF;
+        --light-blue: #EFF6FF;
+        --accent-blue: #DBEAFE;
 
-            --text-dark: #1F2937;
-            --text-light: #6B7280;
-            --text-white: #FFFFFF;
-            --bg-white: #FFFFFF;
-            --bg-light: #F9FAFB;
-            --bg-dark: #111827;
+        --primary-green: #059669;
+        --secondary-green: #10B981;
+        --dark-green: #047857;
+        --light-green: #ECFDF5;
 
-            --gradient-primary: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-            --gradient-secondary: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
-            --gradient-text: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-            --gradient-accent: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+        --text-dark: #1F2937;
+        --text-light: #6B7280;
+        --text-white: #FFFFFF;
+        --bg-white: #FFFFFF;
+        --bg-light: #F9FAFB;
+        --bg-dark: #111827;
+
+        --gradient-primary: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+        --gradient-secondary: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+        --gradient-text: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+        --gradient-accent: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+    }
+
+    /* Hero Section */
+    .hero-section {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        margin-top: 0;
+        padding-top: 60px;
+    }
+
+    .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--gradient-primary);
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+    .floating-shapes {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+    }
+
+    .shape {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .shape-1 {
+        width: 100px;
+        height: 100px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+
+    .shape-2 {
+        width: 150px;
+        height: 150px;
+        top: 60%;
+        right: 15%;
+        animation-delay: 2s;
+    }
+
+    .shape-3 {
+        width: 80px;
+        height: 80px;
+        bottom: 30%;
+        left: 20%;
+        animation-delay: 4s;
+    }
+
+    .shape-4 {
+        width: 120px;
+        height: 120px;
+        top: 10%;
+        right: 30%;
+        animation-delay: 1s;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px) rotate(0deg);
         }
 
-        /* Hero Section */
-        .hero-section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            margin-top: 0;
-            padding-top: 60px;
+        50% {
+            transform: translateY(-20px) rotate(180deg);
         }
+    }
 
-        .hero-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--gradient-primary);
-        }
+    .hero-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        width: 100%;
+    }
 
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.3);
-        }
+    .hero-text {
+        color: white;
+    }
 
-        .floating-shapes {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overflow: hidden;
-        }
+    .hero-title {
+        font-size: clamp(3rem, 6vw, 5rem);
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        font-family: 'Poppins', sans-serif;
+    }
 
-        .shape {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            animation: float 6s ease-in-out infinite;
-        }
+    .title-line {
+        display: block;
+    }
 
-        .shape-1 {
-            width: 100px;
-            height: 100px;
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
+    .gradient-text {
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
 
-        .shape-2 {
-            width: 150px;
-            height: 150px;
-            top: 60%;
-            right: 15%;
-            animation-delay: 2s;
-        }
+    .hero-description {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+        max-width: 600px;
+    }
 
-        .shape-3 {
-            width: 80px;
-            height: 80px;
-            bottom: 30%;
-            left: 20%;
-            animation-delay: 4s;
-        }
+    .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
 
-        .shape-4 {
-            width: 120px;
-            height: 120px;
-            top: 10%;
-            right: 30%;
-            animation-delay: 1s;
-        }
+    .btn {
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: none;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 160px;
+    }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
+    .btn-primary {
+        background: white;
+        color: var(--primary-blue);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
 
-        .hero-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 2;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            width: 100%;
-        }
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
 
-        .hero-text {
-            color: white;
-        }
+    .btn-outline {
+        background: blue;
+        color: var(--primary-blue);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
 
-        .hero-title {
-            font-size: clamp(3rem, 6vw, 5rem);
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            font-family: 'Poppins', sans-serif;
-        }
+    .btn-outline:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
 
-        .title-line {
-            display: block;
-        }
+    .hero-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
 
-        .gradient-text {
-            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+    .stat-item {
+        text-align: center;
+        color: white;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 2rem 1rem;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
 
-        .hero-description {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            max-width: 600px;
-        }
+    /* Counter Animation Styles */
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 900;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        transition: all 0.3s ease;
+    }
 
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
+    .stat-item.animate .stat-number {
+        transform: scale(1.1);
+    }
 
-        .btn {
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: none;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 160px;
-        }
+    .stat-item.animate {
+        animation: statPulse 0.6s ease-out;
+    }
 
-        .btn-primary {
-            background: white;
-            color: var(--primary-blue);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        .btn-outline {
-            background: blue;
-            color: var(--primary-blue);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        .btn-outline:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);              
-        }
-
-        .hero-stats {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem 1rem;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        /* Counter Animation Styles */
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 900;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            transition: all 0.3s ease;
-        }
-
-        .stat-item.animate .stat-number {
-            transform: scale(1.1);
-        }
-
-        .stat-item.animate {
-            animation: statPulse 0.6s ease-out;
-        }
-
-        @keyframes statPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            opacity: 0.9;
-            margin-top: 0.5rem;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-        }
-
-        .scroll-arrow {
-            width: 50px;
-            height: 50px;
-            border: 2px solid white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            animation: bounce 2s infinite;
-            cursor: pointer;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-
-        /* Section Styles */
-        .section {
-            padding: 6rem 0;
-            position: relative;
-            opacity: 1 !important;
-            transform: none !important;
-        }
-
-        .section:nth-child(even) {
-            background: var(--bg-light);
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title {
-            font-size: clamp(2.5rem, 4vw, 3.5rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: var(--gradient-text);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .section-subtitle {
-            font-size: 1.25rem;
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Academic Levels */
-        .levels-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .level-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
-
-        .level-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        .level-image {
-            position: relative;
-            height: 250px;
-            overflow: hidden;
-        }
-
-        .level-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .level-card:hover .level-image img {
-            transform: scale(1.1);
-        }
-
-        .level-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .level-card:hover .level-overlay {
-            opacity: 0.9;
-        }
-
-        .level-icon {
-            color: white;
-            font-size: 3rem;
-            transform: scale(0);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .level-card:hover .level-icon {
+    @keyframes statPulse {
+        0% {
             transform: scale(1);
         }
 
-        .level-content {
-            padding: 2rem;
+        50% {
+            transform: scale(1.05);
         }
 
-        .level-content h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .stat-label {
+        font-size: 1rem;
+        opacity: 0.9;
+        margin-top: 0.5rem;
+    }
+
+    .scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+    }
+
+    .scroll-arrow {
+        width: 50px;
+        height: 50px;
+        border: 2px solid white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        animation: bounce 2s infinite;
+        cursor: pointer;
+    }
+
+    @keyframes bounce {
+
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+            transform: translateY(0);
         }
 
-        .level-grade {
-            color: var(--primary-blue);
-            font-weight: 600;
-            margin-bottom: 1rem;
+        40% {
+            transform: translateY(-10px);
         }
 
-        .level-description {
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .level-btn {
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 100%;
-        }
-
-        .level-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Curriculum Section */
-        .curriculum-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .curriculum-card {
-            background: white;
-            padding: 2.5rem 2rem;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid transparent;
-        }
-
-        .curriculum-card:hover {
+        60% {
             transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border-color: var(--primary-blue);
+        }
+    }
+
+    /* Section Styles */
+    .section {
+        padding: 6rem 0;
+        position: relative;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .section:nth-child(even) {
+        background: var(--bg-light);
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .section-title {
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        font-weight: 800;
+        margin-bottom: 1rem;
+        background: var(--gradient-text);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .section-subtitle {
+        font-size: 1.25rem;
+        color: var(--text-light);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Academic Levels */
+    .levels-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+    }
+
+    .level-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+    }
+
+    .level-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .level-image {
+        position: relative;
+        height: 250px;
+        overflow: hidden;
+    }
+
+    .level-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .level-card:hover .level-image img {
+        transform: scale(1.1);
+    }
+
+    .level-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .level-card:hover .level-overlay {
+        opacity: 0.9;
+    }
+
+    .level-icon {
+        color: white;
+        font-size: 3rem;
+        transform: scale(0);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .level-card:hover .level-icon {
+        transform: scale(1);
+    }
+
+    .level-content {
+        padding: 2rem;
+    }
+
+    .level-content h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--text-dark);
+    }
+
+    .level-grade {
+        color: var(--primary-blue);
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .level-description {
+        color: var(--text-light);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+
+    .level-btn {
+        background: var(--gradient-primary);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 100%;
+    }
+
+    .level-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Curriculum Section */
+    .curriculum-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+    }
+
+    .curriculum-card {
+        background: white;
+        padding: 2.5rem 2rem;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid transparent;
+    }
+
+    .curriculum-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        border-color: var(--primary-blue);
+    }
+
+    .card-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--gradient-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: white;
+        font-size: 2rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .curriculum-card:hover .card-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .curriculum-card h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--text-dark);
+    }
+
+    .curriculum-card p {
+        color: var(--text-light);
+        line-height: 1.6;
+    }
+
+    /* Modern Member Table Styles */
+    .members-table-container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        overflow: hidden;
+        margin-top: 2rem;
+    }
+
+    .table-header {
+        background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .table-title {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .table-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    .search-container {
+        padding: 1.5rem 2rem;
+        background: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .search-box {
+        position: relative;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 1rem 1rem 1rem 3rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: white;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: #2563EB;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #64748b;
+        font-size: 1.1rem;
+    }
+
+    .table-wrapper {
+        max-height: 600px;
+        overflow-y: auto;
+        overflow-x: auto;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+        background: #f1f5f9;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+
+    .members-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 600px;
+    }
+
+    .table-head {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .table-head th {
+        padding: 1.5rem 1rem;
+        text-align: left;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #374151;
+        border-bottom: 2px solid #e2e8f0;
+    }
+
+    .table-body tr {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .table-body tr:hover {
+        background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        transform: scale(1.01);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .table-body td {
+        padding: 1.5rem 1rem;
+        vertical-align: middle;
+    }
+
+    .member-image-cell {
+        width: 80px;
+    }
+
+    .member-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #e2e8f0;
+        transition: all 0.3s ease;
+    }
+
+    .table-body tr:hover .member-image {
+        border-color: #2563EB;
+        transform: scale(1.1);
+    }
+
+    .member-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #1f2937;
+        margin-bottom: 0.25rem;
+    }
+
+    .member-role {
+        font-size: 0.9rem;
+        color: #6b7280;
+    }
+
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: #4b5563;
+    }
+
+    .contact-icon {
+        width: 16px;
+        color: #2563EB;
+    }
+
+    .contact-link {
+        color: #2563EB;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .contact-link:hover {
+        color: #1d4ed8;
+        text-decoration: underline;
+    }
+
+    .no-results {
+        text-align: center;
+        padding: 3rem;
+        color: #6b7280;
+    }
+
+    .no-results-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    .table-footer {
+        padding: 1.5rem 2rem;
+        background: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .results-count {
+        color: #6b7280;
+        font-size: 0.9rem;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        color: white;
+        text-align: center;
+    }
+
+    .cta-content h2 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 800;
+        margin-bottom: 1rem;
+        font-family: 'Poppins', sans-serif;
+        color: black;
+    }
+
+    .cta-content p {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        color: black;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .cta-section .btn-primary {
+        background: white;
+        color: var(--primary-blue);
+    }
+
+    .cta-section .btn-outline {
+        border-color: white;
+        color: white;
+    }
+
+    .cta-section .btn-outline:hover {
+        background: white;
+        color: var(--primary-blue);
+    }
+
+    /* Footer */
+    .footer {
+        background: var(--bg-dark);
+        color: white;
+        padding: 3rem 0;
+    }
+
+    .footer-content {
+        text-align: center;
+    }
+
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .footer-links a {
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .footer-links a:hover {
+        color: var(--secondary-blue);
+    }
+
+    .footer-text {
+        opacity: 0.7;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .hero-content {
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            text-align: center;
         }
 
-        .card-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--gradient-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
+        .hero-stats {
+            flex-direction: row;
             justify-content: center;
-            margin: 0 auto 1.5rem;
-            color: white;
-            font-size: 2rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .curriculum-card:hover .card-icon {
-            transform: scale(1.1) rotate(5deg);
+        .levels-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         }
 
-        .curriculum-card h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--text-dark);
+        .curriculum-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            padding: 0 1rem;
         }
 
-        .curriculum-card p {
-            color: var(--text-light);
-            line-height: 1.6;
+        .section {
+            padding: 4rem 0;
         }
 
-        /* Modern Member Table Styles */
-        .members-table-container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            overflow: hidden;
-            margin-top: 2rem;
+        .hero-buttons {
+            justify-content: center;
         }
 
-        .table-header {
-            background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);
-            color: white;
-            padding: 2rem;
-            text-align: center;
+        .btn {
+            min-width: 140px;
         }
 
-        .table-title {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .table-subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .search-container {
-            padding: 1.5rem 2rem;
-            background: #f8fafc;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .search-box {
-            position: relative;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #2563EB;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #64748b;
-            font-size: 1.1rem;
-        }
-
-        .table-wrapper {
-            max-height: 600px;
-            overflow-y: auto;
-            overflow-x: auto;
-        }
-
-        .table-wrapper::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        .table-wrapper::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-
-        .table-wrapper::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-
-        .table-wrapper::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-
-        .members-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 600px;
-        }
-
-        .table-head {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .table-head th {
-            padding: 1.5rem 1rem;
-            text-align: left;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #374151;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        .table-body tr {
-            transition: all 0.3s ease;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .table-body tr:hover {
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            transform: scale(1.01);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .table-body td {
-            padding: 1.5rem 1rem;
-            vertical-align: middle;
-        }
-
-        .member-image-cell {
-            width: 80px;
-        }
-
-        .member-image {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #e2e8f0;
-            transition: all 0.3s ease;
-        }
-
-        .table-body tr:hover .member-image {
-            border-color: #2563EB;
-            transform: scale(1.1);
-        }
-
-        .member-name {
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: #1f2937;
-            margin-bottom: 0.25rem;
-        }
-
-        .member-role {
-            font-size: 0.9rem;
-            color: #6b7280;
-        }
-
-        .contact-info {
-            display: flex;
+        .hero-stats {
             flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            color: #4b5563;
-        }
-
-        .contact-icon {
-            width: 16px;
-            color: #2563EB;
-        }
-
-        .contact-link {
-            color: #2563EB;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .contact-link:hover {
-            color: #1d4ed8;
-            text-decoration: underline;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 3rem;
-            color: #6b7280;
-        }
-
-        .no-results-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
-        .table-footer {
-            padding: 1.5rem 2rem;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
             gap: 1rem;
         }
 
-        .results-count {
-            color: #6b7280;
-            font-size: 0.9rem;
+        .stat-item {
+            padding: 1.5rem 1rem;
         }
 
-        /* CTA Section */
-        .cta-section {
-            color: white;
-            text-align: center;
+        .levels-grid {
+            grid-template-columns: 1fr;
         }
 
-        .cta-content h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-            font-family: 'Poppins', sans-serif;
-            color: black;
-        }
-
-        .cta-content p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            color: black;
+        .curriculum-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         }
 
         .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .cta-section .btn-primary {
-            background: white;
-            color: var(--primary-blue);
-        }
-
-        .cta-section .btn-outline {
-            border-color: white;
-            color: white;
-        }
-
-        .cta-section .btn-outline:hover {
-            background: white;
-            color: var(--primary-blue);
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--bg-dark);
-            color: white;
-            padding: 3rem 0;
-        }
-
-        .footer-content {
-            text-align: center;
+            flex-direction: column;
+            align-items: center;
         }
 
         .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .footer-links a:hover {
-            color: var(--secondary-blue);
-        }
-
-        .footer-text {
-            opacity: 0.7;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-                text-align: center;
-            }
-
-            .hero-stats {
-                flex-direction: row;
-                justify-content: center;
-            }
-
-            .levels-grid {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            }
-
-            .curriculum-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 1rem;
-            }
-
-            .section {
-                padding: 4rem 0;
-            }
-
-            .hero-buttons {
-                justify-content: center;
-            }
-
-            .btn {
-                min-width: 140px;
-            }
-
-            .hero-stats {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .stat-item {
-                padding: 1.5rem 1rem;
-            }
-
-            .levels-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .curriculum-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .footer-links {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .table-header {
-                padding: 1.5rem;
-            }
-
-            .table-title {
-                font-size: 1.5rem;
-            }
-
-            .search-container {
-                padding: 1rem;
-            }
-
-            .table-head th,
-            .table-body td {
-                padding: 1rem 0.5rem;
-            }
-
-            .member-name {
-                font-size: 1rem;
-            }
-
-            .contact-info {
-                gap: 0.25rem;
-            }
-
-            .contact-item {
-                font-size: 0.8rem;
-            }
-
-            .table-footer {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .hero-description {
-                font-size: 1.1rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .section-subtitle {
-                font-size: 1.1rem;
-            }
-
-            .curriculum-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .card-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-            }
-        }
-
-        /* Animation for table rows */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .table-body tr {
-            animation: slideIn 0.3s ease forwards;
-        }
-
-        /* Enhanced Pagination Styles */
-        .pagination-container {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: var(--bg-white);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e5e7eb;
-        }
-
-        .pagination-wrapper {
-            display: flex;
             flex-direction: column;
             gap: 1rem;
-            align-items: center;
         }
 
-        .page-info {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .table-header {
+            padding: 1.5rem;
+        }
+
+        .table-title {
+            font-size: 1.5rem;
+        }
+
+        .search-container {
+            padding: 1rem;
+        }
+
+        .table-head th,
+        .table-body td {
+            padding: 1rem 0.5rem;
+        }
+
+        .member-name {
+            font-size: 1rem;
+        }
+
+        .contact-info {
             gap: 0.25rem;
+        }
+
+        .contact-item {
+            font-size: 0.8rem;
+        }
+
+        .table-footer {
+            flex-direction: column;
             text-align: center;
         }
+    }
 
-        .page-text {
-            font-size: 0.875rem;
-            color: var(--text-dark);
-            font-weight: 500;
+    @media (max-width: 480px) {
+        .hero-title {
+            font-size: 2.5rem;
         }
 
-        .total-items {
-            font-size: 0.75rem;
-            color: var(--text-light);
+        .hero-description {
+            font-size: 1.1rem;
         }
 
-        .pagination-nav {
-            display: flex;
-            justify-content: center;
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+        }
+
+        .curriculum-card {
+            padding: 2rem 1.5rem;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+        }
+    }
+
+    /* Animation for table rows */
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .table-body tr {
+        animation: slideIn 0.3s ease forwards;
+    }
+
+    /* Enhanced Pagination Styles */
+    .pagination-container {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: var(--bg-white);
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+    }
+
+    .pagination-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .page-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        text-align: center;
+    }
+
+    .page-text {
+        font-size: 0.875rem;
+        color: var(--text-dark);
+        font-weight: 500;
+    }
+
+    .total-items {
+        font-size: 0.75rem;
+        color: var(--text-light);
+    }
+
+    .pagination-nav {
+        display: flex;
+        justify-content: center;
+    }
+
+    .pagination-list {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .pagination-item {
+        display: flex;
+    }
+
+    .pagination-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+        padding: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-dark);
+        background: var(--bg-white);
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        gap: 0.25rem;
+    }
+
+    .pagination-link:hover:not(.pagination-disabled):not(.pagination-current) {
+        background: var(--light-blue);
+        border-color: var(--primary-blue);
+        color: var(--primary-blue);
+        transform: translateY(-1px);
+    }
+
+    .pagination-current {
+        background: var(--primary-blue);
+        border-color: var(--primary-blue);
+        color: var(--text-white);
+        font-weight: 600;
+    }
+
+    .pagination-disabled {
+        color: #9ca3af;
+        background: #f9fafb;
+        border-color: #e5e7eb;
+        cursor: not-allowed;
+    }
+
+    .pagination-first,
+    .pagination-last {
+        font-weight: 600;
+    }
+
+    .pagination-prev,
+    .pagination-next {
+        padding: 0.5rem 0.75rem;
+    }
+
+    .pagination-text {
+        font-size: 0.875rem;
+    }
+
+    .pagination-ellipsis {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+        color: var(--text-light);
+        font-weight: 500;
+    }
+
+    .items-per-page {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: var(--text-dark);
+    }
+
+    .items-label,
+    .items-text {
+        font-weight: 500;
+    }
+
+    .items-select {
+        padding: 0.375rem 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        background: var(--bg-white);
+        color: var(--text-dark);
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: border-color 0.2s ease;
+    }
+
+    .items-select:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .pagination-wrapper {
+            gap: 1.5rem;
         }
 
         .pagination-list {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .pagination-item {
-            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.125rem;
         }
 
         .pagination-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 40px;
-            height: 40px;
-            padding: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text-dark);
-            background: var(--bg-white);
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            gap: 0.25rem;
-        }
-
-        .pagination-link:hover:not(.pagination-disabled):not(.pagination-current) {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-            color: var(--primary-blue);
-            transform: translateY(-1px);
-        }
-
-        .pagination-current {
-            background: var(--primary-blue);
-            border-color: var(--primary-blue);
-            color: var(--text-white);
-            font-weight: 600;
-        }
-
-        .pagination-disabled {
-            color: #9ca3af;
-            background: #f9fafb;
-            border-color: #e5e7eb;
-            cursor: not-allowed;
-        }
-
-        .pagination-first,
-        .pagination-last {
-            font-weight: 600;
-        }
-
-        .pagination-prev,
-        .pagination-next {
-            padding: 0.5rem 0.75rem;
+            min-width: 36px;
+            height: 36px;
+            font-size: 0.8125rem;
         }
 
         .pagination-text {
-            font-size: 0.875rem;
+            display: none;
         }
 
-        .pagination-ellipsis {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 40px;
-            height: 40px;
-            color: var(--text-light);
-            font-weight: 500;
+        .pagination-prev .pagination-text,
+        .pagination-next .pagination-text {
+            display: none;
         }
 
         .items-per-page {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            color: var(--text-dark);
+            flex-direction: column;
+            text-align: center;
+            gap: 0.25rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .pagination-container {
+            padding: 1rem;
+            margin-top: 1.5rem;
         }
 
-        .items-label,
-        .items-text {
-            font-weight: 500;
+        .page-info {
+            font-size: 0.8125rem;
         }
 
-        .items-select {
-            padding: 0.375rem 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            background: var(--bg-white);
-            color: var(--text-dark);
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: border-color 0.2s ease;
+        .pagination-link {
+            min-width: 32px;
+            height: 32px;
+            font-size: 0.75rem;
         }
-
-        .items-select:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .pagination-wrapper {
-                gap: 1.5rem;
-            }
-
-            .pagination-list {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 0.125rem;
-            }
-
-            .pagination-link {
-                min-width: 36px;
-                height: 36px;
-                font-size: 0.8125rem;
-            }
-
-            .pagination-text {
-                display: none;
-            }
-
-            .pagination-prev .pagination-text,
-            .pagination-next .pagination-text {
-                display: none;
-            }
-
-            .items-per-page {
-                flex-direction: column;
-                text-align: center;
-                gap: 0.25rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .pagination-container {
-                padding: 1rem;
-                margin-top: 1.5rem;
-            }
-
-            .page-info {
-                font-size: 0.8125rem;
-            }
-
-            .pagination-link {
-                min-width: 32px;
-                height: 32px;
-                font-size: 0.75rem;
-            }
-        }
+    }
 </style>
 {% endblock links %}
 
@@ -1146,7 +1177,7 @@
             <div class="shape shape-4"></div>
         </div>
     </div>
-    
+
     <div class="hero-content">
         <div class="hero-text">
             <h1 class="hero-title">
@@ -1154,42 +1185,42 @@
                 <span class="title-line gradient-text">Academic Education</span>
             </h1>
             <p class="hero-description">
-                Nurturing minds, shaping futures. Our comprehensive academic program 
+                Nurturing minds, shaping futures. Our comprehensive academic program
                 prepares students for success in an ever-evolving world.
             </p>
-           
-        </div>
-        
-        <div class="hero-stats">
-    <div class="stat-item">
-        {% if achivement.student < 100 %}
-            <div class="stat-number" data-target="{{ achivement.student|default:0 }}">0</div>
-        {% else %}
-            <div class="stat-number" data-target="{{ achivement.student|default:0 }}" data-suffix="+">0</div>
-        {% endif %}
-        <div class="stat-label">Students</div>
-    </div>
 
-    <div class="stat-item">
-        {% if achivement.Faculty < 1 %}
-            <div class="stat-number" data-target="{{ achivement.Faculty|default:0 }}">0</div>
+        </div>
+
+        <div class="hero-stats">
+            <div class="stat-item">
+                {% if achivement.student < 100 %} <div class="stat-number"
+                    data-target="{{ achivement.student|default:0 }}">0</div>
+            {% else %}
+            <div class="stat-number" data-target="{{ achivement.student|default:0 }}" data-suffix="+">0</div>
+            {% endif %}
+            <div class="stat-label">Students</div>
+        </div>
+
+        <div class="stat-item">
+            {% if achivement.Faculty < 1 %} <div class="stat-number" data-target="{{ achivement.Faculty|default:0 }}">0
+        </div>
         {% else %}
-            <div class="stat-number" data-target="{{ achivement.Faculty|default:0 }}" data-suffix="+">0</div>
+        <div class="stat-number" data-target="{{ achivement.Faculty|default:0 }}" data-suffix="+">0</div>
         {% endif %}
         <div class="stat-label">Faculty</div>
     </div>
 
     <div class="stat-item">
-        {% if achivement.experience < 1 %}
-            <div class="stat-number" data-target="{{ achivement.experience|default:0 }}">0</div>
-        {% else %}
-            <div class="stat-number" data-target="{{ achivement.experience|default:0 }}" data-suffix="+">0</div>
-        {% endif %}
-        <div class="stat-label">Years</div>
+        {% if achivement.experience < 1 %} <div class="stat-number" data-target="{{ achivement.experience|default:0 }}">
+            0</div>
+    {% else %}
+    <div class="stat-number" data-target="{{ achivement.experience|default:0 }}" data-suffix="+">0</div>
+    {% endif %}
+    <div class="stat-label">Years</div>
     </div>
-</div>
     </div>
-    
+    </div>
+
     <div class="scroll-indicator">
         <div class="scroll-arrow">
             <i class="fas fa-chevron-down"></i>
@@ -1206,7 +1237,7 @@
                 Comprehensive education programs designed for every stage of learning
             </p>
         </div>
-        
+
         <div class="levels-grid">
             <div class="level-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="level-image">
@@ -1223,10 +1254,10 @@
                     <p class="level-description">
                         {{grade.low_des}}
                     </p>
-                  
+
                 </div>
             </div>
-            
+
             <div class="level-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="level-image">
                     <img src="{{grade.grade_mid.url}}" alt="Middle School">
@@ -1242,10 +1273,10 @@
                     <p class="level-description">
                         {{grade.mid_des}}.
                     </p>
-                 
+
                 </div>
             </div>
-            
+
             <div class="level-card" data-aos="fade-up" data-aos-delay="300">
                 <div class="level-image">
                     <img src="{{grade.grade_high.url}}" alt="Upper School">
@@ -1261,7 +1292,7 @@
                     <p class="level-description">
                         {{grade.high_des}}
                     </p>
-               
+
                 </div>
             </div>
         </div>
@@ -1277,63 +1308,71 @@
                 Comprehensive subjects designed to foster well-rounded development
             </p>
         </div>
-        
-<div class="curriculum-grid">
-    <div class="curriculum-card" data-aos="zoom-in" data-aos-delay="150">
-    <div class="card-icon">
-        <i class="fas fa-flask"></i>
-    </div>
-    <h3>Science</h3>
-    <p>Exploring the natural world through inquiry</p>
-</div>
 
-<div class="curriculum-card" data-aos="zoom-in" data-aos-delay="200">
-    <div class="card-icon">
-        <i class="fas fa-calculator"></i>
-    </div>
-    <h3>Mathematics</h3>
-    <p>Building logical thinking and problem-solving</p>
-</div>
+        <div class="curriculum-grid">
+            <div class="curriculum-card" data-aos="zoom-in" data-aos-delay="150">
+                <div class="card-icon">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <h3>Science</h3>
+                <p>Exploring the natural world through inquiry</p>
+            </div>
 
-<div class="curriculum-card" data-aos="zoom-in" data-aos-delay="250">
-    <div class="card-icon">
-        <i class="fas fa-globe"></i>
-    </div>
-    <h3>Social Studies</h3>
-    <p>Understanding society and global perspectives</p>
-</div>
+            <div class="curriculum-card" data-aos="zoom-in" data-aos-delay="200">
+                <div class="card-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <h3>Mathematics</h3>
+                <p>Building logical thinking and problem-solving</p>
+            </div>
 
-<div class="curriculum-card" data-aos="zoom-in" data-aos-delay="300">
-    <div class="card-icon">
-        <i class="fas fa-language"></i>
-    </div>
-    <h3>Nepali</h3>
-    <p>Promoting language skills and cultural identity</p>
-</div>
+            <div class="curriculum-card" data-aos="zoom-in" data-aos-delay="250">
+                <div class="card-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h3>Social Studies</h3>
+                <p>Understanding society and global perspectives</p>
+            </div>
 
-<div class="curriculum-card" data-aos="zoom-in" data-aos-delay="350">
-    <div class="card-icon">
-        <i class="fas fa-book-open"></i>
-    </div>
-    <h3>English</h3>
-    <p>Enhancing communication and comprehension skills</p>
-</div>
+            <div class="curriculum-card" data-aos="zoom-in" data-aos-delay="300">
+                <div class="card-icon">
+                    <i class="fas fa-language"></i>
+                </div>
+                <h3>Nepali</h3>
+                <p>Promoting language skills and cultural identity</p>
+            </div>
 
-<div class="curriculum-card" data-aos="zoom-in" data-aos-delay="400">
-    <div class="card-icon">
-        <i class="fas fa-desktop"></i>
-    </div>
-    <h3>Computer</h3>
-    <p>Empowering digital literacy and coding basics</p>
-</div>
+            <div class="curriculum-card" data-aos="zoom-in" data-aos-delay="350">
+                <div class="card-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3>English</h3>
+                <p>Enhancing communication and comprehension skills</p>
+            </div>
 
-<div class="curriculum-card" data-aos="zoom-in" data-aos-delay="450">
-    <div class="card-icon">
-        <i class="fas fa-square-root-alt"></i>
-    </div>
-    <h3>Optional Mathematics</h3>
-    <p>Challenging advanced learners in mathematical thinking</p>
-</div>
+            <div class="curriculum-card" data-aos="zoom-in" data-aos-delay="400">
+                <div class="card-icon">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <h3>Computer</h3>
+                <p>Empowering digital literacy and coding basics</p>
+            </div>
+
+            <div class="curriculum-card" data-aos="zoom-in" data-aos-delay="450">
+                <div class="card-icon">
+                    <i class="fas fa-square-root-alt"></i>
+                </div>
+                <h3>Optional Mathematics</h3>
+                <p>Challenging advanced learners in mathematical thinking</p>
+            </div>
+
+            <div class="curriculum-card" data-aos="zoom-in" data-aos-delay="500">
+                <div class="card-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <h3>And More !</h3>
+                <p>Discover a wide range of additional subjects and activities</p>
+            </div>
 
         </div>
     </div>
@@ -1348,7 +1387,7 @@
                 Dedicated educators committed to student success
             </p>
         </div>
-        
+
         <div class="members-table-container">
             <!-- Table Header -->
             <div class="table-header">
@@ -1358,10 +1397,17 @@
 
             <!-- Search Container -->
             <div class="search-container">
-                <div class="search-box">
+                <form method="GET" action="{% url 'home:academic' %}" class="search-box">
                     <i class="fas fa-search search-icon"></i>
-                    <input type="text" class="search-input" placeholder="Search members by name or contact..." id="searchInput">
-                </div>
+                    <input type="text" name="q" class="search-input" placeholder="Search members by name or contact..."
+                        id="searchInput" value="{{ query|default:'' }}">
+                    {% if query %}
+                    <a href="{% url 'home:academic' %}"
+                        style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: #64748b; text-decoration: none;">
+                        <i class="fas fa-times"></i>
+                    </a>
+                    {% endif %}
+                </form>
             </div>
 
             <!-- Table Wrapper -->
@@ -1371,6 +1417,7 @@
                         <tr>
                             <th>Member</th>
                             <th>Name</th>
+                            <th>Role</th>
                             <th>Contact Information</th>
                         </tr>
                     </thead>
@@ -1378,25 +1425,28 @@
                         {% for member in members %}
                         <tr class="member-row">
                             <td class="member-image-cell">
-                                <img src="{{ member.member_image.url }}" alt="{{ member.member_name }}" class="member-image" 
-                                     onerror="this.src='{% static 'images/nope.jpg' %}">
+                                <img src="{{ member.member_image.url }}" alt="{{ member.member_name }}"
+                                    class="member-image" onerror="this.src='{% static 'images/nope.jpg' %}">
                             </td>
                             <td>
                                 <div class="member-name">{{ member.member_name }}</div>
-                                <div class="member-role">Team Member</div>
+                            </td>
+                            <td>
+                                <div class="member-role">{{ member.member_role }}</div>
                             </td>
                             <td>
                                 <div class="contact-info">
                                     <div class="contact-item">
-                                        <i class="fas fa-phone contact-icon"></i>
-                                        <a href="tel:{{ member.member_contact }}" class="contact-link">{{ member.member_contact }}</a>
+                                        <i class="fa-solid fa-envelope"></i>
+                                        <a href="mailto:{{ member.member_contact }}" class="contact-link">
+                                            {{member.member_contact }}</a>
                                     </div>
                                 </div>
                             </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="3" style="text-align: center; padding: 2rem; color: #6b7280;">
+                            <td colspan="4" style="text-align: center; padding: 2rem; color: #6b7280;">
                                 No members found
                             </td>
                         </tr>
@@ -1428,7 +1478,8 @@
                     <!-- Page Info -->
                     <div class="page-info">
                         <span class="page-text">
-                            Page <strong>{{ members.number }}</strong> of <strong>{{ members.paginator.num_pages }}</strong>
+                            Page <strong>{{ members.number }}</strong> of <strong>{{ members.paginator.num_pages
+                                }}</strong>
                         </span>
                         <span class="total-items">
                             ({{ members.paginator.count }} total members)
@@ -1440,73 +1491,76 @@
                         <ul class="pagination-list">
                             <!-- First Page -->
                             {% if members.has_previous %}
-                                <li class="pagination-item">
-                                    <a href="?page=1" class="pagination-link pagination-first" title="First page">
-                                        <i class="fas fa-angle-double-left"></i>
-                                        <span class="sr-only">First</span>
-                                    </a>
-                                </li>
-                                <!-- Previous Page -->
-                                <li class="pagination-item">
-                                    <a href="?page={{ members.previous_page_number }}" class="pagination-link pagination-prev" title="Previous page">
-                                        <i class="fas fa-angle-left"></i>
-                                        <span class="pagination-text">Previous</span>
-                                    </a>
-                                </li>
+                            <li class="pagination-item">
+                                <a href="?page=1" class="pagination-link pagination-first" title="First page">
+                                    <i class="fas fa-angle-double-left"></i>
+                                    <span class="sr-only">First</span>
+                                </a>
+                            </li>
+                            <!-- Previous Page -->
+                            <li class="pagination-item">
+                                <a href="?page={{ members.previous_page_number }}"
+                                    class="pagination-link pagination-prev" title="Previous page">
+                                    <i class="fas fa-angle-left"></i>
+                                    <span class="pagination-text">Previous</span>
+                                </a>
+                            </li>
                             {% else %}
-                                <li class="pagination-item">
-                                    <span class="pagination-link pagination-disabled">
-                                        <i class="fas fa-angle-double-left"></i>
-                                        <span class="sr-only">First</span>
-                                    </span>
-                                </li>
-                                <li class="pagination-item">
-                                    <span class="pagination-link pagination-disabled">
-                                        <i class="fas fa-angle-left"></i>
-                                        <span class="pagination-text">Previous</span>
-                                    </span>
-                                </li>
+                            <li class="pagination-item">
+                                <span class="pagination-link pagination-disabled">
+                                    <i class="fas fa-angle-double-left"></i>
+                                    <span class="sr-only">First</span>
+                                </span>
+                            </li>
+                            <li class="pagination-item">
+                                <span class="pagination-link pagination-disabled">
+                                    <i class="fas fa-angle-left"></i>
+                                    <span class="pagination-text">Previous</span>
+                                </span>
+                            </li>
                             {% endif %}
 
                             <!-- Page Numbers -->
                             {% for num in members.paginator.page_range %}
-                                {% if num == members.number %}
-                                    <li class="pagination-item">
-                                        <span class="pagination-link pagination-current" aria-current="page">
-                                            {{ num }}
-                                        </span>
-                                    </li>
-                                {% elif num > members.number|add:'-3' and num < members.number|add:'3' %}
-                                    <li class="pagination-item">
-                                        <a href="?page={{ num }}" class="pagination-link">{{ num }}</a>
-                                    </li>
+                            {% if num == members.number %}
+                            <li class="pagination-item">
+                                <span class="pagination-link pagination-current" aria-current="page">
+                                    {{ num }}
+                                </span>
+                            </li>
+                            {% elif num > members.number|add:'-3' and num < members.number|add:'3' %} <li
+                                class="pagination-item">
+                                <a href="?page={{ num }}" class="pagination-link">{{ num }}</a>
+                                </li>
                                 {% elif num == 1 or num == members.paginator.num_pages %}
-                                    <li class="pagination-item">
-                                        <a href="?page={{ num }}" class="pagination-link">{{ num }}</a>
-                                    </li>
-                                {% elif num == members.number|add:'-4' or num == members.number|add:'4' %}
-                                    <li class="pagination-item">
-                                        <span class="pagination-ellipsis">...</span>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-
-                            <!-- Next Page -->
-                            {% if members.has_next %}
                                 <li class="pagination-item">
-                                    <a href="?page={{ members.next_page_number }}" class="pagination-link pagination-next" title="Next page">
+                                    <a href="?page={{ num }}" class="pagination-link">{{ num }}</a>
+                                </li>
+                                {% elif num == members.number|add:'-4' or num == members.number|add:'4' %}
+                                <li class="pagination-item">
+                                    <span class="pagination-ellipsis">...</span>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+
+                                <!-- Next Page -->
+                                {% if members.has_next %}
+                                <li class="pagination-item">
+                                    <a href="?page={{ members.next_page_number }}"
+                                        class="pagination-link pagination-next" title="Next page">
                                         <span class="pagination-text">Next</span>
                                         <i class="fas fa-angle-right"></i>
                                     </a>
                                 </li>
                                 <!-- Last Page -->
                                 <li class="pagination-item">
-                                    <a href="?page={{ members.paginator.num_pages }}" class="pagination-link pagination-last" title="Last page">
+                                    <a href="?page={{ members.paginator.num_pages }}"
+                                        class="pagination-link pagination-last" title="Last page">
                                         <span class="sr-only">Last</span>
                                         <i class="fas fa-angle-double-right"></i>
                                     </a>
                                 </li>
-                            {% else %}
+                                {% else %}
                                 <li class="pagination-item">
                                     <span class="pagination-link pagination-disabled">
                                         <span class="pagination-text">Next</span>
@@ -1519,7 +1573,7 @@
                                         <i class="fas fa-angle-double-right"></i>
                                     </span>
                                 </li>
-                            {% endif %}
+                                {% endif %}
                         </ul>
                     </nav>
                 </div>
@@ -1534,12 +1588,13 @@
     <div class="container">
         <div class="cta-content" data-aos="fade-up">
             <h2 style="color: black;">Ready to Begin Your Academic Journey?</h2>
-            <p style="color:black"> Join our community of learners and discover your potential at Shree Rastriya Secondary School.</p>
+            <p style="color:black"> Join our community of learners and discover your potential at Shree Rastriya
+                Secondary School.</p>
             <div class="cta-buttons">
-                <a href="{% url "home:admission" %}"> 
-                <button class="btn btn-primary btn-large">Apply Now</button>
+                <a href="{% url 'home:admission' %}">
+                    <button class="btn btn-primary btn-large">Apply Now</button>
                 </a>
-                
+
             </div>
         </div>
     </div>
@@ -1554,34 +1609,34 @@
     }
 
     // Preserve search parameters in pagination links
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const searchParams = new URLSearchParams(window.location.search);
         const paginationLinks = document.querySelectorAll('.pagination-link[href]');
-        
+
         paginationLinks.forEach(link => {
             const url = new URL(link.href, window.location.origin);
-            
+
             // Preserve existing search parameters except page
             for (const [key, value] of searchParams.entries()) {
                 if (key !== 'page') {
                     url.searchParams.set(key, value);
                 }
             }
-            
+
             link.href = url.toString();
-            
-            link.addEventListener('click', function(e) {
+
+            link.addEventListener('click', function (e) {
                 // Let the default navigation happen, but add scroll behavior
                 setTimeout(() => {
                     // Find the table or members section to scroll to
-                    const tableSection = document.querySelector('.members-table') || 
-                                        document.querySelector('.table-responsive') || 
-                                        document.querySelector('table') ||
-                                        document.querySelector('.pagination-container');
-                    
+                    const tableSection = document.querySelector('.members-table') ||
+                        document.querySelector('.table-responsive') ||
+                        document.querySelector('table') ||
+                        document.querySelector('.pagination-container');
+
                     if (tableSection) {
-                        tableSection.scrollIntoView({ 
-                            behavior: 'smooth', 
+                        tableSection.scrollIntoView({
+                            behavior: 'smooth',
                             block: 'start',
                             inline: 'nearest'
                         });
@@ -1594,16 +1649,16 @@
         const currentPage = searchParams.get('page');
         if (currentPage && parseInt(currentPage) > 1) {
             // Find the table or members section to scroll to
-            const tableSection = document.querySelector('.members-table') || 
-                                document.querySelector('.table-responsive') || 
-                                document.querySelector('table') ||
-                                document.querySelector('.pagination-container');
-            
+            const tableSection = document.querySelector('.members-table') ||
+                document.querySelector('.table-responsive') ||
+                document.querySelector('table') ||
+                document.querySelector('.pagination-container');
+
             if (tableSection) {
                 // Small delay to ensure page is fully loaded
                 setTimeout(() => {
-                    tableSection.scrollIntoView({ 
-                        behavior: 'smooth', 
+                    tableSection.scrollIntoView({
+                        behavior: 'smooth',
                         block: 'start',
                         inline: 'nearest'
                     });
@@ -1614,11 +1669,11 @@
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Initialize AOS (Animate On Scroll)
         function initAOS() {
             const elements = document.querySelectorAll('[data-aos]');
-            
+
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1632,7 +1687,7 @@
                 threshold: 0.1,
                 rootMargin: '0px 0px -50px 0px'
             });
-            
+
             elements.forEach(element => {
                 observer.observe(element);
             });
@@ -1642,25 +1697,25 @@
         function initCounterAnimation() {
             const counters = document.querySelectorAll('.stat-number');
             const speed = 200; // Animation speed (lower = faster)
-            
+
             const animateCounter = (counter) => {
                 const target = parseInt(counter.getAttribute('data-target'));
                 const suffix = counter.getAttribute('data-suffix') || '';
-                
+
                 if (isNaN(target)) {
                     counter.textContent = counter.getAttribute('data-target') || 'N/A';
                     return;
                 }
-                
+
                 const increment = target / speed;
                 let current = 0;
-                
+
                 // Add animation class to parent stat-item
                 const statItem = counter.closest('.stat-item');
                 if (statItem) {
                     statItem.classList.add('animate');
                 }
-                
+
                 const updateCounter = () => {
                     if (current < target) {
                         current += increment;
@@ -1676,10 +1731,10 @@
                         }
                     }
                 };
-                
+
                 updateCounter();
             };
-            
+
             // Intersection Observer for triggering animation when in view
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1697,66 +1752,26 @@
                 threshold: 0.5,
                 rootMargin: '0px 0px -100px 0px'
             });
-            
+
             counters.forEach(counter => {
                 observer.observe(counter);
             });
         }
-        
-        // Member Table Search Functionality
-        function initMemberSearch() {
-            const searchInput = document.getElementById('searchInput');
-            const tableBody = document.getElementById('tableBody');
-            const noResults = document.getElementById('noResults');
-            const resultsCount = document.getElementById('resultsCount');
-            
-            if (!searchInput || !tableBody) return;
-            
-            const allRows = Array.from(tableBody.querySelectorAll('.member-row'));
-            const totalMembers = allRows.length;
-            
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase().trim();
-                let visibleCount = 0;
-                
-                allRows.forEach(row => {
-                    const memberName = row.querySelector('.member-name')?.textContent.toLowerCase() || '';
-                    const memberContact = row.querySelector('.contact-link')?.textContent.toLowerCase() || '';
-                    
-                    const isVisible = memberName.includes(searchTerm) || memberContact.includes(searchTerm);
-                    
-                    if (isVisible) {
-                        row.style.display = '';
-                        visibleCount++;
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-                
-                // Update results count and no results message
-                if (visibleCount === 0 && searchTerm !== '') {
-                    noResults.style.display = 'block';
-                    resultsCount.textContent = 'No members found';
-                } else {
-                    noResults.style.display = 'none';
-                    resultsCount.textContent = `Showing ${visibleCount} of ${totalMembers} member${visibleCount !== 1 ? 's' : ''}`;
-                }
-            });
-        }
-        
+
+
         // Initialize everything
         initAOS();
         initCounterAnimation();
-        initMemberSearch();
-        
+        // initMemberSearch(); // Removed client-side search
+
         // Smooth scrolling for navigation links
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
                 const targetSection = document.querySelector(targetId);
-                
+
                 if (targetSection) {
                     const offsetTop = targetSection.offsetTop - 80;
                     window.scrollTo({
@@ -1766,11 +1781,11 @@
                 }
             });
         });
-        
+
         // Scroll indicator functionality
         const scrollIndicator = document.querySelector('.scroll-indicator');
         if (scrollIndicator) {
-            scrollIndicator.addEventListener('click', function() {
+            scrollIndicator.addEventListener('click', function () {
                 const academicsSection = document.getElementById('academics');
                 if (academicsSection) {
                     const offsetTop = academicsSection.offsetTop - 80;
@@ -1781,24 +1796,39 @@
                 }
             });
         }
-        
+
         // Interactive hover effects for cards
         function initCardEffects() {
             const cards = document.querySelectorAll('.level-card, .curriculum-card');
-            
+
             cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
+                card.addEventListener('mouseenter', function () {
                     this.style.transform = 'translateY(-10px) scale(1.02)';
                 });
-                
-                card.addEventListener('mouseleave', function() {
+
+                card.addEventListener('mouseleave', function () {
                     this.style.transform = 'translateY(0) scale(1)';
                 });
             });
         }
-        
+
         // Initialize card effects
         initCardEffects();
+
+        // Scroll to members table if search query exists
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('q') || (urlParams.has('page') && parseInt(urlParams.get('page')) > 1)) {
+            const membersTable = document.querySelector('.members-table-container');
+            if (membersTable) {
+                setTimeout(() => {
+                    membersTable.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 100);
+            }
+        }
+
     });
 </script>
 {% endblock content %}
