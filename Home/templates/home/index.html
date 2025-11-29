@@ -1197,16 +1197,6 @@
     font-family: 'Poppins', sans-serif;
   }
 
-  .review-rating {
-    display: flex;
-    gap: 2px;
-    margin-bottom: 0.25rem;
-  }
-
-  .review-rating i {
-    color: #fbbf24;
-    font-size: 0.9rem;
-  }
 
   .review-class {
     font-size: 0.9rem;
@@ -1434,17 +1424,6 @@
     text-shadow: none;
   }
 
-  .review-modal-rating {
-    display: flex;
-    gap: 4px;
-    margin-bottom: 1.5rem;
-  }
-
-  .review-modal-rating i {
-    color: #fbbf24;
-    font-size: 1.1rem;
-    filter: none;
-  }
 
   .review-modal-info span {
     display: inline-block;
@@ -2827,7 +2806,6 @@
       </button>
       <div class="review-modal-info">
         <h3 id="modalName"></h3>
-        <div class="review-modal-rating" id="modalRating"></div>
         <span id="modalClass"></span>
         <span id="modalSubject"></span>
       </div>
@@ -3432,20 +3410,6 @@
         if (modalFullReview) modalFullReview.textContent = review.fullReview;
         if (modalDate) modalDate.textContent = review.date;
         if (modalLikes) modalLikes.textContent = review.likes;
-        const ratingContainer = document.getElementById('modalRating');
-        if (ratingContainer) {
-          ratingContainer.innerHTML = '';
-          for (let i = 0; i < 5; i++) {
-            const star = document.createElement('i');
-            star.className = 'fas fa-star';
-            if (i < review.rating) {
-              star.style.color = '#ffd700';
-            } else {
-              star.style.color = '#ddd';
-            }
-            ratingContainer.appendChild(star);
-          }
-        }
         reviewModal.classList.add('active');
         document.body.style.overflow = 'hidden';
       }
