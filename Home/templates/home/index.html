@@ -2482,12 +2482,13 @@
   <section class="content-section">
     <div class="container">
       <div class="principal-card">
+
         <div class="principal-image">
-          <img src="{% static 'home/images/teacher/sir.jpg' %}" alt="Mr. Saran Kumar Basnet- Principal" loading="lazy">
+          <img src="{{principal.image.url}}" alt="{{principal.name}}- Principal" loading="lazy">
         </div>
         <div class="principal-content">
           <div class="principal-header">
-            <h2>Message From Campus Chief</h2>
+            <h2>Message From Our Principal</h2>
           </div>
           <div class="principal-message">
             <svg viewBox="0 0 24 24" class="quote-icon" aria-hidden="true">
@@ -2496,21 +2497,17 @@
               </path>
             </svg>
             <p class="principal-text">
-              Our college is committed to fostering essential skills and helping you achieve your goals by identifying
-              your talents and stimulating innovative thinking. We endeavor to shape you into dynamic and responsible
-              citizens who can contribute to the growth of our nation.
+                {{principal.message}}
             </p>
-            <p class="principal-text">
-              We extend a warm welcome to you and are eager to support you in realizing your potential for a bright
-              future.
-            </p>
+          
             <p class="principal-signature">
               Sincerely,<br>
-              <strong>Mr. Saran Kumar Basnet </strong><br>
+              <strong>{{principal.name}}</strong><br>
               Principal
             </p>
           </div>
         </div>
+
       </div>
     </div>
   </section>

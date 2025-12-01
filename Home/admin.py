@@ -10,9 +10,11 @@ admin.site.index_title = "Welcome to Shree Rastriya Secondary School Admin Dashb
 
 # Register your models here.
 
-# tile 
+# tile
 admin.site.register(models.Header)
-#slide show
+# slide show
+
+admin.site.register(models.Principal)
 
 admin.site.register(models.Slider)
 
@@ -33,10 +35,10 @@ admin.site.register(models.Contact)
 
 admin.site.register(models.Members)
 
-admin.site.register(models.Faculty) 
+admin.site.register(models.Faculty)
 
-admin.site.register(models.Member_Role) 
+admin.site.register(models.Member_Role)
 
-admin.site.register(models.Achievements_stats) 
+admin.site.register(models.Achievements_stats)
 
-admin.site.register(models.Student_Reviews) 
+admin.site.register(models.Student_Reviews)
