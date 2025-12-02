@@ -7,6 +7,7 @@ from teacher.models import Teacher
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db.models import Q
+from data_class.models import Class
 
 
 def home(request):
@@ -33,6 +34,7 @@ def home(request):
     # We can at least ensure we are not over-fetching.
 
     faculty = mod.Faculty_Teacher_Info.objects.all()
+
     name = mod.Header.objects.first()
     slider = mod.Slider.objects.all()
 
@@ -170,7 +172,29 @@ def detail_news(request, pk):
 
 
 def achivement(request):
-    return render(request, "achivements/achivements.html")
+    sports_achivements = mod.Sports_Achivements.objects.all().order_by("-created_at")
+    academic_achivements = mod.Academic_Achivements.objects.all().order_by("-created_at")
+    stats = mod.Achievements_stats.objects.first()
+    timeline_events = mod.Time_Line.objects.all().order_by("-year")
+
+    # Combine for featured (latest 3)
+    from itertools import chain
+    from operator import attrgetter
+
+    featured_achievements = sorted(
+        chain(sports_achivements, academic_achivements),
+        key=attrgetter("created_at"),
+        reverse=True,
+    )[:3]
+
+    context = {
+        "sports_achivements": sports_achivements,
+        "academic_achivements": academic_achivements,
+        "featured_achievements": featured_achievements,
+        "stats": stats,
+        "timeline_events": timeline_events,
+    }
+    return render(request, "achivements/achivements.html", context)
 
 
 def contact(request):

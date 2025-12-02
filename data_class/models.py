@@ -22,7 +22,7 @@ class Subject(models.Model):
 
 class Class(models.Model):
 
-    grade = models.CharField(verbose_name="Grade/Class")
+    grade = models.CharField(verbose_name="Grade")
     section = models.CharField(max_length=30, verbose_name="Section",blank=True,null=True)
     faculty = models.ForeignKey(HD.Faculty,on_delete=models.CASCADE,default=1)
     subjects = models.ManyToManyField(Subject, verbose_name="Subjects")

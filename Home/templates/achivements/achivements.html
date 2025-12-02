@@ -4,544 +4,603 @@
 {% block title %}Shree Rastriya Secondary School - Achievements{% endblock title %}
 
 {% block links %}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Newsreader:wght@400;500;700;800&family=Noto+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <style>
-        :root {
-            --primary-blue: #2563EB;
-            --secondary-blue: #3B82F6;
-            --dark-blue: #1E40AF;
-            --light-blue: #EFF6FF;
-            --accent-blue: #DBEAFE;
-            --primary-green: #059669;
-            --secondary-green: #10B981;
-            --dark-green: #047857;
-            --light-green: #ECFDF5;
-            --text-dark: #0d151c;
-            --text-light: #49749c;
-            --text-white: #FFFFFF;
-            --bg-white: #FFFFFF;
-            --bg-light: #f8fafc;
-            --bg-gray: #e7edf4;
-            --gradient-primary: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Newsreader:wght@400;500;700;800&family=Noto+Sans:wght@400;500;700;900&display=swap"
+    rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-        /* Full Screen Layout */
-        .achievements-wrapper {
-            min-height: 100vh;
-            width: 100%;
-            background-color: var(--bg-light);
-        }
+<style>
+    :root {
+        --primary-blue: #2563EB;
+        --secondary-blue: #3B82F6;
+        --dark-blue: #1E40AF;
+        --light-blue: #EFF6FF;
+        --accent-blue: #DBEAFE;
+        --primary-green: #059669;
+        --secondary-green: #10B981;
+        --dark-green: #047857;
+        --light-green: #ECFDF5;
+        --text-dark: #0d151c;
+        --text-light: #49749c;
+        --text-white: #FFFFFF;
+        --bg-white: #FFFFFF;
+        --bg-light: #f8fafc;
+        --bg-gray: #e7edf4;
+        --gradient-primary: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+    }
 
-        /* Content Container */
-        .content-container {
-            position: relative;
-            min-height: 100vh;
-            padding-top: 80px;
-        }
+    /* Full Screen Layout */
+    .achievements-wrapper {
+        min-height: 100vh;
+        width: 100%;
+        background-color: var(--bg-light);
+    }
 
+    /* Content Container */
+    .content-container {
+        position: relative;
+        min-height: 100vh;
+        padding-top: 80px;
+    }
+
+    .achievements-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    /* Enhanced Fade-in Animation Classes */
+    .fade-in-element {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .fade-in-element.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .fade-in-left {
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .fade-in-left.visible {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .fade-in-right {
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .fade-in-right.visible {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .fade-in-scale {
+        opacity: 0;
+        transform: scale(0.8);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .fade-in-scale.visible {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .fade-in-rotate {
+        opacity: 0;
+        transform: rotate(-10deg) scale(0.9);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .fade-in-rotate.visible {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+    }
+
+    /* Staggered animation delays */
+    .fade-in-element:nth-child(1) {
+        transition-delay: 0.1s;
+    }
+
+    .fade-in-element:nth-child(2) {
+        transition-delay: 0.2s;
+    }
+
+    .fade-in-element:nth-child(3) {
+        transition-delay: 0.3s;
+    }
+
+    .fade-in-element:nth-child(4) {
+        transition-delay: 0.4s;
+    }
+
+    .fade-in-element:nth-child(5) {
+        transition-delay: 0.5s;
+    }
+
+    .fade-in-element:nth-child(6) {
+        transition-delay: 0.6s;
+    }
+
+    /* Header Section */
+    .achievements-header {
+        text-align: center;
+        padding: 3rem 1rem 2rem;
+    }
+
+    .achievements-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+    }
+
+    .achievements-subtitle {
+        font-size: 1.2rem;
+        color: var(--text-light);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    /* Featured Achievements */
+    .featured-section {
+        margin: 3rem 0;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .featured-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .featured-card {
+        background: white;
+        border-radius: 15px;
+        /* overflow: hidden; Removed to allow popup to show */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        /* Ensure positioning context */
+        cursor: pointer;
+    }
+
+    /* Ensure image maintains border radius since overflow is removed from parent */
+    .featured-image {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    /* Popup Styles - Hidden by default, used as data source */
+    .popup-details {
+        display: none;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        background: white;
+        width: 90%;
+        max-width: 500px;
+        border-radius: 20px;
+        padding: 2rem;
+        position: relative;
+        transform: scale(0.8);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    .modal-overlay.active .modal-content {
+        transform: scale(1);
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        color: #64748b;
+        font-size: 1.2rem;
+    }
+
+    .close-modal:hover {
+        background: #e2e8f0;
+        color: #ef4444;
+        transform: rotate(90deg);
+    }
+
+    .modal-body .popup-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-body .popup-text {
+        font-size: 1rem;
+        color: var(--text-dark);
+        line-height: 1.7;
+    }
+
+    .featured-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .featured-image {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .featured-content {
+        padding: 1.5rem;
+    }
+
+    .featured-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+    }
+
+    .featured-description {
+        color: var(--text-light);
+        line-height: 1.6;
+    }
+
+    /* Achievement Categories */
+    .category-section {
+        margin: 3rem 0;
+    }
+
+    .achievements-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .achievement-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        border: 1px solid var(--bg-gray);
+        position: relative;
+        /* Ensure positioning context */
+        cursor: pointer;
+    }
+
+    .achievement-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        border-color: var(--primary-blue);
+    }
+
+    .achievement-icon {
+        width: 50px;
+        height: 50px;
+        background: var(--gradient-primary);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .achievement-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+    }
+
+    .achievement-description {
+        color: var(--text-light);
+        line-height: 1.6;
+        font-size: 0.95rem;
+    }
+
+    /* Timeline Section */
+    .timeline-section {
+        margin: 4rem 0;
+        background: white;
+        border-radius: 15px;
+        padding: 3rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .timeline-container {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .timeline-line {
+        position: absolute;
+        left: 30px;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: var(--gradient-primary);
+        border-radius: 2px;
+        opacity: 0;
+        transition: opacity 1s ease;
+    }
+
+    .timeline-line.visible {
+        opacity: 1;
+    }
+
+    .timeline-item {
+        position: relative;
+        padding-left: 80px;
+        margin-bottom: 3rem;
+    }
+
+    .timeline-dot {
+        position: absolute;
+        left: 18px;
+        top: 8px;
+        width: 24px;
+        height: 24px;
+        background: var(--primary-blue);
+        border-radius: 50%;
+        border: 4px solid white;
+        box-shadow: 0 0 0 4px var(--light-blue);
+        transform: scale(0);
+        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .timeline-item.visible .timeline-dot {
+        transform: scale(1);
+    }
+
+    .timeline-year {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        margin-bottom: 0.5rem;
+    }
+
+    .timeline-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+    }
+
+    .timeline-description {
+        color: var(--text-light);
+        line-height: 1.6;
+    }
+
+    /* Statistics Section */
+    .stats-section {
+        background: var(--gradient-primary);
+        border-radius: 15px;
+        padding: 3rem;
+        margin: 3rem 0;
+        color: white;
+        text-align: center;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 1rem;
+        opacity: 0.9;
+    }
+
+    /* Call to Action */
+    .cta-section {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: white;
+        border-radius: 15px;
+        margin: 3rem 0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .cta-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+    }
+
+    .cta-description {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .cta-button {
+        background: var(--gradient-primary);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+    }
+
+    /* No Data Placeholder Styles */
+    .no-data-container {
+        background: var(--bg-gray);
+        border-radius: 12px;
+        padding: 3rem 2rem;
+        text-align: center;
+        margin: 2rem 0;
+        border: 1px dashed var(--text-light);
+    }
+
+    .no-data-icon {
+        font-size: 3.5rem;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+        opacity: 0.8;
+    }
+
+    .no-data-title {
+        font-size: 1.4rem;
+        color: var(--text-dark);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .no-data-message {
+        color: var(--text-light);
+        line-height: 1.6;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
         .achievements-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Enhanced Fade-in Animation Classes */
-        .fade-in-element {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .fade-in-element.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .fade-in-left {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .fade-in-left.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .fade-in-right {
-            opacity: 0;
-            transform: translateX(50px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .fade-in-right.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .fade-in-scale {
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .fade-in-scale.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .fade-in-rotate {
-            opacity: 0;
-            transform: rotate(-10deg) scale(0.9);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .fade-in-rotate.visible {
-            opacity: 1;
-            transform: rotate(0deg) scale(1);
-        }
-
-        /* Staggered animation delays */
-        .fade-in-element:nth-child(1) { transition-delay: 0.1s; }
-        .fade-in-element:nth-child(2) { transition-delay: 0.2s; }
-        .fade-in-element:nth-child(3) { transition-delay: 0.3s; }
-        .fade-in-element:nth-child(4) { transition-delay: 0.4s; }
-        .fade-in-element:nth-child(5) { transition-delay: 0.5s; }
-        .fade-in-element:nth-child(6) { transition-delay: 0.6s; }
-
-        /* Header Section */
-        .achievements-header {
-            text-align: center;
-            padding: 3rem 1rem 2rem;
+            padding: 0 1rem;
         }
 
         .achievements-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary-blue);
-            margin-bottom: 1rem;
-        }
-
-        .achievements-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        /* Featured Achievements */
-        .featured-section {
-            margin: 3rem 0;
-        }
-
-        .section-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 2rem;
-            text-align: center;
+            font-size: 2rem;
         }
 
         .featured-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .featured-card {
-            background: white;
-            border-radius: 15px;
-            /* overflow: hidden; Removed to allow popup to show */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            position: relative; /* Ensure positioning context */
-            cursor: pointer;
-        }
-
-        /* Ensure image maintains border radius since overflow is removed from parent */
-        .featured-image {
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-        }
-
-        /* Popup Styles - Hidden by default, used as data source */
-        .popup-details {
-            display: none;
-        }
-
-        /* Modal Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background: white;
-            width: 90%;
-            max-width: 500px;
-            border-radius: 20px;
-            padding: 2rem;
-            position: relative;
-            transform: scale(0.8);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #f1f5f9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: #64748b;
-            font-size: 1.2rem;
-        }
-
-        .close-modal:hover {
-            background: #e2e8f0;
-            color: #ef4444;
-            transform: rotate(90deg);
-        }
-
-        .modal-body .popup-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .modal-body .popup-text {
-            font-size: 1rem;
-            color: var(--text-dark);
-            line-height: 1.7;
-        }
-
-        .featured-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .featured-image {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        .featured-content {
-            padding: 1.5rem;
-        }
-
-        .featured-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .featured-description {
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
-        /* Achievement Categories */
-        .category-section {
-            margin: 3rem 0;
+            grid-template-columns: 1fr;
         }
 
         .achievements-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .achievement-card {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            border: 1px solid var(--bg-gray);
-            position: relative; /* Ensure positioning context */
-            cursor: pointer;
-        }
-
-        .achievement-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-            border-color: var(--primary-blue);
-        }
-
-        .achievement-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient-primary);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .achievement-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .achievement-description {
-            color: var(--text-light);
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        /* Timeline Section */
-        .timeline-section {
-            margin: 4rem 0;
-            background: white;
-            border-radius: 15px;
-            padding: 3rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        }
-
-        .timeline-container {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .timeline-line {
-            position: absolute;
-            left: 30px;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--gradient-primary);
-            border-radius: 2px;
-            opacity: 0;
-            transition: opacity 1s ease;
-        }
-
-        .timeline-line.visible {
-            opacity: 1;
+            grid-template-columns: 1fr;
         }
 
         .timeline-item {
-            position: relative;
-            padding-left: 80px;
-            margin-bottom: 3rem;
+            padding-left: 60px;
+        }
+
+        .timeline-line {
+            left: 20px;
         }
 
         .timeline-dot {
-            position: absolute;
-            left: 18px;
-            top: 8px;
-            width: 24px;
-            height: 24px;
-            background: var(--primary-blue);
-            border-radius: 50%;
-            border: 4px solid white;
-            box-shadow: 0 0 0 4px var(--light-blue);
-            transform: scale(0);
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        .timeline-item.visible .timeline-dot {
-            transform: scale(1);
-        }
-
-        .timeline-year {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-description {
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
-        /* Statistics Section */
-        .stats-section {
-            background: var(--gradient-primary);
-            border-radius: 15px;
-            padding: 3rem;
-            margin: 3rem 0;
-            color: white;
-            text-align: center;
+            left: 8px;
         }
 
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(2, 1fr);
         }
 
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        /* Call to Action */
+        .timeline-section,
+        .stats-section,
         .cta-section {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: white;
-            border-radius: 15px;
-            margin: 3rem 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 2rem 1.5rem;
         }
-
-        .cta-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
+        
+        .no-data-container {
+            padding: 2rem 1rem;
         }
-
-        .cta-description {
-            font-size: 1.1rem;
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+        
+        .no-data-icon {
+            font-size: 2.8rem;
         }
+    }
 
-        .cta-button {
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(37, 99, 235, 0.3);
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+
+        .fade-in-element,
+        .fade-in-left,
+        .fade-in-right,
+        .fade-in-scale,
+        .fade-in-rotate,
+        .timeline-dot,
+        .timeline-line {
+            transition: none;
         }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
-        }
-
-    
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .achievements-container {
-                padding: 0 1rem;
-            }
-
-            .achievements-title {
-                font-size: 2rem;
-            }
-
-            .featured-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .achievements-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .timeline-item {
-                padding-left: 60px;
-            }
-
-            .timeline-line {
-                left: 20px;
-            }
-
-            .timeline-dot {
-                left: 8px;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .timeline-section,
-            .stats-section,
-            .cta-section {
-                padding: 2rem 1.5rem;
-            }
-        }
-
-        /* Reduced motion support */
-        @media (prefers-reduced-motion: reduce) {
-            .fade-in-element,
-            .fade-in-left,
-            .fade-in-right,
-            .fade-in-scale,
-            .fade-in-rotate,
-            .timeline-dot,
-            .timeline-line {
-                transition: none;
-            }
-        }
-    </style>
+    }
+</style>
 {% endblock links %}
 
 {% block content %}
@@ -555,7 +614,8 @@
             <div class="achievements-header fade-in-element">
                 <h1 class="achievements-title fade-in-scale">Our Achievements</h1>
                 <p class="achievements-subtitle fade-in-element">
-                    Celebrating the successes of our students, faculty, and the entire Shree Rastriya Secondary School community.
+                    Celebrating the successes of our students, faculty, and the entire Shree Rastriya Secondary School
+                    community.
                 </p>
             </div>
 
@@ -563,39 +623,29 @@
             <section class="featured-section">
                 <h2 class="section-title fade-in-element">Featured Achievements</h2>
                 <div class="featured-grid">
-                    <div class="featured-card fade-in-left">
-                        <div class="featured-image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAP5x5I6Vs8VBYzx1n--qOX5F41SjqpXwYt6GaPJPLNwWZ30Sc9T9lNStnZG7prGgqMARUrNsM1mGoP5D25uhBFulEkVyQ1bQW8BSz_aDGrtP62kQYt-f-PzZcFofjUM8LGRdzWFJ88TNEpNThh8aXQk9VqF6-V-eYVs4cFH0Y3tw13lJli1qZynS8CQinF8x1wt0Dd2hj05JI6HgayRjJBYT5wkpOSv37m57mDCa8Er0GXW6cDted4vUnCryNZB8demYGbESmkMgw');"></div>
-                        <div class="featured-content">
-                            <h3 class="featured-title">Academic Excellence Awards</h3>
-                            <p class="featured-description">securing Second Position with highest Score .</p>
-                        </div>
-                        <div class="popup-details">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAP5x5I6Vs8VBYzx1n--qOX5F41SjqpXwYt6GaPJPLNwWZ30Sc9T9lNStnZG7prGgqMARUrNsM1mGoP5D25uhBFulEkVyQ1bQW8BSz_aDGrtP62kQYt-f-PzZcFofjUM8LGRdzWFJ88TNEpNThh8aXQk9VqF6-V-eYVs4cFH0Y3tw13lJli1qZynS8CQinF8x1wt0Dd2hj05JI6HgayRjJBYT5wkpOSv37m57mDCa8Er0GXW6cDted4vUnCryNZB8demYGbESmkMgw" alt="Academic Excellence" class="popup-image">
-                            <p class="popup-text">Our school secured the Second Position in Itahari Sub-Metropolitan City with the highest score. As per the ERO report, this achievement is a testament to our exceptional learning outcomes and the successful adoption of new and effective educational practices.</p>
-                        </div>
-                    </div>
+                    {% for achievement in featured_achievements %}
                     <div class="featured-card fade-in-element">
-                        <div class="featured-image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3mcLUkkIGNFsisDfp4PBfWm5zcylkvlPkvSnG9cjGrzgKaWCCUlmuw96Hes30-LpQrHERGfg7VMNMlclszE3IUBIJKiE3qzsAyAXaYLIBE1JLdFKNETtUi8S9BNWySfJOh1fCGEu3WhAqxZTJdIugQt30pEjYhyAUXTpvmEW2kF8g_hQTfPEA8_eUKAm5M9ctLJf4TwwHXiAc5PW6hA4kwyScJK0dIEPAePh5_d2sXKytVDDNNwpHN8NFNqJi8tj09EM3gxFC3lk');"></div>
+                        <div class="featured-image" style="background-image: url('{{ achievement.image.url }}');"></div>
                         <div class="featured-content">
-                            <h3 class="featured-title">Sports Championship Victory</h3>
-                            <p class="featured-description">Celebrating the triumph of our sports teams in regional and national competitions.</p>
+                            <h3 class="featured-title">{{ achievement.title }}</h3>
+                            <p class="featured-description">{{ achievement.description|truncatewords:10 }}</p>
                         </div>
                         <div class="popup-details">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3mcLUkkIGNFsisDfp4PBfWm5zcylkvlPkvSnG9cjGrzgKaWCCUlmuw96Hes30-LpQrHERGfg7VMNMlclszE3IUBIJKiE3qzsAyAXaYLIBE1JLdFKNETtUi8S9BNWySfJOh1fCGEu3WhAqxZTJdIugQt30pEjYhyAUXTpvmEW2kF8g_hQTfPEA8_eUKAm5M9ctLJf4TwwHXiAc5PW6hA4kwyScJK0dIEPAePh5_d2sXKytVDDNNwpHN8NFNqJi8tj09EM3gxFC3lk" alt="Sports Victory" class="popup-image">
-                            <p class="popup-text">From football to athletics, our teams have brought home numerous trophies. This victory highlights not just physical prowess but also teamwork, discipline, and the spirit of fair play.</p>
+                            <img src="{{ achievement.image.url }}" alt="{{ achievement.title }}" class="popup-image">
+                            <p class="popup-text">{{ achievement.description }}</p>
                         </div>
                     </div>
-                    <div class="featured-card fade-in-right">
-                        <div class="featured-image" style="background-image: url('{% static 'home/images/achivements/dance.jpeg' %}');"></div>
-                        <div class="featured-content">
-                            <h3 class="featured-title">Arts & Cultural Excellence</h3>
-                            <p class="featured-description">Highlighting the creativity and talent of our students in arts and cultural programs.</p>
+                    {% empty %}
+                    <div class="no-data-container fade-in-element">
+                        <div class="no-data-icon">
+                            <i class="fas fa-trophy"></i>
                         </div>
-                        <div class="popup-details">
-                            <img src="{% static 'home/images/achivements/dance.jpeg' %}" alt="Arts Excellence" class="popup-image">
-                            <p class="popup-text">Our students consistently excel in music, dance, and fine arts, reflecting their vibrant creativity and our school's dedication to holistic development. Notably, we secured first place and a cash prize of 20,000 in the cultural dance competition organized by the 'Raja Club', a testament to our active participation and success in cultural events.</p>
+                        <div class="no-data-title">No Featured Achievements</div>
+                        <div class="no-data-message">
+                            There are currently no featured achievements to display. New achievements will be showcased here once they are added by the school administration.
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </section>
 
@@ -603,39 +653,29 @@
             <section class="category-section">
                 <h2 class="section-title fade-in-element">Academic Achievements</h2>
                 <div class="achievements-grid">
+                    {% for achievement in academic_achivements %}
                     <div class="achievement-card fade-in-element">
                         <div class="achievement-icon">
                             <i class="fas fa-graduation-cap"></i>
                         </div>
-                        <h3 class="achievement-title">SEE Examination Results</h3>
-                        <p class="achievement-description">Achieved an outstanding 84.34% pass rate in the SEE examinations.</p>
+                        <h3 class="achievement-title">{{ achievement.title }}</h3>
+                        <p class="achievement-description">{{ achievement.description|truncatewords:15 }}</p>
                         <div class="popup-details">
-                            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="SEE Results" class="popup-image">
-                            <p class="popup-text">Our students have demonstrated remarkable academic prowess with an 84.34% success rate in the Secondary Education Examination (SEE), reflecting their hard work and our rigorous academic preparation.</p>
+                            <img src="{{ achievement.image.url }}" alt="{{ achievement.title }}" class="popup-image">
+                            <p class="popup-text">{{ achievement.description }}</p>
                         </div>
                     </div>
-                    <div class="achievement-card fade-in-element">
-                        <div class="achievement-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3 class="achievement-title">Grade 12 Results</h3>
-                        <p class="achievement-description">Secured a commendable 66.65% pass rate in Grade 12 board exams.</p>
-                        <div class="popup-details">
-                            <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Grade 12 Results" class="popup-image">
-                            <p class="popup-text">Our Grade 12 students have achieved a 66.65% pass rate, showcasing their dedication and readiness for higher education. We continue to strive for excellence and support every student's academic journey.</p>
-                        </div>
-                    </div>
-                    <div class="achievement-card fade-in-element">
-                        <div class="achievement-icon">
+                    {% empty %}
+                    <div class="no-data-container fade-in-element">
+                        <div class="no-data-icon">
                             <i class="fas fa-book"></i>
                         </div>
-                        <h3 class="achievement-title">Research Publications</h3>
-                        <p class="achievement-description">Students' research papers published in academic journals and conferences.</p>
-                        <div class="popup-details">
-                            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Research" class="popup-image">
-                            <p class="popup-text">A rare feat for high schoolers, our students have contributed original research in fields like biology and computer science, recognized by the academic community.</p>
+                        <div class="no-data-title">No Academic Achievements</div>
+                        <div class="no-data-message">
+                            We are currently working on documenting our academic achievements. Check back soon for updates on academic excellence and scholarly accomplishments.
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </section>
 
@@ -643,39 +683,29 @@
             <section class="category-section">
                 <h2 class="section-title fade-in-element">Sports Achievements</h2>
                 <div class="achievements-grid">
-                    <div class="achievement-card fade-in-rotate">
+                    {% for achievement in sports_achivements %}
+                    <div class="achievement-card fade-in-element">
                         <div class="achievement-icon">
                             <i class="fas fa-medal"></i>
                         </div>
-                        <h3 class="achievement-title">Regional Champions</h3>
-                        <p class="achievement-description">Basketball and football teams win regional championships.</p>
+                        <h3 class="achievement-title">{{ achievement.title }}</h3>
+                        <p class="achievement-description">{{ achievement.description|truncatewords:15 }}</p>
                         <div class="popup-details">
-                            <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Regional Champions" class="popup-image">
-                            <p class="popup-text">Our teams demonstrated exceptional skill and strategy, dominating the regional leagues and bringing pride to our school.</p>
+                            <img src="{{ achievement.image.url }}" alt="{{ achievement.title }}" class="popup-image">
+                            <p class="popup-text">{{ achievement.description }}</p>
                         </div>
                     </div>
-                    <div class="achievement-card fade-in-scale">
-                        <div class="achievement-icon">
-                            <i class="fas fa-star"></i>
+                    {% empty %}
+                    <div class="no-data-container fade-in-element">
+                        <div class="no-data-icon">
+                            <i class="fas fa-running"></i>
                         </div>
-                        <h3 class="achievement-title">Individual Excellence</h3>
-                        <p class="achievement-description">Athletes receive individual awards for outstanding performance.</p>
-                        <div class="popup-details">
-                            <img src="https://images.unsplash.com/photo-1552674605-4695231af347?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Individual Excellence" class="popup-image">
-                            <p class="popup-text">Several of our student-athletes were named MVPs in their respective sports, setting new records and inspiring their peers.</p>
-                        </div>
-                    </div>
-                    <div class="achievement-card fade-in-rotate">
-                        <div class="achievement-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <h3 class="achievement-title">Team Spirit Award</h3>
-                        <p class="achievement-description">Recognizing teams with the best spirit and sportsmanship.</p>
-                        <div class="popup-details">
-                            <img src="https://images.unsplash.com/photo-1526676037777-05a232554f77?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Team Spirit" class="popup-image">
-                            <p class="popup-text">Beyond winning, our teams are known for their integrity, respect for opponents, and positive attitude on and off the field.</p>
+                        <div class="no-data-title">No Sports Achievements</div>
+                        <div class="no-data-message">
+                            Our sports programs are growing rapidly! We're currently compiling our sports achievements. Stay tuned for exciting updates on our athletic accomplishments.
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </section>
 
@@ -684,20 +714,20 @@
                 <h2 class="section-title" style="color: white;">Achievement Statistics</h2>
                 <div class="stats-grid">
                     <div class="stat-item fade-in-element">
-                        <div class="stat-number">150+</div>
-                        <div class="stat-label">Awards Won</div>
+                        <div class="stat-number">{{ stats.student|default:"150+" }}</div>
+                        <div class="stat-label">Students</div>
                     </div>
                     <div class="stat-item fade-in-element">
-                        <div class="stat-number">95%</div>
-                        <div class="stat-label">College Acceptance Rate</div>
+                        <div class="stat-number">{{ stats.sucess_rate|default:"95" }}%</div>
+                        <div class="stat-label">Success Rate</div>
                     </div>
                     <div class="stat-item fade-in-element">
-                        <div class="stat-number">25+</div>
-                        <div class="stat-label">National Competitions</div>
+                        <div class="stat-number">{{ stats.teacher|default:"25+" }}</div>
+                        <div class="stat-label">Teachers</div>
                     </div>
                     <div class="stat-item fade-in-element">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">Community Service Hours</div>
+                        <div class="stat-number">{{ stats.experience|default:"10+" }}</div>
+                        <div class="stat-label">Years Experience</div>
                     </div>
                 </div>
             </section>
@@ -707,30 +737,24 @@
                 <h2 class="section-title">Timeline of Major Achievements</h2>
                 <div class="timeline-container">
                     <div class="timeline-line"></div>
-                    <div class="timeline-item fade-in-left">
+                    {% for event in timeline_events %}
+                    <div class="timeline-item {% cycle 'fade-in-left' 'fade-in-right' %}">
                         <div class="timeline-dot"></div>
-                        <div class="timeline-year">2024</div>
-                        <h3 class="timeline-title">School Excellence Award</h3>
-                        <p class="timeline-description">Recognized as one of the top schools in the region for overall excellence in education.</p>
+                        <div class="timeline-year">{{ event.year }}</div>
+                        <h3 class="timeline-title">{{ event.title }}</h3>
+                        <p class="timeline-description">{{ event.description }}</p>
                     </div>
-                    <div class="timeline-item fade-in-right">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-year">2023</div>
-                        <h3 class="timeline-title">National Science Competition</h3>
-                        <p class="timeline-description">Students won first place in the national science fair with innovative environmental projects.</p>
+                    {% empty %}
+                    <div class="no-data-container fade-in-element" style="margin-top: 2rem;">
+                        <div class="no-data-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <div class="no-data-title">No Timeline Events</div>
+                        <div class="no-data-message">
+                            We are currently compiling our historical achievements timeline. Check back soon for a comprehensive overview of our school's major milestones.
+                        </div>
                     </div>
-                    <div class="timeline-item fade-in-left">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-year">2022</div>
-                        <h3 class="timeline-title">Sports Championship Victory</h3>
-                        <p class="timeline-description">Multiple sports teams achieved championship status in regional competitions.</p>
-                    </div>
-                    <div class="timeline-item fade-in-right">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-year">2021</div>
-                        <h3 class="timeline-title">Academic Excellence Recognition</h3>
-                        <p class="timeline-description">Awarded for outstanding academic performance and innovative teaching methods.</p>
-                    </div>
+                    {% endfor %}
                 </div>
             </section>
 
@@ -738,10 +762,11 @@
             <section class="cta-section fade-in-scale">
                 <h2 class="cta-title">Be Part of Our Success Story</h2>
                 <p class="cta-description">
-                    Join Shree Rastriya Secondary School and become part of a community that celebrates excellence, 
+                    Join Shree Rastriya Secondary School and become part of a community that celebrates excellence,
                     fosters growth, and creates opportunities for every student to achieve their dreams.
                 </p>
-                <a href="{% url "home:admission" %}">
+
+                    <a href="{% url "home:admission" %}">
                     <button class="cta-button">
                         <i class="fas fa-rocket"></i>
                         Learn More About Admissions
@@ -765,7 +790,7 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Hide loading animation after page loads
         setTimeout(() => {
             const loadingAnimation = document.getElementById('loadingAnimation');
@@ -787,7 +812,7 @@
                     setTimeout(() => {
                         entry.target.classList.add('visible');
                     }, index * 100);
-                    
+
                     // Unobserve after animation to improve performance
                     fadeInObserver.unobserve(entry.target);
                 }
@@ -798,7 +823,7 @@
         const fadeElements = document.querySelectorAll(
             '.fade-in-element, .fade-in-left, .fade-in-right, .fade-in-scale, .fade-in-rotate'
         );
-        
+
         fadeElements.forEach(element => {
             fadeInObserver.observe(element);
         });
@@ -812,7 +837,7 @@
                     if (timelineLine) {
                         timelineLine.classList.add('visible');
                     }
-                    
+
                     // Animate timeline items with staggered delay
                     const timelineItems = entry.target.querySelectorAll('.timeline-item');
                     timelineItems.forEach((item, index) => {
@@ -820,7 +845,7 @@
                             item.classList.add('visible');
                         }, index * 200);
                     });
-                    
+
                     timelineObserver.unobserve(entry.target);
                 }
             });
@@ -836,18 +861,18 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const statNumbers = entry.target.querySelectorAll('.stat-number');
-                    
+
                     statNumbers.forEach((stat, index) => {
                         setTimeout(() => {
                             const finalValue = stat.textContent;
                             const numericValue = parseInt(finalValue.replace(/\D/g, ''));
                             const suffix = finalValue.replace(/\d/g, '');
-                            
+
                             let currentValue = 0;
                             const increment = numericValue / 60;
                             const duration = 2000; // 2 seconds
                             const stepTime = duration / 60;
-                            
+
                             const timer = setInterval(() => {
                                 currentValue += increment;
                                 if (currentValue >= numericValue) {
@@ -859,7 +884,7 @@
                             }, stepTime);
                         }, index * 200);
                     });
-                    
+
                     statsObserver.unobserve(entry.target);
                 }
             });
@@ -888,7 +913,7 @@
 
         // Click event for cards
         document.querySelectorAll('.achievement-card, .featured-card').forEach(card => {
-            card.addEventListener('click', function(e) {
+            card.addEventListener('click', function (e) {
                 const popupContent = this.querySelector('.popup-details');
                 if (popupContent) {
                     openModal(popupContent.innerHTML);
@@ -898,15 +923,15 @@
 
         // Close modal events
         closeModal.addEventListener('click', closeModalFunc);
-        
-        modal.addEventListener('click', function(e) {
+
+        modal.addEventListener('click', function (e) {
             if (e.target === modal) {
                 closeModalFunc();
             }
         });
 
         // Close on Escape key
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && modal.classList.contains('active')) {
                 closeModalFunc();
             }
@@ -914,9 +939,9 @@
 
         // Enhanced card hover effects with performance optimization
         let isHovering = false;
-        
+
         document.querySelectorAll('.achievement-card, .featured-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
+            card.addEventListener('mouseenter', function () {
                 if (!isHovering) {
                     isHovering = true;
                     requestAnimationFrame(() => {
@@ -925,8 +950,8 @@
                     });
                 }
             });
-            
-            card.addEventListener('mouseleave', function() {
+
+            card.addEventListener('mouseleave', function () {
                 if (!isHovering) {
                     isHovering = true;
                     requestAnimationFrame(() => {
