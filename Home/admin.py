@@ -42,3 +42,10 @@ admin.site.register(models.Member_Role)
 admin.site.register(models.Achievements_stats)
 
 admin.site.register(models.Student_Reviews)
+
+
+admin.site.register(models.Sports_Achivements)
+
+admin.site.register(models.Academic_Achivements)
+
+admin.site.register(models.Time_Line)
