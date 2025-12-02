@@ -120,6 +120,46 @@ class Achievements_stats(models.Model):
         verbose_name = "Achivement stats"
         verbose_name_plural = "Achivement stats"
 
+class Sports_Achivements(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    image  = models.ImageField(upload_to="sports_achivements/")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Sports Achivement"
+        verbose_name_plural = "Sports Achivements"
+
+    def __str__(self):
+        return self.title
+    
+
+
+
+class Academic_Achivements(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    image  = models.ImageField(upload_to="academic_achivements/")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Academic Achivement"
+        verbose_name_plural = "Academic Achivements"
+    
+    def __str__(self):
+        return self.title
+
+class Time_Line(models.Model):
+    year = models.CharField(max_length=100)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+
+    class Meta:
+        verbose_name = "Time_Line"
+        verbose_name_plural = "Time_Lines"
+
+    def __str__(self):
+        return self.year
 
 class Academics(models.Model):
     grade_low = models.ImageField(
