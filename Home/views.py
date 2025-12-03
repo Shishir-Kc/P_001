@@ -195,8 +195,42 @@ def achivement(request):
         "timeline_events": timeline_events,
     }
     return render(request, "achivements/achivements.html", context)
+"""
+    work for tomorrow 
+Important Dates
+Application Deadline
+March 15th - Final deadline for all application materials
+
+Interview Period
+April 1st - May 15th - Scheduled interviews with applicants
+
+Decision Notification
+June 1st - Admission decisions released
+
+Enrollment Deadline
+June 30th - Final deadline to confirm enrollment
 
 
+make it so that user can add it from admin panel
+
+if no data make it invisible ! 
+
+2) 
+
+    make it so that teacher are shown from same model eg class not from a diff model ! 
+
+3) 
+
+    make it so that  user can upload the bg image of login page /! 
+
+4) 
+
+    make it so that there is proper email ui ! 
+    
+
+
+
+"""
 def contact(request):
     if request.method == "POST":
         full_name = request.POST.get("name")
@@ -253,3 +287,4 @@ def contact(request):
         return redirect("home:home")
 
     return render(request, "contact/contact.html")
+
