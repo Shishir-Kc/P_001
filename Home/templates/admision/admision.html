@@ -4,469 +4,478 @@
 {% block title %}Shree Rastriya Secondary School - Admissions{% endblock title %}
 
 {% block links %}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Lexend:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <style>
-        :root {
-            --primary-blue: #2563EB;
-            --secondary-blue: #3B82F6;
-            --dark-blue: #1E40AF;
-            --light-blue: #EFF6FF;
-            --accent-blue: #DBEAFE;
-            --primary-green: #059669;
-            --secondary-green: #10B981;
-            --dark-green: #047857;
-            --light-green: #ECFDF5;
-            --text-dark: #1F2937;
-            --text-light: #6B7280;
-            --text-white: #FFFFFF;
-            --bg-white: #FFFFFF;
-            --bg-light: #F9FAFB;
-            --bg-gray: #F3F4F6;
-            --gradient-primary: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-            --gradient-secondary: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
-            --gradient-accent: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Lexend:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900&display=swap"
+    rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-        /* Full Screen Layout */
-        .admissions-wrapper {
-            min-height: 100vh;
-            width: 100%;
-            background-color: var(--bg-light);
-        }
+<style>
+    :root {
+        --primary-blue: #2563EB;
+        --secondary-blue: #3B82F6;
+        --dark-blue: #1E40AF;
+        --light-blue: #EFF6FF;
+        --accent-blue: #DBEAFE;
+        --primary-green: #059669;
+        --secondary-green: #10B981;
+        --dark-green: #047857;
+        --light-green: #ECFDF5;
+        --text-dark: #1F2937;
+        --text-light: #6B7280;
+        --text-white: #FFFFFF;
+        --bg-white: #FFFFFF;
+        --bg-light: #F9FAFB;
+        --bg-gray: #F3F4F6;
+        --gradient-primary: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+        --gradient-secondary: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+        --gradient-accent: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+    }
 
-        /* Content Container */
-        .content-container {
-            position: relative;
-            min-height: 100vh;
-            padding-top: 80px;
-        }
+    /* Full Screen Layout */
+    .admissions-wrapper {
+        min-height: 100vh;
+        width: 100%;
+        background-color: var(--bg-light);
+    }
 
-        .content-wrapper {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+    /* Content Container */
+    .content-container {
+        position: relative;
+        min-height: 100vh;
+        padding-top: 80px;
+    }
 
-        /* Hero Section */
-        .hero-section {
-            text-align: center;
-            padding: 4rem 0;
-            background: var(--gradient-primary);
-            color: white;
-            border-radius: 20px;
-            margin-bottom: 3rem;
-        }
+    .content-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
 
-        .hero-title {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-        }
+    /* Hero Section */
+    .hero-section {
+        text-align: center;
+        padding: 4rem 0;
+        background: var(--gradient-primary);
+        color: white;
+        border-radius: 20px;
+        margin-bottom: 3rem;
+    }
 
-        .hero-subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
-        }
+    .hero-title {
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-weight: 900;
+        margin-bottom: 1.5rem;
+    }
 
-        .hero-cta {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+    .hero-subtitle {
+        font-size: 1.3rem;
+        margin-bottom: 2rem;
+        opacity: 0.95;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
+    }
 
-        .cta-button {
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+    .hero-cta {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
 
-        .cta-primary {
-            background: white;
-            color: var(--primary-blue);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
+    .cta-button {
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
 
-        .cta-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
+    .cta-primary {
+        background: white;
+        color: var(--primary-blue);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
 
-        .cta-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
-        }
+    .cta-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
 
-        .cta-secondary:hover {
-            background: white;
-            color: var(--primary-blue);
-            transform: translateY(-3px);
-        }
+    .cta-secondary {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+    }
 
-        /* Content Sections */
-        .content-section {
-            background: white;
-            margin: 2rem 0;
-            padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-        }
+    .cta-secondary:hover {
+        background: white;
+        color: var(--primary-blue);
+        transform: translateY(-3px);
+    }
 
-        .content-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-        }
+    /* Content Sections */
+    .content-section {
+        background: white;
+        margin: 2rem 0;
+        padding: 3rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+    }
 
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary-blue);
-            margin-bottom: 1.5rem;
-        }
+    .content-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
 
-        .section-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--primary-blue);
+        margin-bottom: 1.5rem;
+    }
 
-        .content-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            position: relative;
-        }
+    .section-subtitle {
+        font-size: 1.2rem;
+        color: var(--text-light);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
 
-        .content-title::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--gradient-primary);
-            border-radius: 2px;
-        }
+    .content-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+        position: relative;
+    }
 
-        .content-text {
-            font-size: 1.1rem;
-            color: var(--text-dark);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
+    .content-title::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--gradient-primary);
+        border-radius: 2px;
+    }
 
-        /* Process Steps */
-        .process-container {
-            display: grid;
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
+    .content-text {
+        font-size: 1.1rem;
+        color: var(--text-dark);
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+    }
 
-        .process-step {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.5rem;
-            padding: 2rem;
-            background: var(--bg-gray);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            border-left: 4px solid var(--primary-blue);
-        }
+    /* Process Steps */
+    .process-container {
+        display: grid;
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
 
-        .process-step:hover {
-            transform: translateX(10px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            background: white;
-        }
+    .process-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding: 2rem;
+        background: var(--bg-gray);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        border-left: 4px solid var(--primary-blue);
+    }
 
-        .step-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            flex-shrink: 0;
-        }
+    .process-step:hover {
+        transform: translateX(10px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        background: white;
+    }
 
-        .step-content h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
+    .step-icon {
+        width: 50px;
+        height: 50px;
+        background: var(--gradient-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
 
-        .step-content p {
-            color: var(--text-light);
-            line-height: 1.6;
-        }
+    .step-content h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+    }
 
-        /* Interactive Timeline */
-        .timeline-container {
-            position: relative;
-            padding: 2rem 0;
-        }
+    .step-content p {
+        color: var(--text-light);
+        line-height: 1.6;
+    }
 
-        .timeline-line {
-            position: absolute;
-            left: 30px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: var(--gradient-primary);
-        }
+    /* Interactive Timeline */
+    .timeline-container {
+        position: relative;
+        padding: 2rem 0;
+    }
 
-        .timeline-item {
-            position: relative;
-            padding-left: 80px;
-            margin-bottom: 3rem;
-        }
+    .timeline-line {
+        position: absolute;
+        left: 30px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--gradient-primary);
+    }
 
-        .timeline-dot {
-            position: absolute;
-            left: 20px;
-            top: 10px;
-            width: 20px;
-            height: 20px;
-            background: var(--primary-blue);
-            border-radius: 50%;
-            border: 4px solid white;
-            box-shadow: 0 0 0 4px var(--light-blue);
-        }
+    .timeline-item {
+        position: relative;
+        padding-left: 80px;
+        margin-bottom: 3rem;
+    }
 
-        .timeline-item h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
+    .timeline-dot {
+        position: absolute;
+        left: 20px;
+        top: 10px;
+        width: 20px;
+        height: 20px;
+        background: var(--primary-blue);
+        border-radius: 50%;
+        border: 4px solid white;
+        box-shadow: 0 0 0 4px var(--light-blue);
+    }
 
-        .timeline-item p {
-            color: var(--text-light);
-            line-height: 1.6;
-        }
+    .timeline-item h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+    }
 
-        /* Interactive Cards */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
+    .timeline-item p {
+        color: var(--text-light);
+        line-height: 1.6;
+    }
 
-        .interactive-card {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 1px solid var(--bg-gray);
-        }
+    /* Interactive Cards */
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
 
-        .interactive-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-            border-color: var(--primary-blue);
-        }
+    .interactive-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 1px solid var(--bg-gray);
+    }
 
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient-accent);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-        }
+    .interactive-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        border-color: var(--primary-blue);
+    }
 
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
+    .card-icon {
+        width: 50px;
+        height: 50px;
+        background: var(--gradient-accent);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
 
-        .card-description {
-            color: var(--text-light);
-            line-height: 1.6;
-        }
+    .card-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+    }
 
-        /* FAQ Section */
-        .faq-container {
-            margin: 2rem 0;
-        }
+    .card-description {
+        color: var(--text-light);
+        line-height: 1.6;
+    }
 
-        .faq-item {
-            background: white;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--bg-gray);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
+    /* FAQ Section */
+    .faq-container {
+        margin: 2rem 0;
+    }
 
-        .faq-item:hover {
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
+    .faq-item {
+        background: white;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--bg-gray);
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
 
-        .faq-question {
-            padding: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg-gray);
-            transition: all 0.3s ease;
-        }
+    .faq-item:hover {
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
 
-        .faq-question:hover {
-            background: var(--light-blue);
-        }
+    .faq-question {
+        padding: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--bg-gray);
+        transition: all 0.3s ease;
+    }
 
-        .faq-question-text {
-            font-weight: 600;
-            color: var(--text-dark);
-        }
+    .faq-question:hover {
+        background: var(--light-blue);
+    }
 
-        .faq-answer {
-            padding: 0 1.5rem 1.5rem;
-            color: var(--text-light);
-            line-height: 1.6;
-            display: none;
-        }
+    .faq-question-text {
+        font-weight: 600;
+        color: var(--text-dark);
+    }
 
-        .faq-item.active .faq-answer {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
+    .faq-answer {
+        padding: 0 1.5rem 1.5rem;
+        color: var(--text-light);
+        line-height: 1.6;
+        display: none;
+    }
 
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    .faq-item.active .faq-answer {
+        display: block;
+        animation: slideDown 0.3s ease;
+    }
 
-        /* Apply Button */
-        .apply-section {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: var(--gradient-primary);
-            border-radius: 15px;
-            margin: 3rem 0;
-            color: white;
-        }
-
-        .apply-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-
-        .apply-subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .apply-button {
-            background: white;
-            color: var(--primary-blue);
-            border: none;
-            border-radius: 50px;
-            padding: 1rem 2.5rem;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .apply-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .content-wrapper {
-                padding: 0 1rem;
-            }
-            
-            .content-section {
-                padding: 2rem 1.5rem;
-                margin: 1rem 0;
-            }
-            
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .hero-cta {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .process-step {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .timeline-item {
-                padding-left: 60px;
-            }
-            
-            .card-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Scroll animations */
-        .fade-in {
+    @keyframes slideDown {
+        from {
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease;
+            transform: translateY(-10px);
         }
 
-        .fade-in.visible {
+        to {
             opacity: 1;
             transform: translateY(0);
         }
-    </style>
+    }
+
+    /* Apply Button */
+    .apply-section {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: var(--gradient-primary);
+        border-radius: 15px;
+        margin: 3rem 0;
+        color: white;
+    }
+
+    .apply-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+    }
+
+    .apply-subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.95;
+    }
+
+    .apply-button {
+        background: white;
+        color: var(--primary-blue);
+        border: none;
+        border-radius: 50px;
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .apply-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .content-wrapper {
+            padding: 0 1rem;
+        }
+
+        .content-section {
+            padding: 2rem 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+
+        .hero-cta {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .process-step {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .timeline-item {
+            padding-left: 60px;
+        }
+
+        .card-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Scroll animations */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s ease;
+    }
+
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
 {% endblock links %}
 
 {% block content %}
@@ -478,21 +487,22 @@
             <section class="hero-section">
                 <h1 class="hero-title">Join Our Community</h1>
                 <p class="hero-subtitle">
-                    Welcome to Shree Rastriya Secondary School! We're excited you're considering joining our vibrant 
+                    Welcome to Shree Rastriya Secondary School! We're excited you're considering joining our vibrant
                     community where excellence meets opportunity and dreams become reality.
                 </p>
-               
-               
-               
+
+
+
             </section>
 
             <!-- Admission Overview -->
             <section class="content-section fade-in">
                 <h2 class="section-title">Admission Overview</h2>
                 <p class="content-text">
-                    Shree Rastriya Secondary School offers a comprehensive and engaging educational experience for students 
-                    from kindergarten through 12th grade. Our curriculum is designed to challenge and inspire students, 
-                    fostering a lifelong love of learning. We seek students who are curious, motivated, and eager to 
+                    Shree Rastriya Secondary School offers a comprehensive and engaging educational experience for
+                    students
+                    from kindergarten through 12th grade. Our curriculum is designed to challenge and inspire students,
+                    fostering a lifelong love of learning. We seek students who are curious, motivated, and eager to
                     contribute to our diverse community.
                 </p>
             </section>
@@ -520,28 +530,32 @@
                             <i class="fas fa-user-graduate"></i>
                         </div>
                         <h3 class="card-title">Grades 6-8</h3>
-                        <p class="card-description">Must have a strong academic record and demonstrate commitment to learning.</p>
+                        <p class="card-description">Must have a strong academic record and demonstrate commitment to
+                            learning.</p>
                     </div>
                     <div class="interactive-card">
                         <div class="card-icon">
                             <i class="fas fa-graduation-cap"></i>
                         </div>
                         <h3 class="card-title">Grades 9-10</h3>
-                        <p class="card-description">Must have a minimum GPA of 2.0 and submit standardized test scores.</p>
+                        <p class="card-description">Must have a minimum GPA of 2.0 and submit standardized test scores.
+                        </p>
                     </div>
                     <div class="interactive-card">
                         <div class="card-icon">
                             <i class="fas fa-university"></i>
                         </div>
                         <h3 class="card-title">Grade 11</h3>
-                        <p class="card-description">Must have passed SEE with minimum GPA requirements as per stream choice.</p>
+                        <p class="card-description">Must have passed SEE with minimum GPA requirements as per stream
+                            choice.</p>
                     </div>
                     <div class="interactive-card">
                         <div class="card-icon">
                             <i class="fas fa-hard-hat"></i>
                         </div>
                         <h3 class="card-title">Diploma in Civil Engineering</h3>
-                        <p class="card-description">Must have passed SEE with minimum C grade in Math and Science, and D+ in English.</p>
+                        <p class="card-description">Must have passed SEE with minimum C grade in Math and Science, and
+                            D+ in English.</p>
                     </div>
                 </div>
             </section>
@@ -556,7 +570,8 @@
                         </div>
                         <div class="step-content">
                             <h3>Submit Application</h3>
-                            <p>Complete the online application form and submit all required documents including transcripts, recommendations, and personal statement.</p>
+                            <p>Complete the online application form and submit all required documents including
+                                transcripts, recommendations, and personal statement.</p>
                         </div>
                     </div>
                     <div class="process-step">
@@ -574,7 +589,8 @@
                         </div>
                         <div class="step-content">
                             <h3>Receive Decision</h3>
-                            <p>Admissions decisions will be communicated via Facebook within the specified timeframe.</p>
+                            <p>Admissions decisions will be communicated via Facebook within the specified timeframe.
+                            </p>
                         </div>
                     </div>
                     <div class="process-step">
@@ -583,52 +599,45 @@
                         </div>
                         <div class="step-content">
                             <h3>Complete Enrollment</h3>
-                            <p>Upon acceptance, complete the enrollment process, submit required forms, and secure your spot in our community.</p>
+                            <p>Upon acceptance, complete the enrollment process, submit required forms, and secure your
+                                spot in our community.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
             <!-- Important Dates -->
+            {% if important_dates %}
             <section class="content-section fade-in">
                 <h2 class="content-title">Important Dates</h2>
                 <div class="timeline-container">
                     <div class="timeline-line"></div>
+                    {% for date in important_dates %}
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
-                        <h3>Application Deadline</h3>
-                        <p><strong>March 15th</strong> - Final deadline for all application materials</p>
+                        <h3>{{date.title}}</h3>
+                        <p><strong>{{date.initial_date}}</strong> - {{date.secondary_title}}</p>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <h3>Interview Period</h3>
-                        <p><strong>April 1st - May 15th</strong> - Scheduled interviews with applicants</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <h3>Decision Notification</h3>
-                        <p><strong>June 1st</strong> - Admission decisions released</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <h3>Enrollment Deadline</h3>
-                        <p><strong>June 30th</strong> - Final deadline to confirm enrollment</p>
-                    </div>
+                    {% endfor %}
                 </div>
             </section>
+            {% endif %}
 
             <!-- Resources -->
             <section class="content-section fade-in">
                 <h2 class="content-title">Resources</h2>
                 <div class="card-grid">
-                    <a href="{{resources.admission_guide}}" class="interactive-card" download='{{resources.admission_guide}}' style="text-decoration: none;">
+                    <a href="{{resources.admission_guide}}" class="interactive-card"
+                        download='{{resources.admission_guide}}' style="text-decoration: none;">
                         <div class="card-icon">
                             <i class="fas fa-file-pdf"></i>
                         </div>
                         <h3 class="card-title">Admissions Guide</h3>
-                        <p class="card-description">Download our comprehensive guide to the admissions process with detailed instructions and tips.</p>
+                        <p class="card-description">Download our comprehensive guide to the admissions process with
+                            detailed instructions and tips.</p>
                     </a>
-                    <a href="{{resources.academic_calendar}}" class="interactive-card" download='{{resources.academic_calendar}}' style="text-decoration: none;">
+                    <a href="{{resources.academic_calendar}}" class="interactive-card"
+                        download='{{resources.academic_calendar}}' style="text-decoration: none;">
                         <div class="card-icon">
                             <i class="fas fa-calendar"></i>
                         </div>
@@ -648,7 +657,8 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            The average class size at Shree Rastriya Secondary School is 20 students, ensuring personalized 
+                            The average class size at Shree Rastriya Secondary School is 20 students, ensuring
+                            personalized
                             attention and a supportive learning environment where every student can thrive.
                         </div>
                     </div>
@@ -658,8 +668,9 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            We offer a wide range of extracurricular activities including sports teams, music ensembles, 
-                            drama club, debate team, robotics club, community service projects, and various academic competitions.
+                            We offer a wide range of extracurricular activities including sports teams, music ensembles,
+                            drama club, debate team, robotics club, community service projects, and various academic
+                            competitions.
                         </div>
                     </div>
                     <div class="faq-item">
@@ -668,7 +679,8 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            You can attend one of our open houses, schedule a campus tour, contact our admissions office, 
+                            You can attend one of our open houses, schedule a campus tour, contact our admissions
+                            office,
                             or explore our website and social media channels for the latest updates and information.
                         </div>
                     </div>
@@ -678,7 +690,8 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            We offer various financial aid options including merit-based scholarships, need-based assistance, 
+                            We offer various financial aid options including merit-based scholarships, need-based
+                            assistance,
                             and payment plans to make quality education accessible to deserving students.
                         </div>
                     </div>
@@ -688,15 +701,16 @@
             <!-- Apply Section -->
             <section class="apply-section fade-in">
                 <h2 class="apply-title">Ready to Begin Your Journey?</h2>
-                <p class="apply-subtitle">Join our community of learners and discover your potential at Shree Rastriya Secondary School.</p>
-           
+                <p class="apply-subtitle">Join our community of learners and discover your potential at Shree Rastriya
+                    Secondary School.</p>
+
             </section>
 
             <!-- Contact -->
             <section class="content-section fade-in">
                 <h2 class="content-title">Contact Our Admissions Team</h2>
                 <p class="content-text">
-                    If you have any questions or need assistance with your application, please don't hesitate to 
+                    If you have any questions or need assistance with your application, please don't hesitate to
                     contact our admissions team. We're here to help guide you through the process!
                 </p>
                 <div class="card-grid">
@@ -728,7 +742,7 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Intersection Observer for scroll animations
         const observerOptions = {
             threshold: 0.1,
@@ -750,10 +764,10 @@
 
         // FAQ functionality
         document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', function() {
+            question.addEventListener('click', function () {
                 const faqItem = this.parentElement;
                 const isActive = faqItem.classList.contains('active');
-                
+
                 // Close all FAQ items
                 document.querySelectorAll('.faq-item').forEach(item => {
                     item.classList.remove('active');
@@ -761,7 +775,7 @@
                     icon.classList.remove('fa-chevron-up');
                     icon.classList.add('fa-chevron-down');
                 });
-                
+
                 // Open clicked item if it wasn't active
                 if (!isActive) {
                     faqItem.classList.add('active');
@@ -774,16 +788,16 @@
 
         // Interactive card hover effects
         document.querySelectorAll('.interactive-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
+            card.addEventListener('mouseenter', function () {
                 this.style.transform = 'translateY(-8px)';
             });
-            
-            card.addEventListener('mouseleave', function() {
+
+            card.addEventListener('mouseleave', function () {
                 this.style.transform = 'translateY(0)';
             });
         });
 
-    
+
     });
 </script>
 {% endblock content %}
