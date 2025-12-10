@@ -6,6 +6,7 @@ from student.models import Student_info
 from teacher.models import Teacher
 from django.contrib.auth.models import User,Group
 from .utils import does_user_exists
+from .models import Login_Background_image
 
 
 def user_login(request):
@@ -55,7 +56,11 @@ def user_login(request):
             messages.error(request, 'Invalid credentials! Please check your email/code and password.')
             return redirect('login:login')
     
-    return render(request, 'login/login.html')
+    background_image = Login_Background_image.objects.first()
+    context = {
+        'background_image': background_image
+    }
+    return render(request, 'login/login.html', context)
 
 
 
