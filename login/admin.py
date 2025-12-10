@@ -1,3 +1,4 @@
 from django.contrib import admin
+from .models import Login_Background_image
 
-# Register your models here.
+admin.site.register(Login_Background_image)
