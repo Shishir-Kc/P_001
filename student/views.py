@@ -246,17 +246,6 @@ def attendence(request):
     # Use shared utility to get calendar data
     calendar_data = get_calendar_data(get_year(), get_month(), student.id)
 
-    # Fetch records for summary stats (could be optimized to not re-fetch if utility returned them, 
-    # but utility returns processed calendar data. We can keep existing stats calls or optimize them too.)
-    # The existing stats calls in context use utils that do their own queries. 
-    # For now, we keep them to ensure stats are correct, but we replaced the heavy calendar logic.
-
-    # We need student_records for the context if the template uses it separately from calendar_data
-    # The original code passed 'student_records' to context.
-    # We can fetch it again or modify utility to return it. 
-    # To be safe and minimal change, let's re-fetch just the records for the list view if needed,
-    # or rely on what the template uses. 
-    # Looking at original code: student_records was passed.
     
     try:
         attendance_objs = Attendance.objects.filter(year=get_year(),month=get_month()).order_by('date')
@@ -265,24 +254,7 @@ def attendence(request):
         student_records = []
 
     context = {
-            'teacher': teacher, # Warning: 'teacher' variable was not defined in original scope before context! 
-                                # It was imported as module 'teacher'. 
-                                # Checking original code: 'teacher' key was passed but variable 'teacher' was NOT defined in the function body.
-                                # It likely referred to the module 'teacher' imported at top, or it was a bug.
-                                # If it's the module, passing it to template is weird. 
-                                # If it was meant to be the class teacher, it's missing.
-                                # Let's assume it was a bug or unnecessary. I will omit it if not defined, or pass None.
-                                # Wait, line 7: 'from teacher import models as teach'. 
-                                # Line 97: 'def teacher(request): ...' 
-                                # In 'attendence' view (line 228), 'teacher' is not defined.
-                                # I will remove it from context to prevent NameError if it was indeed buggy, 
-                                # or check if I missed something. 
-                                # Ah, I see 'teacher' in context at line 326. 
-                                # But 'teacher' is NOT defined in the function 'attendence' in the original code I read (lines 228-336).
-                                # This would have caused a NameError at runtime!
-                                # I will fix this by fetching the teacher if possible, or removing it.
-                                # Student has a class, class has teachers.
-                                # I'll try to fetch the class teacher.
+            'teacher': teacher, 
             'student': student,
             'current_month': get_month(),
             'current_year': get_year(),
