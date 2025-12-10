@@ -49,3 +49,5 @@ admin.site.register(models.Sports_Achivements)
 admin.site.register(models.Academic_Achivements)
 
 admin.site.register(models.Time_Line)
+
+admin.site.register(models.Important_Dates)
