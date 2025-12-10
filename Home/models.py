@@ -286,3 +286,17 @@ class Student_Reviews(models.Model):
     def __str__(self):
         return self.name
 
+
+class Important_Dates(models.Model):
+    title  = models.CharField(max_length=100)
+    secondary_title = models.CharField(max_length=100)
+    initial_date = models.DateField()
+    final_date = models.DateField()
+    
+    class Meta:
+        verbose_name = "Important Date"
+        verbose_name_plural = "Important Dates"
+    
+    def __str__(self):
+        return self.title
+
