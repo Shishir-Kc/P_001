@@ -1,14 +1,56 @@
+# cloning
+
+
+
+
+```bash
+git clone https://github.com/Shishir-Kc/MAIN_PROJECT.git
+```
+
+
+! Note Make Sure Python is Installed .
+    
+## Installation
+
+Install The project with python
+
+# cd into MAIN_PROJECT
+
+env creation
+
+# Linux
+```bash
+    python3 -m venev .venv  
+```
+# # Activation
+
+```bash
+    source .venv/bin/activate
+``` 
+
+#  # Installing packages     
+
+```bash
+    pip install -r requirements.txt
+```
+#  # Applying migrations
+
+```bash
+    python manage.py migrate
+```
+
+# #  Running the server
+
+```bash
+    python manage.py runserver
+``` 
+
+
+# below here are for proper prod ready info (being added later)
+
 # Groups 
 
 1) Head
 2) Teacher
 3) Student 
 
-# To Do 
-
-1) fix this DoesNotExist at /student/attendence/
-YEAR_MONTH matching query does not exist. fixed !
-
-2) fix year dublication !  fixed 
- 
-3) data_class.models.YEAR_MONTH.DoesNotExist: YEAR_MONTH matching query does not exist. -fixed !
