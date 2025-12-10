@@ -1,3 +1,7 @@
 from django.db import models
 
-# Create your models here.
+class Login_Background_image(models.Model):
+    image = models.ImageField(upload_to='login_images/')
+
+    def __str__(self):
+        return self.image.url
