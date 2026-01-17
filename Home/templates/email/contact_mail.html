@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>New Contact Message</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f6f8fb;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .email-wrapper {
+      width: 100%;
+      padding: 24px 0;
+    }
+
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    }
+
+    .header h1 {
+      font-size: 20px;
+      margin-bottom: 24px;
+      color: #111827;
+      font-weight: 600;
+    }
+
+    .field {
+      margin-bottom: 14px;
+      font-size: 14px;
+      color: #374151;
+    }
+
+    .field strong {
+      color: #111827;
+    }
+
+    .message-box {
+      margin-top: 20px;
+      padding: 16px;
+      background-color: #f9fafb;
+      border-radius: 8px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #111827;
+    }
+
+    .footer {
+      margin-top: 28px;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 14px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="email-wrapper">
+    <div class="email-container">
+
+      <!-- Header -->
+      <div class="header">
+              <h1>New Student Inquiry</h1>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="field">
+        <strong>Full Name:</strong> {{ full_name }}
+      </div>
+
+      <div class="field">
+        <strong>Email Address:</strong> {{ email }}
+      </div>
+
+      {% if phone %}
+      <div class="field">
+        <strong>Phone Number:</strong> {{ phone }}
+      </div>
+      {% endif %}
+
+      <div class="field">
+        <strong>Subject:</strong> {{ subject }}
+      </div>
+
+      <!-- Message -->
+      <div class="message-box">
+        {{ message }}
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        This message was sent via <strong>{{ platform_name }}</strong>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
