@@ -30,7 +30,7 @@ class Student_info(models.Model):
     Roll_num = models.IntegerField(verbose_name="student_roll number",default=0,null=True,blank=True)
     refrence_code = models.CharField(verbose_name='refrence_code',default='n?A')
     joined = models.BooleanField(default=False,blank=True,null=True)
-
+    account_created_at = models.DateTimeField(auto_now_add=True)
     # parent information ! 
 
     father_name = models.CharField(verbose_name='father_name',blank=True,null=True)
@@ -38,7 +38,7 @@ class Student_info(models.Model):
     parent_contact = models.IntegerField(verbose_name='contact',blank=True,null=True)
     parent_email = models.EmailField(verbose_name='parent_email',blank=True,null=True)
     address  = models.TextField(verbose_name='Address',blank=True,null=True)
-    emergency_contact = models.IntegerField(verbose_name='emergency conmtact',blank=True,null=True)
+    student_contact = models.IntegerField(verbose_name='student contact',blank=True,null=True)
 
 
 
