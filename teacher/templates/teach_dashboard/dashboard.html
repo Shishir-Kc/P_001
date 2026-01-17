@@ -327,28 +327,114 @@
         grid-column: 1;
     }
 
-    /* Student Cards Styling */
+    /* ========================================
+       PENDING REQUESTS SECTION - SCROLLABLE
+       ======================================== */
+    .pending-requests-section {
+        background: var(--bg-primary);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+        max-height: 600px; /* Fixed max height for the entire section */
+    }
+
+    .pending-requests-section h2 {
+        margin: 0 0 1rem 0;
+        font-size: 1.25rem;
+        color: var(--text-primary);
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--border-color);
+        flex-shrink: 0;
+    }
+
+    /* Scrollable Container */
+    .student-list-container {
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .student-list-scrollable {
+        max-height: 480px; /* Height for approximately 3 student cards */
+        overflow-y: auto;
+        padding-right: 8px;
+    }
+
+    /* Custom Scrollbar Styling */
+    .student-list-scrollable::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .student-list-scrollable::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+        border-radius: 10px;
+    }
+
+    .student-list-scrollable::-webkit-scrollbar-thumb {
+        background: var(--text-muted);
+        border-radius: 10px;
+        transition: background 0.3s ease;
+    }
+
+    .student-list-scrollable::-webkit-scrollbar-thumb:hover {
+        background: var(--text-secondary);
+    }
+
+    /* Firefox Scrollbar */
+    .student-list-scrollable {
+        scrollbar-width: thin;
+        scrollbar-color: var(--text-muted) var(--bg-secondary);
+    }
+
+    /* Scroll Indicator (optional fade effect at bottom) */
+    .student-list-container::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 8px;
+        height: 30px;
+        background: linear-gradient(to bottom, transparent, var(--bg-primary));
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .student-list-container.has-scroll::after {
+        opacity: 1;
+    }
+
+    /* Student List */
     .student-list {
         display: flex;
         flex-direction: column;
         gap: 1rem;
     }
 
+    /* Student Card Styling */
     .student-card {
-        background: var(--bg-primary);
+        background: var(--bg-secondary);
         border: 1px solid var(--border-color);
         border-radius: 12px;
-        padding: 1.5rem;
+        padding: 1.25rem;
         display: flex;
         align-items: center;
         gap: 1rem;
         transition: all 0.2s ease;
-        box-shadow: var(--shadow);
+    }
+
+    .student-card:last-child {
+        margin-bottom: 0;
     }
 
     .student-card:hover {
+        background: var(--bg-primary);
         box-shadow: var(--shadow-lg);
         transform: translateY(-2px);
+        border-color: var(--accent-color);
     }
 
     .student-avatar {
@@ -356,18 +442,24 @@
         height: 60px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid var(--border-color);
+        border: 3px solid var(--bg-primary);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
     }
 
     .student-info {
         flex: 1;
+        min-width: 0;
     }
 
     .student-name {
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 600;
         color: var(--text-primary);
         margin-bottom: 0.5rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .student-details {
@@ -380,49 +472,77 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        font-size: 0.875rem;
+        font-size: 0.8rem;
         color: var(--text-secondary);
     }
 
     .student-detail i {
-        width: 16px;
+        width: 14px;
         color: var(--text-muted);
+        font-size: 0.75rem;
     }
 
+    .student-detail span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Action Buttons */
     .student-actions {
         display: flex;
+        flex-direction: column;
         gap: 0.5rem;
+        flex-shrink: 0;
     }
 
     .action-btn {
         padding: 0.5rem 1rem;
         border: none;
         border-radius: 6px;
-        font-size: 0.875rem;
+        font-size: 0.8rem;
         font-weight: 500;
         cursor: pointer;
         transition: all 0.2s ease;
         display: flex;
         align-items: center;
-        gap: 0.25rem;
+        justify-content: center;
+        gap: 0.35rem;
+        min-width: 90px;
     }
 
     .accept-btn {
-        background-color: var(--success-color);
+        background-color: var(--success-color, #10b981);
         color: white;
     }
 
     .accept-btn:hover {
         background-color: #059669;
+        transform: scale(1.05);
     }
 
     .reject-btn {
-        background-color: var(--danger-color);
+        background-color: var(--danger-color, #ef4444);
         color: white;
     }
 
     .reject-btn:hover {
         background-color: #dc2626;
+        transform: scale(1.05);
+    }
+
+    /* Pending Count Badge */
+    .pending-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--accent-color);
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.25rem 0.5rem;
+        border-radius: 12px;
+        margin-left: 0.5rem;
     }
 
     /* Status styling for rejected */
@@ -450,10 +570,15 @@
     }
 
     .empty-state h3 {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
         font-weight: 600;
         margin-bottom: 0.5rem;
         color: var(--text-primary);
+    }
+
+    .empty-state p {
+        margin: 0;
+        font-size: 0.9rem;
     }
 
     .no-results {
@@ -473,6 +598,26 @@
     }
 
     /* Responsive adjustments */
+    @media (max-width: 992px) {
+        .student-card {
+            flex-wrap: wrap;
+        }
+
+        .student-info {
+            flex: 1 1 calc(100% - 80px);
+        }
+
+        .student-actions {
+            flex-direction: row;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .action-btn {
+            flex: 1;
+        }
+    }
+
     @media (max-width: 768px) {
         .dashboard-columns {
             grid-template-columns: 1fr;
@@ -484,10 +629,28 @@
             grid-column: 1;
         }
 
+        .pending-requests-section {
+            max-height: 500px;
+        }
+
+        .student-list-scrollable {
+            max-height: 380px;
+        }
+
         .student-card {
             flex-direction: column;
             text-align: center;
             gap: 1rem;
+            padding: 1rem;
+        }
+
+        .student-info {
+            flex: none;
+            width: 100%;
+        }
+
+        .student-details {
+            align-items: center;
         }
 
         .student-actions {
@@ -509,6 +672,14 @@
     /* Dark mode adjustments */
     [data-theme="dark"] .upload-modal-content,
     [data-theme="dark"] .file-info {
+        background: var(--bg-secondary);
+    }
+
+    [data-theme="dark"] .student-card {
+        background: var(--bg-tertiary);
+    }
+
+    [data-theme="dark"] .student-card:hover {
         background: var(--bg-secondary);
     }
 </style>
@@ -661,65 +832,78 @@
         
         {% if teacher.head_teacher != None %} 
         <section class="pending-requests-section right-column" id="pendingRequestsSection">
-            <h2>Pending Student Requests</h2>
-            <div class="student-list" id="pendingStudentsList">
-                {% if students %}
-                    {% for student in students %}
-                        {% if student.joined == False %}
-                            <div class="student-card" data-student-name="{{ student.first_name|lower }} {{ student.last_name|lower }}">
-                                <img src="{% if student.student_profile %}{{ student.student_profile.url }}{% else %} {% if student.Gender == "Male" %}
-                                    {% static 'teacher/images/male.png' %}
-                                     {% else %}
-                                      {% static 'teacher/images/female.png' %}
-                                {% endif %}{% endif %}" 
-                                     alt="{{ student.first_name }}" class="student-avatar">
-                                <div class="student-info">
-                                    <div class="student-name">{{ student.first_name }} {{ student.last_name }}</div>
-                                    <div class="student-details">
-                                        <div class="student-detail">
-                                            <i class="fas fa-envelope"></i>
-                                            <span>{{ student.email|default:"No email" }}</span>
+            <h2>
+                Pending Student Requests
+                {% with pending_count=students|length %}
+                    {% if pending_count > 0 %}
+                        <span class="pending-count">{{ pending_count }}</span>
+                    {% endif %}
+                {% endwith %}
+            </h2>
+            <div class="student-list-container" id="studentListContainer">
+                <div class="student-list-scrollable" id="pendingStudentsList">
+                    <div class="student-list">
+                        {% if students %}
+                            {% for student in students %}
+                                {% if student.joined == False %}
+                                    <div class="student-card" data-student-name="{{ student.first_name|lower }} {{ student.last_name|lower }}">
+                                        <img src="{% if student.student_profile %}{{ student.student_profile.url }}{% else %}{% if student.Gender == 'Male' %}{% static 'teacher/images/male.png' %}{% else %}{% static 'teacher/images/female.png' %}{% endif %}{% endif %}" 
+                                             alt="{{ student.first_name }}" class="student-avatar">
+                                        <div class="student-info">
+                                            <div class="student-name">{{ student.first_name }} {{ student.last_name }}</div>
+                                            <div class="student-details">
+                                                <div class="student-detail">
+                                                    <i class="fas fa-envelope"></i>
+                                                    <span>{{ student.email|default:"No email" }}</span>
+                                                </div>
+                                                <div class="student-detail">
+                                                    <i class="fas fa-phone"></i>
+                                                    <span>{{ student.student_contact|default:"No contact" }}</span>
+                                                </div>
+                                                <div class="student-detail">
+                                                    <i class="fas fa-calendar"></i>
+                                                    <span>Requested: {{ student.account_created_at|date:"M d, Y" }}</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="student-detail">
-                                            <i class="fas fa-phone"></i>
-                                            <span>{{ student.contact|default:"No contact" }}</span>
-                                        </div>
-                                        <div class="student-detail">
-                                            <i class="fas fa-calendar"></i>
-                                            <span>Requested: {{ student.date_joined|date:"M d, Y" }}</span>
+                                        <div class="student-actions">
+                                            <form method="post" style="display: inline;" action="{% url 'teacher:accept_request' %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="student_id" value="{{ student.id }}">
+                                                <input type="hidden" name="action" value="accept">
+                                                <button type="submit" class="action-btn accept-btn">
+                                                    <i class="fas fa-check"></i>
+                                                    Accept
+                                                </button>
+                                            </form>
+                                            <form method="post" style="display: inline;" action="{% url 'teacher:reject_request' %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="student_id" value="{{ student.id }}">
+                                                <input type="hidden" name="action" value="reject">
+                                                <button type="submit" class="action-btn reject-btn">
+                                                    <i class="fas fa-times"></i>
+                                                    Reject
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
+                                {% endif %}
+                            {% empty %}
+                                <div class="empty-state">
+                                    <i class="fas fa-inbox"></i>
+                                    <h3>No Pending Requests</h3>
+                                    <p>There are no students waiting to join your classes.</p>
                                 </div>
-                                <div class="student-actions">
-                                    <form method="post" style="display: inline;" action="{% url 'teacher:accept_request' %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="student_id" value="{{ student.id }}">
-                                        <input type="hidden" name="action" value="accept">
-                                        <button type="submit" class="action-btn accept-btn">
-                                            <i class="fas fa-check"></i>
-                                            Accept
-                                        </button>
-                                    </form>
-                                    <form method="post" style="display: inline;" action="{% url 'teacher:reject_request' %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="student_id" value="{{ student.id }}">
-                                        <input type="hidden" name="action" value="reject">
-                                        <button type="submit" class="action-btn reject-btn">
-                                            <i class="fas fa-times"></i>
-                                            Reject
-                                        </button>
-                                    </form>
-                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <h3>No Pending Requests</h3>
+                                <p>There are no students waiting to join your classes.</p>
                             </div>
                         {% endif %}
-                    {% endfor %}
-                {% else %}
-                    <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <h3>No Pending Requests</h3>
-                        <p>There are no students waiting to join your classes.</p>
                     </div>
-                {% endif %}
+                </div>
             </div>
         </section>
         {% endif %}
@@ -775,6 +959,36 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Check if scrollable list needs scroll indicator
+    const studentListContainer = document.getElementById('studentListContainer');
+    const pendingStudentsList = document.getElementById('pendingStudentsList');
+    
+    if (pendingStudentsList && studentListContainer) {
+        function checkScroll() {
+            if (pendingStudentsList.scrollHeight > pendingStudentsList.clientHeight) {
+                studentListContainer.classList.add('has-scroll');
+            } else {
+                studentListContainer.classList.remove('has-scroll');
+            }
+        }
+        
+        // Check on load
+        checkScroll();
+        
+        // Check on scroll to hide indicator when at bottom
+        pendingStudentsList.addEventListener('scroll', function() {
+            const isAtBottom = pendingStudentsList.scrollHeight - pendingStudentsList.scrollTop <= pendingStudentsList.clientHeight + 10;
+            if (isAtBottom) {
+                studentListContainer.classList.remove('has-scroll');
+            } else if (pendingStudentsList.scrollHeight > pendingStudentsList.clientHeight) {
+                studentListContainer.classList.add('has-scroll');
+            }
+        });
+        
+        // Re-check on window resize
+        window.addEventListener('resize', checkScroll);
+    }
+
     // Enhanced Image Upload Functionality
     const uploadTrigger = document.getElementById('uploadTrigger');
     const uploadModal = document.getElementById('uploadModal');
@@ -826,7 +1040,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Check file type
         const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
         if (!allowedTypes.includes(file.type)) {
-            showValidationMessage('Please select a valid image file (JPEG, or  PNG,).', 'error');
+            showValidationMessage('Please select a valid image file (JPEG, or PNG).', 'error');
             return false;
         }
 
@@ -999,10 +1213,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 uploadButton.textContent = 'Uploading...';
             }
             showValidationMessage('Uploading your image...', 'warning');
-
-
-    });
-}
+        });
+    }
 
 });
 </script>
