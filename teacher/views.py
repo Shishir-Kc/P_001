@@ -6,11 +6,9 @@ from student import models as std
 from data_class.models import Project, Assignments, Class, Subject,Attendance
 from django.contrib import messages
 from django.contrib.auth import logout
-from u_task.task import send_email
+from u_task.task import send_note_upload_email
 from student import models as stu
 from Home import models as H
-import datetime
-import nepali_datetime
 from .utils import (is_today_date_created,
 get_date,
 get_year,
@@ -43,6 +41,7 @@ def teacher_dashboard(request):
         ).count()
 
         students = std.Student_info.objects.filter(refrence_code = teacher_content.refrence_code)
+        print(students)
       
         projects = Project.objects.filter(
             classs__in=teacher_classes, subject__in=teacher_content.subject.all()
@@ -130,9 +129,7 @@ def upload_assignment(request):
         )
         data.save()
         teacher = models.Teacher.objects.get(user=request.user)
-        email = teacher.email
-        full_name = teacher.first_name + teacher.last_name
-        message = content
+        teacher_name= teacher.first_name + teacher.last_name
         students = stu.Student_info.objects.filter(
             student_class__in=teacher.teacher_class.all()
         )
@@ -141,24 +138,9 @@ def upload_assignment(request):
         for i in students:
             student_email.append(i.email)
 
-        full_message = (f""" 
-    From: {full_name}\n
-    Subject: New Note Uploaded for {subject}\n\n
-    Dear Students,\n\n
-    This is to inform you that a new note has been uploaded for the subject: *{subject}*.\n
-    Please find the details below:\n\n
-    {message}\n\n
-    If you have any questions or need further clarification, feel free to reach out.\n\n
-    Best regards,\n
-    {full_name}
-   """
- )
 
+        send_note_upload_email.delay(teacher_name=str(teacher_name),message='hi',subject=str(subject),students_emails=student_email)
 
-        subject=f"Assignment Uploaded for : {subject}"
-
-        send_email.delay(
-            subject = subject,recivers=student_email,sender=email,message=full_message)
         messages.success(
             request, " Uploaded successfully! Your students can now access this note."
         )
@@ -311,7 +293,7 @@ def upload_news(request):
                     """)
              print('================================')
              print(list_std)
-             send_email.delay(subject=title,recivers=list_std,message=full_message,sender=teacher.email)
+            #  send_email.delay(subject=title,recivers=list_std,message=full_message,sender=teacher.email)
             
             data = H.News(
                 title=title, description=content, image=image_file, category=category , file =supporting_file
@@ -607,7 +589,7 @@ def student_attendance_list(request):
     teacher = models.Teacher.objects.get(user=request.user)
     
     # Base queryset
-    students = std.Student_info.objects.filter(refrence_code=teacher.refrence_code).order_by('Roll_num')
+    students = std.Student_info.objects.filter(refrence_code=teacher.refrence_code,joined=True).order_by('Roll_num')
     
     # Calculate stats on the full list (before search/pagination)
     absent_count = number_of_absent_students(student_obj=students)
