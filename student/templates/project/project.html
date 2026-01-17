@@ -727,24 +727,6 @@
       font-size: 0.75rem;
   }
 
-  /* Rejection reason specific styling */
-  .rejection-reason {
-      background-color: var(--bg-secondary);
-      border-radius: 8px;
-      padding: 1rem;
-      border-left: 4px solid #f59e0b;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      font-family: inherit;
-      line-height: 1.6;
-  }
-
-  .rejection-reason-text {
-      color: var(--text-primary);
-      font-size: 0.875rem;
-      margin: 0;
-  }
-
   .modal-actions {
       display: flex;
       gap: 0.75rem;
@@ -792,6 +774,282 @@
 
   .modal-btn-close:hover {
       background-color: var(--accent-hover);
+  }
+
+  /* ===== MODERN REJECTION MODAL STYLES ===== */
+  .rejection-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 1rem;
+  }
+
+  .rejection-modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+  }
+
+  .rejection-modal {
+      width: 100%;
+      max-width: 420px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      transform: scale(0.9) translateY(20px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  .rejection-modal-overlay.show .rejection-modal {
+      transform: scale(1) translateY(0);
+  }
+
+  /* Top accent bar */
+  .rejection-modal::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background-size: 200% 100%;
+      animation: shimmer 2s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+  }
+
+  /* Close button */
+  .rejection-close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      z-index: 10;
+  }
+
+  .rejection-close-btn:hover {
+      background: var(--bg-tertiary);
+      transform: scale(1.05);
+  }
+
+  .rejection-close-btn svg {
+      width: 18px;
+      height: 18px;
+      color: var(--text-muted);
+      transition: color 0.2s ease;
+  }
+
+  .rejection-close-btn:hover svg {
+      color: var(--text-primary);
+  }
+
+  /* Modal content */
+  .rejection-modal-content {
+      padding: 2.5rem 2rem 2rem;
+  }
+
+  /* Icon wrapper */
+  .rejection-icon-wrapper {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+  }
+
+  .rejection-icon-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 2px dashed rgba(239, 68, 68, 0.3);
+      animation: spin 20s linear infinite;
+  }
+
+  @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+  }
+
+  .rejection-icon-wrapper svg {
+      width: 32px;
+      height: 32px;
+      color: #ef4444;
+  }
+
+  /* Title */
+  .rejection-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.5px;
+  }
+
+  .rejection-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 1.75rem;
+  }
+
+  /* Project info card */
+  .rejection-project-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+  }
+
+  .rejection-project-name {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+  }
+
+  .rejection-project-name::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: #ef4444;
+      border-radius: 3px;
+      flex-shrink: 0;
+  }
+
+  .rejection-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.625rem 0;
+      border-top: 1px solid var(--border-color);
+  }
+
+  .rejection-meta-row:first-of-type {
+      border-top: none;
+      padding-top: 0;
+  }
+
+  .rejection-meta-label {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+  }
+
+  .rejection-meta-value {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+  }
+
+  /* Reason section */
+  .rejection-reason-section {
+      margin-bottom: 1.75rem;
+  }
+
+  .rejection-reason-label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.75px;
+      margin-bottom: 0.625rem;
+  }
+
+  .rejection-reason-box {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.03) 100%);
+      border-left: 3px solid #ef4444;
+      border-radius: 0 12px 12px 0;
+      padding: 1rem 1.25rem;
+  }
+
+  .rejection-reason-text {
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      line-height: 1.7;
+      margin: 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+  }
+
+  /* Action button */
+  .rejection-action-btn {
+      width: 100%;
+      padding: 0.875rem 1.5rem;
+      border-radius: 12px;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      background: linear-gradient(135deg, var(--accent-color) 0%, #1d4ed8 100%);
+      color: white;
+      box-shadow: 0 4px 14px rgba(42, 123, 237, 0.35);
+  }
+
+  .rejection-action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(42, 123, 237, 0.45);
+  }
+
+  .rejection-action-btn:active {
+      transform: translateY(0);
+  }
+
+  /* Dark mode adjustments for rejection modal */
+  [data-theme="dark"] .rejection-modal {
+      background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+  }
+
+  [data-theme="dark"] .rejection-icon-wrapper {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.08) 100%);
+  }
+
+  [data-theme="dark"] .rejection-icon-wrapper::before {
+      border-color: rgba(239, 68, 68, 0.4);
+  }
+
+  [data-theme="dark"] .rejection-project-card {
+      background: var(--bg-tertiary);
+  }
+
+  [data-theme="dark"] .rejection-reason-box {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(239, 68, 68, 0.06) 100%);
+  }
+
+  [data-theme="dark"] .rejection-close-btn {
+      background: var(--bg-tertiary);
   }
 
   /* Hidden delete form */
@@ -845,6 +1103,24 @@
       .project-card-actions {
           flex-direction: row;
           align-items: flex-start;
+      }
+
+      .rejection-modal-content {
+          padding: 2rem 1.5rem 1.5rem;
+      }
+
+      .rejection-title {
+          font-size: 1.25rem;
+      }
+
+      .rejection-icon-wrapper {
+          width: 64px;
+          height: 64px;
+      }
+
+      .rejection-icon-wrapper svg {
+          width: 28px;
+          height: 28px;
       }
   }
   
@@ -948,10 +1224,6 @@
   }
 
   [data-theme="dark"] .project-info {
-      background-color: var(--bg-tertiary);
-  }
-
-  [data-theme="dark"] .rejection-reason {
       background-color: var(--bg-tertiary);
   }
 
@@ -1168,7 +1440,7 @@
   }
 
   .fade-in-section {
-      opacity: 0; /* Start invisible */
+      opacity: 0;
       animation: fadeIn 0.6s ease-out forwards;
       animation-delay: var(--animation-delay, 0s);
   }
@@ -1203,29 +1475,49 @@
       </div>
   </div>
 
-  <!-- Rejection Reason Modal -->
-  <div class="modal-overlay" id="rejectionModal">
-      <div class="modal">
-          <div class="modal-header">
-              <div class="modal-icon warning">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
-                      <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,104v40a8,8,0,0,0,16,0V104a8,8,0,0,0-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,140Z"></path>
+  <!-- ===== MODERN REJECTION MODAL ===== -->
+  <div class="rejection-modal-overlay" id="rejectionModal">
+      <div class="rejection-modal">
+          <!-- Close Button -->
+          <button class="rejection-close-btn" onclick="closeRejectionModal()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+          </button>
+
+          <div class="rejection-modal-content">
+              <!-- Icon -->
+              <div class="rejection-icon-wrapper">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
               </div>
-              <h3 class="modal-title">Project Rejected</h3>
-          </div>
-          <div class="modal-body">
-              <p class="modal-text">Your project has been rejected for the following reason:</p>
-              <div class="project-info" id="rejectionProjectInfo">
-                  <div class="project-info-title" id="rejectionProjectTitle">Project Title</div>
-                  <div class="project-info-subject" id="rejectionProjectSubject">Subject Name</div>
+
+              <!-- Title -->
+              <h2 class="rejection-title">Project Rejected</h2>
+              <p class="rejection-subtitle">Your submission requires revisions</p>
+
+              <!-- Project Details -->
+              <div class="rejection-project-card">
+                  <div class="rejection-project-name" id="rejectionProjectTitle">Project Title</div>
+                  <div class="rejection-meta-row">
+                      <span class="rejection-meta-label">Subject</span>
+                      <span class="rejection-meta-value" id="rejectionProjectSubject">Subject Name</span>
+                  </div>
               </div>
-              <div class="rejection-reason">
-                  <p class="rejection-reason-text" id="rejectionReasonText"></p>
+
+              <!-- Rejection Reason -->
+              <div class="rejection-reason-section">
+                  <div class="rejection-reason-label">Reason for rejection</div>
+                  <div class="rejection-reason-box">
+                      <p class="rejection-reason-text" id="rejectionReasonText">No specific reason provided.</p>
+                  </div>
               </div>
-          </div>
-          <div class="modal-actions">
-              <button class="modal-btn modal-btn-close" onclick="closeRejectionModal()">Close</button>
+
+              <!-- Action Button -->
+              <button class="rejection-action-btn" onclick="closeRejectionModal()">
+                  Got it, I'll revise
+              </button>
           </div>
       </div>
   </div>
@@ -1697,7 +1989,7 @@ document.addEventListener('DOMContentLoaded', function() {
       option.classList.add('selected');
   }
   
-  function updateFilterButton(filterType, text, value) {
+    function updateFilterButton(filterType, text, value) {
       const button = filterType === 'subject' ? subjectFilter : statusFilter;
       const span = button.querySelector('span');
       
@@ -1780,7 +2072,7 @@ document.addEventListener('DOMContentLoaded', function() {
           projectsCards.style.display = 'none';
       } else {
           noResults.classList.remove('show');
-          checkScreenSize(); // Restore proper display based on screen size
+          checkScreenSize();
       }
   }
   
@@ -1822,12 +2114,12 @@ document.addEventListener('DOMContentLoaded', function() {
       projectInfoTitle.textContent = projectTitle;
       projectInfoSubject.textContent = projectSubject;
       deleteModal.classList.add('show');
-      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      document.body.style.overflow = 'hidden';
   };
 
   window.closeDeleteModal = function() {
       deleteModal.classList.remove('show');
-      document.body.style.overflow = ''; // Restore scrolling
+      document.body.style.overflow = '';
       projectToDelete = null;
   };
 
@@ -1847,12 +2139,12 @@ document.addEventListener('DOMContentLoaded', function() {
       rejectionProjectSubject.textContent = projectSubject;
       rejectionReasonText.textContent = rejectionMessage || 'No specific reason provided.';
       rejectionModal.classList.add('show');
-      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      document.body.style.overflow = 'hidden';
   };
 
   window.closeRejectionModal = function() {
       rejectionModal.classList.remove('show');
-      document.body.style.overflow = ''; // Restore scrolling
+      document.body.style.overflow = '';
   };
 
   // Close modals when clicking outside
@@ -1898,7 +2190,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (toastId) {
               closeToast(toastId);
           }
-      }, 5000 + (index * 500)); // Stagger the auto-hide timing
+      }, 5000 + (index * 500));
   });
 });
 </script>
