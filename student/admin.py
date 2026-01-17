@@ -10,7 +10,7 @@ class Student_Admin(admin.ModelAdmin):
         'student_code',
         'student_class',
         'Roll_num',
-        'emergency_contact',
+        'student_contact',
 
 
     ]
@@ -20,7 +20,7 @@ class Student_Admin(admin.ModelAdmin):
         'last_name',
         'student_code',
         'Roll_num',
-        'emergency_contact',
+        'student_contact',
     ]
 
     list_filter=[
