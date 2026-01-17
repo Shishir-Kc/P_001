@@ -16,8 +16,10 @@ pillow==11.3.0
 prompt_toolkit==3.0.52
 python-dateutil==2.9.0.post0
 python-decouple==3.8
+redis==7.1.0
 six==1.17.0
 sqlparse==0.5.3
+typing_extensions==4.15.0
 tzdata==2025.2
 tzlocal==5.3.1
 vine==5.1.0
