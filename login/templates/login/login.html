@@ -308,7 +308,7 @@
 
         .login-card {
             width: 100%;
-            max-width: 450px;
+            max-width: 480px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -316,6 +316,27 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             padding: 3rem 2.5rem;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        /* Custom scrollbar for login card */
+        .login-card::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .login-card::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .login-card::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .login-card::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
         }
 
         /* Logo and School Name inside form */
@@ -332,7 +353,7 @@
             margin-bottom: 2rem;
         }
 
-        /* BIGGER LOGO inside form - Made even larger */
+        /* BIGGER LOGO inside form */
         .form-logo {
             width: 160px;
             height: 160px;
@@ -413,7 +434,7 @@
 
         /* Form styles */
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             position: relative;
         }
 
@@ -425,6 +446,12 @@
             font-size: 0.9rem;
         }
 
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
         .form-input {
             width: 100%;
             padding: 0.875rem 1rem;
@@ -434,6 +461,11 @@
             color: white;
             font-size: 1rem;
             backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .form-input.with-toggle {
+            padding-right: 3rem;
         }
 
         .form-input::placeholder {
@@ -445,6 +477,186 @@
             border-color: rgba(59, 130, 246, 0.8);
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
             background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-input.error {
+            border-color: rgba(239, 68, 68, 0.8);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+
+        .form-input.success {
+            border-color: rgba(16, 185, 129, 0.8);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+
+        /* Password toggle button */
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            border-radius: 6px;
+        }
+
+        .password-toggle:hover {
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .password-toggle svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2;
+        }
+
+        /* Password strength indicator */
+        .password-strength {
+            margin-top: 0.75rem;
+        }
+
+        .strength-bar-container {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .strength-bar {
+            flex: 1;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .strength-bar.active.weak {
+            background: #ef4444;
+        }
+
+        .strength-bar.active.fair {
+            background: #f59e0b;
+        }
+
+        .strength-bar.active.good {
+            background: #3b82f6;
+        }
+
+        .strength-bar.active.strong {
+            background: #10b981;
+        }
+
+        .strength-text {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .strength-label {
+            font-weight: 500;
+        }
+
+        .strength-label.weak { color: #ef4444; }
+        .strength-label.fair { color: #f59e0b; }
+        .strength-label.good { color: #3b82f6; }
+        .strength-label.strong { color: #10b981; }
+
+        /* Password requirements list */
+        .password-requirements {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .requirement-title {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .requirement-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.35rem;
+            list-style: none;
+        }
+
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        .requirement-item.met {
+            color: #10b981;
+        }
+
+        .requirement-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .requirement-item.met .requirement-icon {
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        .requirement-icon svg {
+            width: 8px;
+            height: 8px;
+            stroke-width: 3;
+        }
+
+        /* Contact field with Nepal country code */
+        .contact-input-group {
+            display: flex;
+            gap: 0;
+        }
+
+        .country-code-display {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-right: none;
+            border-radius: 12px 0 0 12px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            white-space: nowrap;
+        }
+
+        .country-flag {
+            font-size: 1.2rem;
+        }
+
+        .contact-number-input {
+            flex: 1;
+            border-radius: 0 12px 12px 0 !important;
         }
 
         /* Gender Selection Styles */
@@ -536,6 +748,7 @@
         .submit-button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
+            transform: none;
         }
 
         .submit-button.signup {
@@ -577,6 +790,21 @@
         .required {
             color: #ef4444;
             margin-left: 2px;
+        }
+
+        /* Helper text */
+        .helper-text {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.35rem;
+        }
+
+        .helper-text.error {
+            color: #ef4444;
+        }
+
+        .helper-text.success {
+            color: #10b981;
         }
 
         /* Responsive design */
@@ -625,6 +853,10 @@
                 flex-direction: column;
                 gap: 0.75rem;
             }
+
+            .requirement-list {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 480px) {
@@ -655,6 +887,11 @@
 
             .form-header {
                 margin-bottom: 2rem;
+            }
+
+            .country-code-display {
+                padding: 0.875rem 0.75rem;
+                font-size: 0.85rem;
             }
         }
 
@@ -781,15 +1018,27 @@
 
                         <div class="form-group">
                             <label for="user_pass" class="form-label">Password</label>
-                            <input 
-                                type="password" 
-                                name="user_pass" 
-                                id="user_pass" 
-                                class="form-input" 
-                                placeholder="Enter your password" 
-                                required
-                                autocomplete="current-password"
-                            >
+                            <div class="input-wrapper">
+                                <input 
+                                    type="password" 
+                                    name="user_pass" 
+                                    id="user_pass" 
+                                    class="form-input with-toggle" 
+                                    placeholder="Enter your password" 
+                                    required
+                                    autocomplete="current-password"
+                                >
+                                <button type="button" class="password-toggle" onclick="togglePassword('user_pass', this)" aria-label="Toggle password visibility">
+                                    <svg class="eye-open" stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <circle cx="12" cy="12" r="3" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                    </svg>
+                                    <svg class="eye-closed" style="display: none;" stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <line x1="1" y1="1" x2="23" y2="23" stroke-linecap="round" stroke-linejoin="round"></line>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
 
                         <button type="submit" class="submit-button" id="loginSubmitBtn">
@@ -813,7 +1062,7 @@
                         {% csrf_token %}
                         
                         <div class="form-group">
-                            <label for="signup_email" class="form-label">Email</label>
+                            <label for="signup_email" class="form-label">Email <span class="required">*</span></label>
                             <input 
                                 type="email" 
                                 name="email" 
@@ -827,7 +1076,7 @@
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="first_name" class="form-label">First Name</label>
+                                <label for="first_name" class="form-label">First Name <span class="required">*</span></label>
                                 <input 
                                     type="text" 
                                     name="first_name" 
@@ -840,7 +1089,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="last_name" class="form-label">Last Name</label>
+                                <label for="last_name" class="form-label">Last Name <span class="required">*</span></label>
                                 <input 
                                     type="text" 
                                     name="last_name" 
@@ -851,6 +1100,31 @@
                                     autocomplete="family-name"
                                 >
                             </div>
+                        </div>
+
+                        <!-- Contact Number Field - Nepal Only -->
+                        <div class="form-group">
+                            <label for="contact_number" class="form-label">Contact Number <span class="required">*</span></label>
+                            <div class="contact-input-group">
+                                <div class="country-code-display">
+                                    <span class="country-flag">🇳🇵</span>
+                                    <span>+977</span>
+                                </div>
+                                <input type="hidden" name="country_code" value="+977">
+                                <input 
+                                    type="tel" 
+                                    name="contact_number" 
+                                    id="contact_number" 
+                                    class="form-input contact-number-input" 
+                                    placeholder="98XXXXXXXX" 
+                                    required
+                                    autocomplete="tel"
+                                    pattern="[0-9]{10}"
+                                    maxlength="10"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                >
+                            </div>
+                            <span class="helper-text" id="contactHelper">Enter 10 digit Nepal mobile number</span>
                         </div>
 
                         <!-- Gender Selection Section -->
@@ -895,33 +1169,126 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="signup_password" class="form-label">Password</label>
-                            <input 
-                                type="password" 
-                                name="user_pass" 
-                                id="signup_password" 
-                                class="form-input" 
-                                placeholder="Create a strong password" 
-                                required
-                                autocomplete="new-password"
-                            >
+                            <label for="signup_password" class="form-label">Password <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="password" 
+                                    name="user_pass" 
+                                    id="signup_password" 
+                                    class="form-input with-toggle" 
+                                    placeholder="Create a strong password" 
+                                    required
+                                    autocomplete="new-password"
+                                >
+                                <button type="button" class="password-toggle" onclick="togglePassword('signup_password', this)" aria-label="Toggle password visibility">
+                                    <svg class="eye-open" stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <circle cx="12" cy="12" r="3" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                    </svg>
+                                    <svg class="eye-closed" style="display: none;" stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <line x1="1" y1="1" x2="23" y2="23" stroke-linecap="round" stroke-linejoin="round"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <!-- Password Strength Indicator -->
+                            <div class="password-strength" id="passwordStrength">
+                                <div class="strength-bar-container">
+                                    <div class="strength-bar" id="strengthBar1"></div>
+                                    <div class="strength-bar" id="strengthBar2"></div>
+                                    <div class="strength-bar" id="strengthBar3"></div>
+                                    <div class="strength-bar" id="strengthBar4"></div>
+                                </div>
+                                <div class="strength-text">
+                                    <span class="strength-label" id="strengthLabel">Password strength</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Password Requirements -->
+                            <div class="password-requirements" id="passwordRequirements">
+                                <div class="requirement-title">Password must contain:</div>
+                                <ul class="requirement-list">
+                                    <li class="requirement-item" id="req-length">
+                                        <span class="requirement-icon">
+                                            <svg stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </span>
+                                        At least 8 characters
+                                    </li>
+                                    <li class="requirement-item" id="req-uppercase">
+                                        <span class="requirement-icon">
+                                            <svg stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </span>
+                                        One uppercase letter
+                                    </li>
+                                    <li class="requirement-item" id="req-lowercase">
+                                        <span class="requirement-icon">
+                                            <svg stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </span>
+                                        One lowercase letter
+                                    </li>
+                                    <li class="requirement-item" id="req-number">
+                                        <span class="requirement-icon">
+                                            <svg stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </span>
+                                        One number
+                                    </li>
+                                    <li class="requirement-item" id="req-special">
+                                        <span class="requirement-icon">
+                                            <svg stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </span>
+                                        One special character
+                                    </li>
+                                    <li class="requirement-item" id="req-nomatch">
+                                        <span class="requirement-icon">
+                                            <svg stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </span>
+                                        Passwords match
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="confirm_password" class="form-label">Confirm Password</label>
-                            <input 
-                                type="password" 
-                                name="confirm_password" 
-                                id="confirm_password" 
-                                class="form-input" 
-                                placeholder="Confirm your password" 
-                                required
-                                autocomplete="new-password"
-                            >
+                            <label for="confirm_password" class="form-label">Confirm Password <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="password" 
+                                    name="confirm_password" 
+                                    id="confirm_password" 
+                                    class="form-input with-toggle" 
+                                    placeholder="Confirm your password" 
+                                    required
+                                    autocomplete="new-password"
+                                >
+                                <button type="button" class="password-toggle" onclick="togglePassword('confirm_password', this)" aria-label="Toggle password visibility">
+                                    <svg class="eye-open" stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <circle cx="12" cy="12" r="3" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                    </svg>
+                                    <svg class="eye-closed" style="display: none;" stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <line x1="1" y1="1" x2="23" y2="23" stroke-linecap="round" stroke-linejoin="round"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="helper-text" id="confirmPasswordHelper"></span>
                         </div>
 
                         <div class="form-group">
-                            <label for="reference_code" class="form-label">Reference Code</label>
+                            <label for="reference_code" class="form-label">Reference Code <span class="required">*</span></label>
                             <input 
                                 type="text" 
                                 name="reference_code" 
@@ -930,6 +1297,7 @@
                                 placeholder="Teacher reference code" 
                                 required
                             >
+                            <span class="helper-text">Enter the code provided by your teacher</span>
                         </div>
 
                         <button type="submit" class="submit-button signup" id="signupSubmitBtn">
@@ -946,6 +1314,149 @@
     </div>
 
     <script>
+        // Password visibility toggle
+        function togglePassword(inputId, button) {
+            const input = document.getElementById(inputId);
+            const eyeOpen = button.querySelector('.eye-open');
+            const eyeClosed = button.querySelector('.eye-closed');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                eyeOpen.style.display = 'none';
+                eyeClosed.style.display = 'block';
+            } else {
+                input.type = 'password';
+                eyeOpen.style.display = 'block';
+                eyeClosed.style.display = 'none';
+            }
+        }
+
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            const requirements = {
+                length: password.length >= 8,
+                uppercase: /[A-Z]/.test(password),
+                lowercase: /[a-z]/.test(password),
+                number: /[0-9]/.test(password),
+                special: /[!@#$%^&*(),.?":{}|<>_\-+=\[\]\\\/`~]/.test(password)
+            };
+
+            // Count met requirements
+            Object.values(requirements).forEach(met => {
+                if (met) strength++;
+            });
+
+            return { strength, requirements };
+        }
+
+        // Update password strength UI
+        function updatePasswordStrengthUI(password) {
+            const { strength, requirements } = checkPasswordStrength(password);
+            const confirmPassword = document.getElementById('confirm_password').value;
+            
+            // Update requirement items
+            document.getElementById('req-length').classList.toggle('met', requirements.length);
+            document.getElementById('req-uppercase').classList.toggle('met', requirements.uppercase);
+            document.getElementById('req-lowercase').classList.toggle('met', requirements.lowercase);
+            document.getElementById('req-number').classList.toggle('met', requirements.number);
+            document.getElementById('req-special').classList.toggle('met', requirements.special);
+            document.getElementById('req-nomatch').classList.toggle('met', password === confirmPassword && password !== '');
+
+            // Update strength bars
+            const bars = ['strengthBar1', 'strengthBar2', 'strengthBar3', 'strengthBar4'];
+            let strengthLevel = '';
+            
+            if (strength === 0 || password === '') {
+                strengthLevel = '';
+            } else if (strength <= 2) {
+                strengthLevel = 'weak';
+            } else if (strength === 3) {
+                strengthLevel = 'fair';
+            } else if (strength === 4) {
+                strengthLevel = 'good';
+            } else {
+                strengthLevel = 'strong';
+            }
+
+            bars.forEach((barId, index) => {
+                const bar = document.getElementById(barId);
+                bar.className = 'strength-bar';
+                
+                if (password === '') {
+                    return;
+                }
+                
+                if (strengthLevel === 'weak' && index < 1) {
+                    bar.classList.add('active', 'weak');
+                } else if (strengthLevel === 'fair' && index < 2) {
+                    bar.classList.add('active', 'fair');
+                } else if (strengthLevel === 'good' && index < 3) {
+                    bar.classList.add('active', 'good');
+                } else if (strengthLevel === 'strong' && index < 4) {
+                    bar.classList.add('active', 'strong');
+                }
+            });
+
+            // Update strength label
+            const strengthLabel = document.getElementById('strengthLabel');
+            const labels = {
+                '': 'Password strength',
+                'weak': 'Weak - Add more variety',
+                'fair': 'Fair - Getting better',
+                'good': 'Good - Almost there',
+                'strong': 'Strong - Excellent!'
+            };
+            
+            strengthLabel.textContent = labels[strengthLevel];
+            strengthLabel.className = 'strength-label ' + strengthLevel;
+        }
+
+        // Password input event listener
+        document.getElementById('signup_password').addEventListener('input', function() {
+            updatePasswordStrengthUI(this.value);
+            
+            // Also update password input styling
+            const { strength, requirements } = checkPasswordStrength(this.value);
+            if (this.value === '') {
+                this.classList.remove('error', 'success');
+            } else if (strength < 5) {
+                this.classList.add('error');
+                this.classList.remove('success');
+            } else {
+                this.classList.add('success');
+                this.classList.remove('error');
+            }
+        });
+
+        // Confirm password validation
+        document.getElementById('confirm_password').addEventListener('input', function() {
+            const password = document.getElementById('signup_password').value;
+            const confirmPassword = this.value;
+            const helper = document.getElementById('confirmPasswordHelper');
+            
+            // Update the password match requirement
+            document.getElementById('req-nomatch').classList.toggle('met', password === confirmPassword && confirmPassword !== '');
+            
+            if (confirmPassword === '') {
+                this.classList.remove('error', 'success');
+                helper.textContent = '';
+                helper.classList.remove('error', 'success');
+            } else if (password !== confirmPassword) {
+                this.classList.add('error');
+                this.classList.remove('success');
+                helper.textContent = 'Passwords do not match';
+                helper.classList.add('error');
+                helper.classList.remove('success');
+            } else {
+                this.classList.add('success');
+                this.classList.remove('error');
+                helper.textContent = '✓ Passwords match';
+                helper.classList.remove('error');
+                helper.classList.add('success');
+            }
+        });
+
         // Mode switching functionality
         function switchMode(mode) {
             const loginTab = document.getElementById('loginTab');
@@ -961,6 +1472,7 @@
                 
                 // Clear signup form
                 document.getElementById('signupForm').reset();
+                resetPasswordUI();
             } else {
                 signupTab.classList.add('active');
                 loginTab.classList.remove('active');
@@ -972,17 +1484,58 @@
             }
         }
 
-        // Password confirmation validation
-        document.getElementById('confirm_password').addEventListener('input', function() {
-            const password = document.getElementById('signup_password').value;
-            const confirmPassword = this.value;
+        // Reset password UI
+        function resetPasswordUI() {
+            const bars = ['strengthBar1', 'strengthBar2', 'strengthBar3', 'strengthBar4'];
+            bars.forEach(barId => {
+                document.getElementById(barId).className = 'strength-bar';
+            });
             
-            if (password !== confirmPassword && confirmPassword !== '') {
-                this.style.borderColor = 'rgba(239, 68, 68, 0.8)';
-                this.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.2)';
-            } else {
-                this.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-                this.style.boxShadow = 'none';
+            document.getElementById('strengthLabel').textContent = 'Password strength';
+            document.getElementById('strengthLabel').className = 'strength-label';
+            
+            const requirements = ['req-length', 'req-uppercase', 'req-lowercase', 'req-number', 'req-special', 'req-nomatch'];
+            requirements.forEach(reqId => {
+                document.getElementById(reqId).classList.remove('met');
+            });
+            
+            document.getElementById('signup_password').classList.remove('error', 'success');
+            document.getElementById('confirm_password').classList.remove('error', 'success');
+            document.getElementById('confirmPasswordHelper').textContent = '';
+            document.getElementById('confirmPasswordHelper').classList.remove('error', 'success');
+            
+            // Reset contact helper
+            const contactHelper = document.getElementById('contactHelper');
+            contactHelper.textContent = 'Enter 10 digit Nepal mobile number';
+            contactHelper.classList.remove('error', 'success');
+            document.getElementById('contact_number').classList.remove('error', 'success');
+        }
+
+        // Contact number validation - Nepal specific (10 digits)
+        document.getElementById('contact_number').addEventListener('input', function() {
+            // Remove any non-digit characters
+            this.value = this.value.replace(/[^0-9]/g, '');
+            
+            const helper = document.getElementById('contactHelper');
+            const length = this.value.length;
+            
+            // Validate length - must be exactly 10 digits
+            if (length === 0) {
+                this.classList.remove('error', 'success');
+                helper.textContent = 'Enter 10 digit Nepal mobile number';
+                helper.classList.remove('error', 'success');
+            } else if (length < 10) {
+                this.classList.add('error');
+                this.classList.remove('success');
+                helper.textContent = `${10 - length} more digit${10 - length > 1 ? 's' : ''} needed`;
+                helper.classList.add('error');
+                helper.classList.remove('success');
+            } else if (length === 10) {
+                this.classList.add('success');
+                this.classList.remove('error');
+                helper.textContent = '✓ Valid Nepal mobile number';
+                helper.classList.add('success');
+                helper.classList.remove('error');
             }
         });
 
@@ -991,17 +1544,50 @@
             const password = document.getElementById('signup_password').value;
             const confirmPassword = document.getElementById('confirm_password').value;
             const genderSelected = document.querySelector('input[name="gender"]:checked');
+            const contactNumber = document.getElementById('contact_number').value;
+            const { strength, requirements } = checkPasswordStrength(password);
             
-            // Password validation
-            if (password !== confirmPassword) {
+            // Password strength validation
+            if (!requirements.length) {
                 e.preventDefault();
-                addMessage('Passwords do not match. Please check and try again.', 'error', 'Validation Error');
+                addMessage('Password must be at least 8 characters long.', 'error', 'Validation Error');
+                document.getElementById('signup_password').focus();
                 return;
             }
             
-            if (password.length < 8) {
+            if (!requirements.uppercase) {
                 e.preventDefault();
-                addMessage('Password must be at least 8 characters long.', 'error', 'Validation Error');
+                addMessage('Password must contain at least one uppercase letter.', 'error', 'Validation Error');
+                document.getElementById('signup_password').focus();
+                return;
+            }
+            
+            if (!requirements.lowercase) {
+                e.preventDefault();
+                addMessage('Password must contain at least one lowercase letter.', 'error', 'Validation Error');
+                document.getElementById('signup_password').focus();
+                return;
+            }
+            
+            if (!requirements.number) {
+                e.preventDefault();
+                addMessage('Password must contain at least one number.', 'error', 'Validation Error');
+                document.getElementById('signup_password').focus();
+                return;
+            }
+            
+            if (!requirements.special) {
+                e.preventDefault();
+                addMessage('Password must contain at least one special character (!@#$%^&*).', 'error', 'Validation Error');
+                document.getElementById('signup_password').focus();
+                return;
+            }
+            
+            // Password match validation
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                addMessage('Passwords do not match. Please check and try again.', 'error', 'Validation Error');
+                document.getElementById('confirm_password').focus();
                 return;
             }
 
@@ -1009,6 +1595,14 @@
             if (!genderSelected) {
                 e.preventDefault();
                 addMessage('Please select your gender to continue.', 'error', 'Validation Error');
+                return;
+            }
+            
+            // Contact number validation - must be exactly 10 digits
+            if (contactNumber.length !== 10) {
+                e.preventDefault();
+                addMessage('Please enter a valid 10 digit Nepal mobile number.', 'error', 'Validation Error');
+                document.getElementById('contact_number').focus();
                 return;
             }
             
@@ -1043,7 +1637,7 @@
                             closeBtn.click();
                         }
                     }
-                }, 4000 + (index * 200)); // Stagger auto-hide by 200ms for multiple messages
+                }, 4000 + (index * 200));
             });
         });
 
@@ -1060,7 +1654,7 @@
             }, 3000);
         });
 
-        // Function to dynamically add messages (for testing or AJAX responses)
+        // Function to dynamically add messages
         function addMessage(text, type = 'info', title = '') {
             const messagesContainer = document.querySelector('.messages') || createMessagesContainer();
             const messageItem = document.createElement('li');
@@ -1074,7 +1668,7 @@
 
             const titles = {
                 success: title || 'Success',
-                error: title || 'Authentication Failed',
+                error: title || 'Validation Error',
                 warning: title || 'Warning',
                 info: title || 'Information'
             };
