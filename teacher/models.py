@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from student.code import generate_unique_code
 
 
+
 class Teacher(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=20)
@@ -30,7 +31,7 @@ class Teacher(models.Model):
     )
     teacher_image = models.ImageField(upload_to='teacher_image/',blank=True,null=True)
     refrence_code = models.CharField(verbose_name='refrence_code',default='n?A')
-    
+    account_created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
