@@ -6,7 +6,7 @@ from data_class import models as Data
 from django.contrib.auth import logout
 from teacher import models as teach
 from django.contrib import messages
-from u_task.task import send_email
+from u_task.task import send_project_upload_email
 from teacher.utils import (
 total_days_absent,
 total_days_present,
@@ -136,18 +136,27 @@ def student_project(request):
         data.save()
         student_data= std_md.Student_info.objects.get(user=request.user)
         full_name = student_data.first_name  + student_data.last_name
-        teacher = teach.Teacher.objects.filter(
-        teacher_class=student_data.student_class,
-           subject=subject).distinct()
+        print(subject)
+        teacher = teach.Teacher.objects.get(teacher_class = student_data.student_class,subject=subject)
+
+
+
+        """   
+
+            this code might be use full but as of now take it as refrence
+
+        # teacher = teach.Teacher.objects.filter(
+        # teacher_class = student_data.student_class,
+        #    subject=subject).distinct()
         
-        full_message = f"{full_name} has uploaded the project named : {title} \n\n Subject : {subject} \n\n Check it now !"
-        email = ""
-        teacher_mail = []
-        for i in teacher:
-           teacher_mail.append(i.email)
+        # full_message = f"{full_name} has uploaded the project named : {title} \n\n Subject : {subject} \n\n Check it now !"
+        
+        # teacher_mail = []
+        # for i in teacher:
+        #    teacher_mail.append(i.email)
 
-        send_email.delay(subject="Project submission",message=full_message,sender=email,recivers=teacher_mail)
-
+        """
+        send_project_upload_email.delay(teacher_name = str(teacher.user.get_full_name()), teacher_email=teacher.email,student_name=full_name,title=title,subject=str(subject),submission_date=str(data.uploaded_at))
         messages.success(request,"uploaded Sucessfully ! ")
         return redirect ("student:project")
 
