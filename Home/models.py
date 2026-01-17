@@ -231,7 +231,7 @@ class Contact(models.Model):
     full_name = models.TextField(verbose_name="applicant_Name ")
     email = models.EmailField(verbose_name="applicant_Email")
     contact = models.IntegerField(verbose_name="applicant_contact")
-    faculty = models.TextField(verbose_name="applicant_choosen_faculty")
+    matter_of_subject = models.TextField(verbose_name="applicant_matter_of_subject",default="")
     message = models.TextField(verbose_name="applicant_message")
 
     class Meta:
