@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from . import models as mod
 from django.contrib import messages
-from u_task.task import send_contact_mail,send_note_upload_email
+from u_task.task import send_contact_mail
 from student.models import Student_info
 from teacher.models import Teacher
 from django.contrib.auth.models import User
@@ -11,7 +11,6 @@ from data_class.models import Class
 
 
 def home(request):
-   
    
     user_session = "guest"
     valid = "ADMIN"
