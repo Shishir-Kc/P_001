@@ -72,6 +72,7 @@ def user_signup(request):
      last_name = request.POST.get('last_name')
      password = request.POST.get('user_pass')
      refrence_code = request.POST.get('reference_code')
+     contact_number = request.POST.get('contact_number')
      if not refrence_code:
          messages.error(request,'Must Provide Refrence Code !')
          return redirect('login:login')
@@ -84,11 +85,22 @@ def user_signup(request):
 
 
      else:
-        user_account = User.objects.create_user(username=user_name,first_name=first_name,last_name=last_name,email=email,password=password)
+        user_account = User.objects.create_user(username=user_name,
+                                                first_name=first_name,
+                                                last_name=last_name,
+                                                email=email,
+                                                password=password)
         user_account.save()
         group = Group.objects.get(name='Student')  
         user_account.groups.add(group)
-        user_std_account = Student_info.objects.create(user=User.objects.get(username=user_name),first_name=first_name,last_name=last_name,email=email,refrence_code=refrence_code,Gender=gender)
+        user_std_account = Student_info.objects.create(user=User.objects.get(username=user_name),
+                                                       first_name=first_name,
+                                                       last_name=last_name,
+                                                       email=email,
+                                                       refrence_code=refrence_code,
+                                                       Gender=gender,
+                                                       student_contact = contact_number, 
+                                                       )
         user_std_account.save()
         messages.success(request,'You will have Acess To Your Account in a Short Period of time ! ')
         return redirect("login:login")
