@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from . import models as mod
 from django.contrib import messages
-from u_task.task import send_email
+from u_task.task import send_contact_mail,send_note_upload_email
 from student.models import Student_info
 from teacher.models import Teacher
 from django.contrib.auth.models import User
@@ -11,6 +11,8 @@ from data_class.models import Class
 
 
 def home(request):
+   
+   
     user_session = "guest"
     valid = "ADMIN"
 
@@ -203,7 +205,7 @@ def contact(request):
         full_name = request.POST.get("name")
         email = request.POST.get("email")
         contact = request.POST.get("phone")
-        faculty = request.POST.get("subject")
+        matter_of_subject = request.POST.get("subject")
         message = request.POST.get("message")
         subject = "to get admitted "
 
@@ -218,39 +220,20 @@ def contact(request):
             full_name=full_name,
             email=email,
             contact=contact,
-            faculty=faculty,
+            matter_of_subject=matter_of_subject,
             message=message,
         )
         data.save()
 
-        full_message = f"""From: {full_name} <{email}>
-        Subject: {subject}
-
-        Dear Teacher,
-
-                    You have received a new contact query from a student.
-
-                    Full Name: {full_name}
-                    Contact: {contact}
-                    Email: {email}
-                    Faculty: {faculty}
-
-                    Message:
-                            {message}
-
-                    Best regards,
-                    {full_name}
-                    """
-
-        # Send email asynchronously
-        send_email.delay(
-            subject=f"Contact Form: {subject}",
-            message=full_message,
-            sender=email,
-            recivers=list_teacher,
-        )
+        send_contact_mail.delay(email=email,
+                                body=message,
+                                matter_of_subject=matter_of_subject,
+                                full_name=full_name,
+                                contact=contact
+)
 
         messages.success(request, "Sent Successfully!")
+        
         return redirect("home:home")
 
     return render(request, "contact/contact.html")
