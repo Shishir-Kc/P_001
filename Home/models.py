@@ -253,20 +253,6 @@ class Member_Role(models.Model):
         return self.name
 
 
-class Members(models.Model):
-    member_image = models.ImageField(upload_to="member/")
-    member_name = models.CharField(verbose_name="Name")
-    member_contact = models.EmailField(verbose_name="Email", max_length=254)
-    member_role = models.ForeignKey(
-        Member_Role, on_delete=models.CASCADE, null=True, blank=True
-    )
-
-    class Meta:
-        verbose_name = "Member"
-        verbose_name_plural = "Members"
-
-    def __str__(self):
-        return f"{self.member_name} | {self.member_contact}"
 
 
 class Student_Reviews(models.Model):
