@@ -1425,21 +1425,21 @@
                         {% for member in members %}
                         <tr class="member-row">
                             <td class="member-image-cell">
-                                <img src="{{ member.member_image.url }}" alt="{{ member.member_name }}"
+                                <img src="{{ member.teacher_image.url }}" alt="{{ member.user.get_full_name}}"
                                     class="member-image" onerror="this.src='{% static 'images/nope.jpg' %}">
                             </td>
                             <td>
-                                <div class="member-name">{{ member.member_name }}</div>
+                                <div class="member-name">{{ member.user.get_full_name}}</div>
                             </td>
                             <td>
-                                <div class="member-role">{{ member.member_role }}</div>
+                                <div class="member-role">{{ member.teacher_role }}</div>
                             </td>
                             <td>
                                 <div class="contact-info">
                                     <div class="contact-item">
                                         <i class="fa-solid fa-envelope"></i>
-                                        <a href="mailto:{{ member.member_contact }}" class="contact-link">
-                                            {{member.member_contact }}</a>
+                                        <a href="mailto:{{ member.email}}" class="contact-link">
+                                            {{member.email}}</a>
                                     </div>
                                 </div>
                             </td>
