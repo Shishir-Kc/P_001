@@ -4,7 +4,7 @@ from django.contrib import messages
 from u_task.task import send_contact_mail
 from student.models import Student_info
 from teacher.models import Teacher
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Group
 from django.core.paginator import Paginator
 from django.db.models import Q
 from data_class.models import Class
@@ -34,7 +34,11 @@ def home(request):
     # Fetch all data in parallel or optimized batches if possible, but Django is synchronous.
     # We can at least ensure we are not over-fetching.
 
-    faculty = mod.Faculty_Teacher_Info.objects.all()
+    # faculty = mod.Faculty_Teacher_Info.objects.all()
+    teachers = Teacher.objects.filter(user__groups__name='Teacher').distinct()
+
+    print(teachers)
+
 
     name = mod.Header.objects.first()
     slider = mod.Slider.objects.all()
@@ -51,11 +55,15 @@ def home(request):
     news = news_events.filter(category="Notice")[:6]
     event = news_events.filter(category="Events")[:1]
 
+    faculties = Class.objects.all()
+
     photo = mod.GalleryImage.objects.all().order_by("-created_at")[:4]
     upcoming_events = mod.Event.objects.all().order_by("-created_at")[:1]
     achivement = mod.Achievements_stats.objects.first()
     students_review = mod.Student_Reviews.objects.all().order_by("-created_at")[:4]
     principal = mod.Principal.objects.first()
+
+    
     context = {
         "title": name,
         "slides": slider,
@@ -65,9 +73,10 @@ def home(request):
         "achivement": achivement,
         "events": event,
         "user_session": user_session,
-        "facultys": faculty,
+        "teachers": teachers,
         "joined": valid,
         "students_review": students_review,
+        "faculties":faculties,
         "principal": principal,
     }
     return render(request, "home/index.html", context)
