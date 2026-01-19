@@ -86,13 +86,13 @@ def academics(request):
     achivement = mod.Achievements_stats.objects.first()
     grade = mod.Academics.objects.first()
     resource = mod.Academic_resources.objects.first()
-    members = mod.Members.objects.all()
+    members = Teacher.objects.all()
 
     # Handle Search
     query = request.GET.get("q")
     if query:
-        members = mod.Members.objects.filter(
-            Q(member_name__icontains=query) | Q(member_contact__icontains=query)
+        members = Teacher.objects.filter(
+            Q(first_name__icontains=query) | Q(email__icontains=query) |Q(last_name__icontains=query)
         )
 
     paginator = Paginator(members, 10)
