@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from student.code import generate_unique_code
-
+from Home.models import Member_Role
 
 
 class Teacher(models.Model):
@@ -32,7 +32,9 @@ class Teacher(models.Model):
     teacher_image = models.ImageField(upload_to='teacher_image/',blank=True,null=True)
     refrence_code = models.CharField(verbose_name='refrence_code',default='n?A')
     account_created_at = models.DateTimeField(auto_now_add=True)
-
+    teacher_role = models.ForeignKey(
+       Member_Role, on_delete=models.CASCADE, null=True, blank=True
+    )
     def __str__(self):
         return self.name
 
