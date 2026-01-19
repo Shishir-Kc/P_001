@@ -33,7 +33,7 @@ admin.site.register(models.Academic_resources)
 
 admin.site.register(models.Contact)
 
-admin.site.register(models.Members)
+
 
 admin.site.register(models.Faculty)
 
