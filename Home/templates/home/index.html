@@ -800,26 +800,40 @@
     gap: 2rem;
     overflow-x: auto;
     scroll-behavior: smooth;
-    padding: 1rem 0 2rem 0;
+    padding: 2rem 1rem 4rem 1rem;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    transition: var(--transition-smooth);
   }
 
   .faculty-slider::-webkit-scrollbar {
     display: none;
   }
 
+  /* Premium Faculty Card Design */
   .faculty-card {
     background: var(--white);
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: var(--shadow-medium);
-    transition: var(--transition-smooth);
-    flex: 0 0 320px;
-    min-height: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    /* Softer, deeper shadow */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Bouncy effect */
+    flex: 0 0 300px;
+    /* Slightly narrower for better proportion */
+    min-height: 480px;
     opacity: 1;
     transform: scale(1);
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faculty-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+    /* Blue tinted shadow on hover */
+    border-color: rgba(37, 99, 235, 0.3);
   }
 
   .faculty-card.filtering {
@@ -836,115 +850,75 @@
     animation: fadeInScale 0.6s ease-out forwards;
   }
 
-  @keyframes fadeInScale {
-    0% {
-      opacity: 0;
-      transform: scale(0.8) translateY(20px);
-    }
-
-    100% {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
-  }
-
-  .faculty-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-heavy);
-  }
-
-  .faculty-card.filtering:hover {
-    transform: scale(0.8);
-  }
-
   .faculty-image {
     position: relative;
-    height: 300px;
+    height: 320px;
     overflow: hidden;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    /* Slanted bottom edge */
   }
 
   .faculty-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: var(--transition-smooth);
+    object-position: top center;
+    transition: transform 0.6s ease;
   }
 
   .faculty-card:hover .faculty-image img {
     transform: scale(1.1);
   }
 
-  .faculty-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-    opacity: 0;
-    transition: var(--transition-smooth);
+  .faculty-content {
+    padding: 1.5rem;
+    text-align: center;
+    flex-grow: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
   }
 
-  .faculty-card:hover .faculty-overlay {
-    opacity: 0.9;
-  }
-
-  .faculty-social {
-    display: flex;
-    gap: 1rem;
-    transform: translateY(20px);
-    transition: var(--transition-smooth);
-  }
-
-  .faculty-card:hover .faculty-social {
-    transform: translateY(0);
-  }
-
-  .faculty-social a {
-    width: 50px;
-    height: 50px;
-    background: var(--white);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-blue);
-    text-decoration: none;
-    transition: var(--transition-smooth);
-  }
-
-  .faculty-social a:hover {
-    transform: scale(1.1);
-  }
-
-  .faculty-info {
-    padding: 2rem;
-  }
-
-  .faculty-info h3 {
-    font-size: 1.5rem;
+  .faculty-name {
+    font-size: 1.4rem;
     font-weight: 700;
-    margin-bottom: 0.5rem;
     color: var(--text-dark);
     font-family: 'Poppins', sans-serif;
+    margin-bottom: 0.5rem;
   }
 
-  .faculty-role {
+  .faculty-designation {
+    font-size: 0.9rem;
     color: var(--primary-blue);
     font-weight: 600;
+    background: rgba(37, 99, 235, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
     margin-bottom: 1rem;
+    display: inline-block;
   }
 
-  .faculty-description {
-    color: var(--text-light);
-    line-height: 1.6;
+  .view-profile-btn {
+    margin-top: auto;
+    background: transparent;
+    border: 2px solid var(--primary-blue);
+    color: var(--primary-blue);
+    padding: 0.6rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
     font-family: 'Inter', sans-serif;
   }
 
-  /* Faculty Navigation */
+  .faculty-card:hover .view-profile-btn {
+    background: var(--primary-blue);
+    color: var(--white);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+  }
+
+  /* Faculty Navigation Buttons */
   .faculty-nav {
     position: absolute;
     top: 50%;
@@ -952,30 +926,224 @@
     background: var(--white);
     border: none;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--primary-blue);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     cursor: pointer;
-    transition: var(--transition-smooth);
-    box-shadow: var(--shadow-medium);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     z-index: 10;
   }
 
   .faculty-nav:hover {
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: var(--shadow-heavy);
+    transform: translateY(-50%) scale(1.15);
+    background: var(--primary-blue);
+    color: var(--white);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
   }
 
   .faculty-nav.prev {
-    left: -30px;
+    left: -20px;
   }
 
   .faculty-nav.next {
-    right: -30px;
+    right: -20px;
+  }
+
+  /* ========== TEACHER MODAL STYLES ========== */
+  .teacher-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    /* Darker overlay */
+    backdrop-filter: blur(8px);
+    /* Stronger blur */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+  }
+
+  .teacher-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .teacher-modal-content {
+    background: var(--white);
+    border-radius: 24px;
+    width: 900px;
+    max-width: 95%;
+    max-height: 90vh;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    transform: translateY(30px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .teacher-modal-overlay.active .teacher-modal-content {
+    transform: translateY(0) scale(1);
+  }
+
+  .teacher-modal-image-side {
+    width: 40%;
+    min-height: 400px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .teacher-modal-image-side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .teacher-modal-info-side {
+    width: 60%;
+    padding: 3rem;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .teacher-modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: rgba(0, 0, 0, 0.05);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+
+  .teacher-modal-close:hover {
+    background: #ef4444;
+    color: white;
+    transform: rotate(90deg);
+  }
+
+  .teacher-name-modal {
+    font-size: 2.5rem;
+    font-weight: 800;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .teacher-classes-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+  }
+
+  .teacher-class-item {
+    background: #f8fafc;
+    border-left: 4px solid var(--primary-blue);
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.75rem;
+    border-radius: 0 12px 12px 0;
+    font-family: 'Inter', sans-serif;
+    transition: transform 0.2s;
+  }
+
+  .teacher-class-item:hover {
+    transform: translateX(5px);
+    background: #f1f5f9;
+  }
+
+  .teacher-class-grade {
+    font-weight: 700;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+  }
+
+  .teacher-class-faculty {
+    color: var(--text-light);
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 768px) {
+
+    /* Teacher Modal Mobile Styles */
+    .teacher-modal-content {
+      flex-direction: column;
+      width: 95%;
+      /* Wider on mobile */
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 20px;
+      position: relative;
+    }
+
+    .teacher-modal-image-side {
+      width: 100%;
+      height: 450px;
+      /* Increased height for full image */
+      min-height: auto;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .teacher-modal-info-side {
+      width: 100%;
+      padding: 1.5rem;
+      /* Comfortable padding */
+    }
+
+    .teacher-name-modal {
+      font-size: 1.8rem;
+      /* Scaled down title */
+      margin-bottom: 0.25rem;
+    }
+
+    .teacher-modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(255, 255, 255, 0.95);
+      /* High contrast close button */
+      color: var(--text-dark);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+      z-index: 1050;
+      /* Ensure it stays on top */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .teacher-classes-list {
+      margin: 1.5rem 0;
+    }
+
+    .teacher-class-item {
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+    }
   }
 
   /* ========== PRINCIPAL MESSAGE CARD ========== */
@@ -1473,27 +1641,72 @@
   }
 
   /* Responsive adjustments */
+  /* Responsive adjustments for Review Modal */
   @media (max-width: 768px) {
     .review-modal-content {
       flex-direction: column;
-      max-width: 90%;
-      max-height: 85vh;
+      max-width: 95%;
+      /* Wider on mobile */
+      max-height: 90vh;
       overflow-y: auto;
+      border-radius: 20px;
     }
 
     .review-modal-image-container {
       width: 100%;
-      height: 250px;
+      height: 450px;
+      /* Increased height for full image visibility */
       min-height: auto;
+      flex-shrink: 0;
+      /* Prevent shrinking */
+      position: relative;
     }
 
     .review-modal-content-wrapper {
       width: 100%;
-      padding: 2rem;
+      padding: 1.5rem;
+      /* Reduced padding */
+      min-height: auto;
+      /* Allow content to dictate height */
+      position: relative;
+      background: var(--white);
+    }
+
+    /* Hide the inner button on mobile, use the outer/main one */
+    .review-modal-close-btn {
+      display: none;
+    }
+
+    /* Target the outer close button for mobile positioning */
+    .review-modal-close {
+      display: flex;
+      /* Ensure it is visible */
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      z-index: 1050;
+      /* High z-index to stay on top of image */
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--text-dark);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      border: none;
     }
 
     .review-modal-info h3 {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
+      /* Smaller title */
+      margin-bottom: 0.25rem;
+    }
+
+    .review-modal-info span {
+      padding: 0.25rem 0.75rem;
+      font-size: 0.75rem;
     }
   }
 
@@ -2497,9 +2710,9 @@
               </path>
             </svg>
             <p class="principal-text">
-                {{principal.message}}
+              {{principal.message}}
             </p>
-          
+
             <p class="principal-signature">
               Sincerely,<br>
               <strong>{{principal.name}}</strong><br>
@@ -2516,6 +2729,7 @@
     <div class="container">
       <h2><i class="fas fa-chalkboard-teacher" aria-hidden="true"></i> Meet Our Teachers</h2>
       <p>Dedicated educators empowering students with knowledge, care, and guidance</p>
+
       <!-- Faculty Filter -->
       <div class="faculty-filter-container">
         <div class="filter-label">
@@ -2524,18 +2738,26 @@
         </div>
         <div class="faculty-filter-buttons">
           <button class="filter-btn active" data-filter="all">All Teachers</button>
-          <button class="filter-btn" data-filter="Science">Science</button>
-          <button class="filter-btn" data-filter="Computer Science">Computer Science</button>
-          <button class="filter-btn" data-filter="Education">Education</button>
-          <button class="filter-btn" data-filter="Hotel Management">Hotel Management</button>
-          <button class="filter-btn" data-filter="Management">Management</button>
+          {% regroup faculties by faculty as unique_faculties %}
+          {% for group in unique_faculties %}
+          {% if group.grouper %}
+          <button class="filter-btn" data-filter="{{ group.grouper }}">{{ group.grouper }}</button>
+          {% endif %}
+          {% endfor %}
         </div>
+        <!-- IMPORTANT: Assuming 'faculties' in context is a list of classes or similar. 
+             If direct unique list isn't available, we might have issues with duplicates in the buttons. 
+             Using 'regroup' is a safe template trick if 'faculties' is a queryset sorted by faculty.
+             If 'faculties' is just a unique strings list, standard loop works.
+             Fallback to standard loop if structure is simple. -->
       </div>
+
       <!-- Loading Animation -->
       <div class="faculty-loading" id="facultyLoading">
         <div class="loading-spinner"></div>
         <span>Filtering teachers...</span>
       </div>
+
       <div class="faculty-container">
         <button class="faculty-nav prev" id="facultyPrev" aria-label="Previous teachers">
           <i class="fas fa-chevron-left" aria-hidden="true"></i>
@@ -2543,18 +2765,49 @@
         <button class="faculty-nav next" id="facultyNext" aria-label="Next teachers">
           <i class="fas fa-chevron-right" aria-hidden="true"></i>
         </button>
+
         <!-- Faculty Slider -->
         <div class="faculty-slider" id="facultySlider">
-          {% for faculty in facultys %}
-          <div class="faculty-card" data-faculty="{{ faculty.teacher_faculty }}" data-aos="fade-up"
-            data-aos-delay="100">
-            <div class="faculty-image">
-              <img src="{{ faculty.teacher_image.url }}" alt="{{ faculty.teacher_name }}">
+          {% for teacher in teachers %}
+          <div class="faculty-card"
+            data-faculties="{% for class in teacher.teacher_class.all %}{{ class.faculty }} {% endfor %}"
+            data-teacher-name="{{ teacher.user.get_full_name }}" data-teacher-img="{{ teacher.teacher_image.url }}">
+
+            <!-- Store detailed info nicely for the modal to grab -->
+            <div class="teacher-details-hidden" style="display:none;">
+              <ul class="teacher-classes-list">
+                {% for class in teacher.teacher_class.all %}
+                <li class="teacher-class-item">
+                  <div class="teacher-class-grade">Grade: {{class.grade}}</div>
+                  <div class="teacher-class-faculty">{{class.faculty}}</div>
+                </li>
+                {% endfor %}
+              </ul>
             </div>
-            <div class="faculty-info">
-              <h3>{{ faculty.teacher_name }}</h3>
-              <p class="faculty-role">{{ faculty.teacher_faculty }}</p>
-              <p class="faculty-description">{{ faculty.teacher_description }}</p>
+
+            <div class="faculty-image">
+              {% if teacher.teacher_image %}
+              <img src="{{ teacher.teacher_image.url }}" alt="{{ teacher.user.get_full_name }}" loading="lazy">
+              {% else %}
+              <!-- Placeholder if no image -->
+              <img src="https://ui-avatars.com/api/?name={{ teacher.user.get_full_name }}&background=random"
+                alt="{{ teacher.user.get_full_name }}">
+              {% endif %}
+            </div>
+
+            <div class="faculty-content">
+              <h3 class="faculty-name">{{ teacher.user.get_full_name }}</h3>
+
+              <!-- Display primary faculty tag (first one) -->
+              {% with teacher.teacher_class.all|first as first_class %}
+              {% if first_class %}
+              <span class="faculty-designation">{{ first_class.faculty }}</span>
+              {% endif %}
+              {% endwith %}
+
+              <button class="view-profile-btn" onclick="openTeacherModal(this)">
+                View Profile
+              </button>
             </div>
           </div>
           {% endfor %}
@@ -2562,6 +2815,33 @@
       </div>
     </div>
   </section>
+
+  <!-- Teacher Detail Modal -->
+  <div id="teacherModal" class="teacher-modal-overlay">
+    <div class="teacher-modal-content">
+      <button class="teacher-modal-close" id="closeTeacherModal">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <div class="teacher-modal-image-side">
+        <img id="modalTeacherImage" src="" alt="Teacher Image">
+      </div>
+
+      <div class="teacher-modal-info-side">
+        <h2 id="modalTeacherName" class="teacher-name-modal">Teacher Name</h2>
+        <div
+          style="height: 4px; width: 60px; background: var(--primary-blue); border-radius: 2px; margin-bottom: 2rem;">
+        </div>
+
+        <h4 style="font-family:'Poppins',sans-serif; font-size:1.2rem; color:var(--text-light); margin-bottom:1rem;">
+          Teaching Assignments</h4>
+
+        <div id="modalTeacherClasses">
+          <!-- Content injected via JS -->
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Student Reviews Section -->
   <section class="content-section reviews-section">
     <div class="container">
@@ -3205,6 +3485,132 @@
   window.addEventListener('resize', () => {
     setTimeout(updateFacultySlider, 250);
   });
+
+  // ========== TEACHER MODAL FUNCTIONALITY ==========
+  const teacherModal = document.getElementById('teacherModal');
+  const closeTeacherModalBtn = document.getElementById('closeTeacherModal');
+
+  // Expose function globally so inline onclick works
+  window.openTeacherModal = function (btnElement) {
+    const card = btnElement.closest('.faculty-card');
+    if (!card) return;
+
+    const name = card.getAttribute('data-teacher-name');
+    const imgUrl = card.getAttribute('data-teacher-img');
+    const classesHtml = card.querySelector('.teacher-details-hidden').innerHTML;
+
+    const modalName = document.getElementById('modalTeacherName');
+    const modalImg = document.getElementById('modalTeacherImage');
+    const modalClasses = document.getElementById('modalTeacherClasses');
+
+    if (modalName) modalName.textContent = name;
+    if (modalImg) modalImg.src = imgUrl;
+    if (modalClasses) modalClasses.innerHTML = classesHtml;
+
+    if (teacherModal) {
+      teacherModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  if (closeTeacherModalBtn) {
+    closeTeacherModalBtn.addEventListener('click', function () {
+      if (teacherModal) {
+        teacherModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  // Close on outside click
+  if (teacherModal) {
+    teacherModal.addEventListener('click', function (e) {
+      if (e.target === teacherModal) {
+        teacherModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  // Close on Escape
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && teacherModal && teacherModal.classList.contains('active')) {
+      teacherModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Updated Filter Logic
+  // Using override of the previous initFacultyFilter to fix it
+  function initFacultyFilter() {
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        if (isFiltering) return;
+        const filter = this.getAttribute('data-filter');
+        // Allow re-clicking same filter if we want to confirm, but usually return
+        if (filter === currentFilter) return;
+
+        filterFaculty(filter, this);
+      });
+    });
+  }
+
+  function filterFaculty(filter, activeButton) {
+    isFiltering = true;
+    currentFilter = filter;
+
+    // Update active button
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    activeButton.classList.add('active');
+
+    // Show loading if available
+    if (facultyLoading) {
+      facultyLoading.classList.add('active');
+    }
+
+    // Animate out
+    facultyCards.forEach(card => card.classList.add('filtering'));
+
+    setTimeout(() => {
+      if (facultyLoading) facultyLoading.classList.remove('active');
+
+      let visibleCount = 0;
+      facultyCards.forEach((card) => {
+        // Normalize filter comparison
+        // Check if card has the faculty in its list
+        const cardFaculties = (card.getAttribute('data-faculties') || '').toLowerCase();
+        const searchFilter = filter.toLowerCase();
+
+        // Match if filter is 'all' OR if the faculty string contains the filter word
+        const shouldShow = (filter === 'all') || cardFaculties.includes(searchFilter);
+
+        if (shouldShow) {
+          card.classList.remove('filtering', 'filtered-out');
+          card.classList.add('filtered-in');
+          card.style.display = 'flex'; // Use flex because we defined display:flex in CSS
+
+          setTimeout(() => {
+            card.classList.remove('filtered-in');
+          }, 100 + (visibleCount * 50));
+
+          visibleCount++;
+        } else {
+          card.classList.remove('filtering', 'filtered-in');
+          card.classList.add('filtered-out');
+          card.style.display = 'none';
+        }
+      });
+
+      // Reset slider
+      facultyCurrentIndex = 0;
+      if (facultySlider) {
+        facultySlider.scrollTo({ left: 0, behavior: 'smooth' });
+      }
+      setTimeout(updateFacultySlider, 300);
+
+      isFiltering = false;
+    }, 500); // Wait for filtering animation
+  }
   // ========== ENHANCED NOTIFICATION SYSTEM WITH IMAGE & FILE DOWNLOAD SUPPORT ==========
   const noticeModal = document.getElementById('noticeModal');
   const closeNoticeModal = document.getElementById('closeNoticeModal');
