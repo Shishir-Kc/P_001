@@ -4,7 +4,7 @@ from django.contrib import messages
 from u_task.task import send_contact_mail
 from student.models import Student_info
 from teacher.models import Teacher
-from django.contrib.auth.models import User,Group
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db.models import Q
 from data_class.models import Class
@@ -245,4 +245,5 @@ def contact(request):
         return redirect("home:home")
 
     return render(request, "contact/contact.html")
+
 
